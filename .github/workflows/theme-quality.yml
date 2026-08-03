@@ -1,0 +1,60 @@
+name: DK Expressions Theme Quality
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - name: Validate PHP syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find wp-content/themes/dk-expressions-v4 wp-content/themes/dk-expressions-v4-approved-fixes \
+            -type f -name '*.php' -print0 \
+            | xargs -0 -n1 php -l
+
+      - name: Verify required theme files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f wp-content/themes/dk-expressions-v4/style.css
+          test -f wp-content/themes/dk-expressions-v4/functions.php
+          test -f wp-content/themes/dk-expressions-v4-approved-fixes/style.css
+          test -f wp-content/themes/dk-expressions-v4-approved-fixes/functions.php
+
+      - name: Build installable child-theme package
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd wp-content/themes
+          zip -rq ../../dist/dk-expressions-v4-approved-fixes-v1.15.0.zip dk-expressions-v4-approved-fixes \
+            -x '*/.git/*' '*/node_modules/*' '*.DS_Store'
+
+      - name: Upload release candidate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dk-expressions-v1.15.0-release-candidate
+          path: dist/dk-expressions-v4-approved-fixes-v1.15.0.zip
+          if-no-files-found: error
+          retention-days: 14
