@@ -1,0 +1,641 @@
+/*
+Theme Name: DK Expressions V4 — Approved Fixes
+Theme URI: https://dkexpressions.co.za/
+Description: Approved child theme update for DK Expressions V4. Corrects navigation, About, Contact, colours and Back to the Future navigation.
+Author: DK Expressions
+Template: dk-expressions-v4
+Version: 1.14.0
+Requires at least: 6.4
+Requires PHP: 8.0
+Text Domain: dk-expressions-v4-fixes
+*/
+
+/* Header and approved menu */
+.dk-header{background:linear-gradient(180deg,rgba(2,5,10,.98),rgba(2,5,10,.9));border-bottom-color:rgba(67,174,255,.22)}
+.dk-nav-menu{display:flex;align-items:center;gap:clamp(14px,1.65vw,27px);margin:0;padding:0;list-style:none}
+.dk-nav-menu a{position:relative;color:#fff;font-size:9px;letter-spacing:.13em;text-transform:uppercase}
+.dk-nav-menu a::after{content:"";position:absolute;left:0;right:100%;bottom:-10px;height:1px;background:#43b7ff;transition:.25s}
+.dk-nav-menu a:hover::after,.dk-nav-menu a[aria-current="page"]::after{right:0}
+.dk-nav-menu a:hover{color:#63c6ff}
+
+/* About */
+.dk-core-page{width:min(1180px,88vw);margin:auto;padding:95px 0 130px}
+.dk-about-lead{max-width:920px;margin:0 0 70px;color:#eef7ff;font-family:Georgia,serif;font-size:clamp(24px,3.3vw,43px);line-height:1.42}
+.dk-about-copy{display:grid;grid-template-columns:1fr 1fr;gap:45px 8vw;color:#aebbc8;font-size:16px;line-height:1.8}
+.dk-about-copy h2{grid-column:1/-1;margin:15px 0 0;color:#fff;font-size:clamp(34px,4.8vw,65px);line-height:1;text-transform:uppercase}
+.dk-value-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:80px;border-top:1px solid rgba(125,192,255,.18);border-left:1px solid rgba(125,192,255,.18)}
+.dk-value-card{min-height:280px;padding:28px 24px;border-right:1px solid rgba(125,192,255,.18);border-bottom:1px solid rgba(125,192,255,.18);background:linear-gradient(145deg,rgba(10,47,82,.55),rgba(3,10,18,.5))}
+.dk-value-card span{color:#53bbff;font-family:monospace;font-size:10px}.dk-value-card h3{margin:65px 0 15px;color:#fff;font-size:18px;text-transform:uppercase}.dk-value-card p{margin:0;color:#91a2b2;font-size:13px;line-height:1.65}
+
+/* Contact: white text on blue, black text on white */
+.dk-contact-page{width:min(1180px,90vw);margin:95px auto 135px}
+.dk-contact-intro{display:grid;grid-template-columns:.75fr 1.25fr;gap:7vw;margin-bottom:55px}
+.dk-contact-intro h2{margin:0;color:#fff;font-size:clamp(40px,5.3vw,72px);line-height:.98;text-transform:uppercase}
+.dk-contact-intro p{max-width:560px;color:#aab8c6;font-size:16px;line-height:1.75}
+.dk-contact-panel{display:grid;grid-template-columns:.72fr 1.28fr;gap:55px;padding:55px;background:linear-gradient(135deg,#075991,#0b86d7 58%,#105486);box-shadow:0 0 65px rgba(20,152,255,.25)}
+.dk-contact-details,.dk-contact-details h3,.dk-contact-details p,.dk-contact-details a,.dk-project-form label{color:#fff}
+.dk-contact-details h3{margin:0 0 22px;font-size:26px;text-transform:uppercase}.dk-contact-details p{font-size:14px;line-height:1.75}.dk-contact-details a{display:block;margin-top:25px;font-size:17px;font-weight:700}
+.dk-project-form{display:grid;grid-template-columns:1fr 1fr;gap:22px}.dk-project-form label{display:flex;flex-direction:column;gap:9px;font-size:9px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}.dk-project-form .wide{grid-column:1/-1}
+.dk-project-form input,.dk-project-form select,.dk-project-form textarea{width:100%;border:2px solid transparent;border-radius:2px;outline:0;padding:14px;background:#fff!important;color:#05080c!important;font:15px Arial,sans-serif;-webkit-text-fill-color:#05080c}
+.dk-project-form input::placeholder,.dk-project-form textarea::placeholder{color:#59636e;opacity:1}.dk-project-form input:focus,.dk-project-form select:focus,.dk-project-form textarea:focus{border-color:#031d32;box-shadow:0 0 0 3px rgba(255,255,255,.28)}
+.dk-project-form button{grid-column:1/-1;justify-self:start;border:1px solid #fff;padding:16px 24px;background:#fff;color:#064d7d;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;cursor:pointer}.dk-project-form button:hover{background:#020b13;color:#fff}
+
+/* Floating return control */
+.dk-back-to-future{position:fixed;z-index:90;right:22px;bottom:24px;display:flex;align-items:center;gap:13px;padding:13px 17px;border:1px solid #53bbff;background:#087fc8;color:#fff!important;box-shadow:0 0 28px rgba(20,152,255,.4);font-size:8px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;transition:.25s}
+.dk-back-to-future:hover{transform:translateY(-4px);background:#fff;color:#06101b!important}.dk-back-to-future span{font-size:15px}
+.dk-footer-nav .back-footer{color:#53bbff}
+.dk-social-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 22px;margin:0 auto 28px}
+.dk-social-nav a{color:#53bbff;font-size:9px;letter-spacing:.15em;text-transform:uppercase}
+.dk-social-nav a:hover{color:#fff}
+.dk-landing .dk-enter{text-decoration:none}
+
+/* Separate content-rich Home page */
+.dk-home-page-hero{position:relative;min-height:780px;display:grid;grid-template-columns:1.08fr .92fr;align-items:center;gap:7vw;padding:150px max(6vw,calc((100vw - 1180px)/2)) 90px;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 80% 45%,rgba(5,88,166,.33),transparent 32%),linear-gradient(145deg,#02050a 15%,#061423)}
+.dk-home-page-copy{position:relative;z-index:2}
+.dk-home-page-copy h1{max-width:760px;margin:0;color:#fff;font-size:clamp(52px,6.2vw,88px);line-height:.94;letter-spacing:-.045em;text-transform:uppercase}
+.dk-home-page-copy h1 em{display:block;color:#36adfb;font-style:normal}
+.dk-home-page-copy>p:last-of-type{max-width:620px;margin:30px 0 0;color:#aebdcb;font-size:17px;line-height:1.75}
+.dk-home-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:34px}
+.dk-text-link{color:#77caff;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.dk-text-link:hover{color:#fff}
+.dk-home-orbit{position:relative;display:grid;place-items:center;width:min(42vw,530px);aspect-ratio:1;margin:auto;border:1px solid #168ade;border-radius:50%;box-shadow:0 0 85px rgba(12,121,220,.35),inset 0 0 80px rgba(12,121,220,.23)}
+.dk-home-orbit:before,.dk-home-orbit:after{content:"";position:absolute;inset:7%;border:1px dashed #32aefe;border-radius:50%;animation:dkSpin 18s linear infinite}
+.dk-home-orbit:after{inset:-7%;border-style:solid;opacity:.45;animation-direction:reverse;animation-duration:30s}
+.dk-home-orbit img{position:relative;z-index:1;width:86%;height:86%;object-fit:contain;filter:drop-shadow(0 0 32px rgba(30,151,255,.42))}
+
+/* Client and brand logo wall */
+.dk-clients-section{border-block:1px solid rgba(125,192,255,.14);background:linear-gradient(180deg,rgba(5,18,32,.28),rgba(3,9,16,.6))}
+.dk-client-logo-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid rgba(125,192,255,.16);border-left:1px solid rgba(125,192,255,.16)}
+.dk-client-logo{min-height:145px;display:grid;place-items:center;padding:24px;border-right:1px solid rgba(125,192,255,.16);border-bottom:1px solid rgba(125,192,255,.16);background:rgba(5,14,24,.48);transition:.3s}
+.dk-client-logo:hover{background:#081b2d;box-shadow:inset 0 0 35px rgba(25,146,231,.12)}
+.dk-client-logo img{display:block;width:100%;max-width:135px;height:72px;object-fit:contain;filter:grayscale(1) brightness(1.75);opacity:.82;transition:.3s}
+.dk-client-logo:hover img{filter:none;opacity:1;transform:scale(1.04)}
+.dk-client-logo strong{color:#d9e7f2;font-size:12px;line-height:1.3;text-align:center;text-transform:uppercase}
+
+/* Giveaways and competitions */
+.dk-giveaways-hero{position:relative;min-height:760px;display:flex;align-items:flex-end;padding:160px max(6vw,calc((100vw - 1180px)/2)) 95px;overflow:hidden;isolation:isolate;background:radial-gradient(circle at 72% 42%,rgba(15,108,208,.36),transparent 31%),linear-gradient(145deg,#02050a,#07192b)}
+.dk-giveaway-rings{position:absolute;z-index:-1;right:8vw;top:120px;width:min(48vw,560px);aspect-ratio:1;border:2px solid rgba(43,169,255,.68);border-radius:50%;box-shadow:0 0 65px rgba(24,145,232,.43),inset 0 0 65px rgba(24,145,232,.23);animation:dkSpin 20s linear infinite}
+.dk-giveaway-rings:before,.dk-giveaway-rings:after{content:"";position:absolute;border-radius:50%}.dk-giveaway-rings:before{inset:11%;border:1px dashed #53bbff}.dk-giveaway-rings:after{inset:27%;border:1px solid rgba(83,187,255,.46);box-shadow:0 0 35px #075991}
+.dk-giveaways-hero-copy{position:relative;z-index:2;max-width:780px}.dk-giveaways-hero h1{margin:0;color:#fff;font-size:clamp(56px,7vw,100px);line-height:.9;letter-spacing:-.05em;text-transform:uppercase}.dk-giveaways-hero h1 em{display:block;color:#32adff;font-style:normal}.dk-giveaways-hero-copy>p:last-of-type{max-width:620px;margin:30px 0;color:#aebdcb;font-size:17px;line-height:1.7}
+.dk-giveaways-page{width:min(1180px,90vw);margin:auto;padding:100px 0 120px}.dk-giveaway-group{padding-bottom:100px}.dk-giveaway-heading{display:flex;flex-wrap:wrap;align-items:end;gap:18px 28px;margin-bottom:34px}.dk-giveaway-heading .dk-kicker{width:100%;margin-bottom:0}.dk-giveaway-heading h2{margin:0;color:#fff;font-size:clamp(38px,5vw,68px);line-height:.95;text-transform:uppercase}.dk-giveaway-heading>span{margin-left:auto;padding:7px 11px;border:1px solid #1b92df;color:#68c6ff;font-size:8px;letter-spacing:.15em;text-transform:uppercase}
+.dk-giveaway-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.dk-giveaway-card{position:relative;overflow:hidden;border:1px solid rgba(125,192,255,.19);background:#06101b}.dk-giveaway-card.is-featured{grid-column:1/-1}.dk-giveaway-card>a{display:grid;grid-template-columns:.9fr 1.1fr;min-height:330px}.dk-giveaway-card.is-featured>a{min-height:440px}.dk-giveaway-image{position:relative;min-height:260px;overflow:hidden;background:radial-gradient(circle,#0e70c2,transparent 52%),#07101a}.dk-giveaway-image img{width:100%;height:100%;object-fit:cover;transition:.5s}.dk-giveaway-card:hover .dk-giveaway-image img{transform:scale(1.05)}.dk-giveaway-status{display:inline-flex;align-items:center;padding:7px 10px;border:1px solid #32adff;background:rgba(2,10,18,.82);color:#8fd6ff;font-size:8px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.dk-giveaway-image .dk-giveaway-status{position:absolute;top:18px;left:18px}.status-closed .dk-giveaway-status{border-color:#647180;color:#a2afbc}.status-upcoming .dk-giveaway-status{border-color:#c58d31;color:#ffd58d}.dk-giveaway-card-content{display:flex;flex-direction:column;justify-content:center;padding:34px}.dk-giveaway-prize{margin:0 0 16px;color:#43b7ff;font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}.dk-giveaway-card h3{margin:0;color:#fff;font-size:clamp(25px,3vw,43px);line-height:1;text-transform:uppercase}.dk-giveaway-link{margin-top:28px;color:#79cbff;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}.dk-countdown{display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 9px;margin-top:25px;color:#fff}.dk-countdown strong{color:#3eb4ff;font-size:24px}.dk-countdown small{color:#7f91a2;font-size:8px;letter-spacing:.12em;text-transform:uppercase}.dk-countdown span{color:#7f91a2;font-size:10px;text-transform:uppercase}.dk-past-giveaways{opacity:.75}.dk-giveaway-empty{padding:52px;border:1px dashed rgba(83,187,255,.32);background:rgba(5,18,31,.5);text-align:center}.dk-giveaway-empty h3{margin:0 0 12px;color:#fff;font-size:24px;text-transform:uppercase}.dk-giveaway-empty p,.dk-giveaway-disclaimer{color:#8393a3;line-height:1.7}.dk-giveaway-disclaimer{padding-top:30px;border-top:1px solid rgba(125,192,255,.15);font-size:11px}
+.dk-giveaway-single-hero{position:relative;min-height:760px;display:flex;align-items:flex-end;padding:160px max(6vw,calc((100vw - 1180px)/2)) 85px;background:radial-gradient(circle at 65% 35%,#0b5599,transparent 38%),#030914;background-size:cover;background-position:center;overflow:hidden}.dk-giveaway-single-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#02050a 0,rgba(2,5,10,.2) 75%)}.dk-giveaway-single-copy{position:relative;z-index:1;max-width:970px}.dk-giveaway-single-copy h1{margin:20px 0 0;color:#fff;font-size:clamp(50px,6.7vw,94px);line-height:.93;letter-spacing:-.05em;text-transform:uppercase}.dk-single-prize{margin:24px 0 0;color:#65c6ff;font-size:17px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}.dk-giveaway-single-layout{display:grid;grid-template-columns:minmax(0,760px) 320px;justify-content:center;gap:70px;width:min(1180px,90vw);margin:auto;padding:95px 0}.dk-giveaway-description{color:#c4ccd5;font-family:Georgia,serif;font-size:18px;line-height:1.9}.dk-giveaway-facts{align-self:start;padding:26px;border:1px solid rgba(125,192,255,.18);background:#06101b}.dk-giveaway-facts h2{margin:0 0 18px;color:#fff;font-size:18px;text-transform:uppercase}.dk-giveaway-facts>div{padding:16px 0;border-top:1px solid rgba(125,192,255,.14)}.dk-giveaway-facts small,.dk-giveaway-facts strong{display:block}.dk-giveaway-facts small{margin-bottom:7px;color:#43b7ff;font-size:8px;letter-spacing:.14em;text-transform:uppercase}.dk-giveaway-facts strong{color:#dce7f0;font-size:13px;line-height:1.45}.dk-giveaway-entry{width:min(860px,90vw);margin:0 auto 85px;padding:55px;background:linear-gradient(135deg,#075991,#0b86d7 60%,#105486);color:#fff;box-shadow:0 0 65px rgba(20,152,255,.2)}.dk-giveaway-entry .dk-kicker{color:#d8efff}.dk-giveaway-entry h2{margin:0 0 22px;font-size:clamp(34px,5vw,60px);line-height:1;text-transform:uppercase}.dk-giveaway-entry p{font-size:16px;line-height:1.7}.dk-giveaway-entry .wpforms-container label{color:#fff!important}.dk-giveaway-entry .wpforms-container input,.dk-giveaway-entry .wpforms-container textarea,.dk-giveaway-entry .wpforms-container select{background:#fff!important;color:#05080c!important}.dk-giveaway-entry .wpforms-submit{background:#fff!important;color:#075991!important;border:0!important}.dk-giveaway-back{width:min(1180px,90vw);margin:0 auto 110px;border-top:1px solid rgba(125,192,255,.18);padding-top:28px}.dk-giveaway-back a{color:#65c6ff;font-size:9px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.dk-featured-label{display:inline-block;margin:0 9px 9px 0;padding:5px 8px;border:1px solid rgba(56,170,243,.45);color:#60c4ff;font-size:7px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+.dk-auto-red{color:#ff3838!important;font-weight:850!important;text-shadow:0 0 3px rgba(255,35,35,.62)!important;-webkit-text-fill-color:#ff3838!important}
+.dk-native-entry input[type="tel"]{width:100%;box-sizing:border-box;border:2px solid transparent;padding:15px;background:#fff;color:#05080c;font:16px Arial,sans-serif}
+.dk-native-entry{margin-top:30px}.dk-entry-person{display:grid;grid-template-columns:1fr 1fr;gap:16px}.dk-native-entry label{display:flex;flex-direction:column;gap:8px;color:#fff;font-size:9px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.dk-native-entry input[type="text"],.dk-native-entry input[type="email"],.dk-native-entry textarea{width:100%;box-sizing:border-box;border:2px solid transparent;padding:15px;background:#fff;color:#05080c;font:16px Arial,sans-serif}.dk-native-entry textarea{min-height:105px;resize:vertical}.dk-native-entry input:focus,.dk-native-entry textarea:focus{outline:0;border-color:#031d32;box-shadow:0 0 0 3px rgba(255,255,255,.28)}.dk-native-entry h3{margin:34px 0 14px;color:#fff;font-size:19px;text-transform:uppercase}.dk-entry-actions{display:grid;gap:10px}.dk-entry-action{position:relative;padding:15px 16px;border:1px solid rgba(255,255,255,.35);background:rgba(2,21,37,.25)}.dk-entry-action>label:first-child{display:grid;grid-template-columns:22px 1fr;align-items:center}.dk-entry-action>label:first-child input{width:18px;height:18px;accent-color:#031d32}.dk-entry-action span{display:flex;justify-content:space-between;gap:15px;align-items:center}.dk-entry-action strong{font-size:12px;letter-spacing:0;text-transform:none}.dk-entry-action small{color:#d8efff;white-space:nowrap}.dk-entry-action>a,.dk-entry-action>button{display:inline-block;margin:12px 0 0 30px;border:0;background:transparent;color:#fff;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}.dk-entry-answer{margin:15px 0 0 30px}.dk-entry-consent{display:grid!important;grid-template-columns:20px 1fr;align-items:start;margin:22px 0;font-size:10px!important;line-height:1.55;letter-spacing:.04em!important;text-transform:none!important}.dk-entry-consent input{width:18px;height:18px;accent-color:#031d32}.dk-native-entry .dk-button{border:1px solid #fff;background:#fff;color:#075991;cursor:pointer}.dk-entry-privacy{font-size:11px!important;opacity:.82}.dk-entry-honey{position:absolute!important;left:-9999px!important}.dk-entry-notice{margin:20px 0;padding:16px;border:1px solid #fff;background:rgba(4,21,36,.25)}.dk-entry-notice.success{background:#063d2d}
+
+.dk-site-content strong,.dk-site-content b,main strong,main b{color:inherit!important;-webkit-text-fill-color:currentColor!important;text-shadow:0 0 1px #38b4ff,0 0 5px #168fff,0 0 11px rgba(0,145,255,.82);animation:dkNeonOutline 3.2s ease-in-out infinite alternate}@keyframes dkNeonOutline{0%,30%{text-shadow:0 0 1px #35b5ff,0 0 4px #168fff,0 0 9px rgba(0,126,255,.58)}70%{text-shadow:0 0 2px #5bc6ff,0 0 8px #25a8ff,0 0 17px rgba(0,155,255,.94)}100%{text-shadow:0 0 1px #39b6ff,0 0 6px #148cff,0 0 14px rgba(0,143,255,.78)}}
+.dk-site-content strong,.dk-site-content b,main strong,main b{color:inherit!important;-webkit-text-fill-color:currentColor!important;text-shadow:0 0 1px #38b4ff,0 0 5px #168fff,0 0 11px rgba(0,145,255,.82);animation:dkNeonOutline 3.2s ease-in-out infinite alternate}@keyframes dkNeonOutline{0%,30%{text-shadow:0 0 1px #35b5ff,0 0 4px #168fff,0 0 9px rgba(0,126,255,.58)}70%{text-shadow:0 0 2px #5bc6ff,0 0 8px #25a8ff,0 0 17px rgba(0,155,255,.94)}100%{text-shadow:0 0 1px #39b6ff,0 0 6px #148cff,0 0 14px rgba(0,143,255,.78)}}@media(prefers-reduced-motion:reduce){.dk-site-content strong,.dk-site-content b,main strong,main b{animation:none}}
+
+/* Article discovery */
+.dk-related{width:min(1180px,92vw);margin:0 auto;padding:0 0 90px}
+.dk-related>h2{margin:8px 0 28px;color:#fff;font-size:clamp(34px,4.5vw,60px);line-height:1;text-transform:uppercase}
+.dk-related-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.dk-related-card{border:1px solid rgba(125,192,255,.18);background:#06101b}
+.dk-related-card a{display:block;height:100%;padding-bottom:24px}
+.dk-related-image{height:190px;margin-bottom:20px;background:radial-gradient(circle,#0e70c2,transparent 52%),#07101a;overflow:hidden}
+.dk-related-image img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.dk-related-card:hover img{transform:scale(1.05)}
+.dk-related-card small,.dk-related-card h3,.dk-related-card span{display:block;margin-inline:22px}
+.dk-related-card small{color:#38aaf3;font-size:8px;letter-spacing:.15em;text-transform:uppercase}
+.dk-related-card h3{margin-top:10px;margin-bottom:22px;color:#fff;font-size:17px;line-height:1.2;text-transform:uppercase}
+.dk-related-card span{color:#7fcaff;font-size:8px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.dk-story-navigation{display:grid;grid-template-columns:1fr 1fr;gap:1px;width:min(1180px,92vw);margin:0 auto 110px;background:rgba(125,192,255,.18);border:1px solid rgba(125,192,255,.18)}
+.dk-story-navigation>div{background:#040a12}
+.dk-story-navigation>div:empty{display:none}
+.dk-story-navigation a{display:block;min-height:130px;padding:30px;transition:.25s}
+.dk-story-navigation a:hover{background:#075991}
+.dk-story-navigation div:last-child{text-align:right}
+.dk-story-navigation small{display:block;margin-bottom:10px;color:#55baff;font-size:8px;letter-spacing:.15em;text-transform:uppercase}
+.dk-story-navigation strong{display:block;color:#fff;font-size:16px;line-height:1.25;text-transform:uppercase}
+
+/* The return control stays out of the way until the visitor has scrolled. */
+.dk-back-to-future{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(10px)}
+.dk-back-to-future.is-visible{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.dk-back-to-future.is-visible:hover{transform:translateY(-4px)}
+
+/* Remove obsolete Divi and intrusive legacy mobile share output */
+.dk-core-page [class*="et_pb_"],.et_social_mobile{display:none!important}
+
+@media(max-width:1100px){
+  .dk-nav.is-open{position:fixed;display:block;top:68px;left:0;right:0;width:auto;padding:28px 24px;background:#075991;border:0;border-block:1px solid #63c6ff;box-shadow:0 24px 50px rgba(0,0,0,.55)}
+  .dk-nav.is-open .dk-nav-menu{display:grid;grid-template-columns:1fr 1fr;gap:0}
+  .dk-nav.is-open .dk-nav-menu a{display:block;padding:17px 12px;border-bottom:1px solid rgba(255,255,255,.16);color:#fff;font-size:11px}
+  .dk-nav.is-open .dk-nav-menu a::after{display:none}
+  .dk-value-grid{grid-template-columns:repeat(2,1fr)}
+  .dk-contact-panel{grid-template-columns:1fr}
+  .dk-home-page-hero{grid-template-columns:1fr;gap:55px;padding-top:145px;text-align:center}
+  .dk-home-page-copy h1,.dk-home-page-copy>p:last-of-type{margin-inline:auto}
+  .dk-home-actions{justify-content:center}
+  .dk-home-orbit{width:min(68vw,480px)}
+  .dk-client-logo-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .dk-giveaway-card>a{grid-template-columns:1fr}.dk-giveaway-card.is-featured>a{min-height:0}.dk-giveaway-single-layout{grid-template-columns:1fr;gap:40px}
+}
+@media(max-width:700px){
+  html{scroll-padding-top:70px}
+  body{overflow-x:hidden}
+  .dk-entry-person{grid-template-columns:1fr}.dk-entry-action span{display:block}.dk-entry-action small{display:block;margin-top:5px}.dk-entry-answer{margin-left:0}
+
+  /* WordPress shows its toolbar only to logged-in administrators. Keep the
+     website correctly positioned beneath it without changing the public view. */
+  body.admin-bar .dk-header{top:46px}
+
+  .dk-header{height:70px;padding:0 22px}
+  .dk-brand img{width:auto!important;max-width:none;height:54px!important;object-fit:contain}
+  .dk-menu-toggle{width:44px;height:44px}
+
+  /* Compact, dark mobile navigation; no oversized solid-blue screen. */
+  .dk-nav.is-open{
+    top:70px;
+    left:14px;
+    right:14px;
+    max-height:calc(100dvh - 92px);
+    overflow-y:auto;
+    padding:10px 18px;
+    background:rgba(3,16,31,.985);
+    border:1px solid rgba(83,187,255,.52);
+    box-shadow:0 20px 55px rgba(0,0,0,.72);
+  }
+  body.admin-bar .dk-nav.is-open{top:116px;max-height:calc(100dvh - 138px)}
+  .dk-nav.is-open .dk-nav-menu{grid-template-columns:1fr}
+  .dk-nav.is-open .dk-nav-menu a{
+    padding:14px 4px;
+    border-bottom:1px solid rgba(105,195,255,.14);
+    font-size:10px;
+    letter-spacing:.18em;
+  }
+  .dk-nav.is-open .dk-nav-menu li:last-child a{border-bottom:0}
+
+  /* Prevent the fixed header from cropping the top of core page heroes. */
+  .dk-page-hero{
+    min-height:clamp(520px,76svh,700px);
+    padding:118px 28px 68px!important;
+    box-sizing:border-box;
+  }
+  body.admin-bar .dk-page-hero{padding-top:164px!important}
+  .dk-page-copy{width:100%;max-width:100%;margin:0!important}
+  .dk-page-copy h1{
+    max-width:100%;
+    margin:0;
+    font-size:clamp(45px,14vw,68px)!important;
+    line-height:.9!important;
+    overflow-wrap:anywhere;
+  }
+  .dk-page-copy h1 em{display:block}
+  .dk-page-copy>p:last-child{max-width:31rem;font-size:16px;line-height:1.65}
+
+  .dk-about-copy,.dk-contact-intro{grid-template-columns:1fr}
+  .dk-about-copy h2{grid-column:auto}
+  .dk-core-page{width:min(100% - 44px,1180px);padding:64px 0 90px}
+  .dk-about-lead{
+    margin:0 0 56px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:clamp(28px,9.2vw,40px);
+    line-height:1.24;
+  }
+  .dk-about-copy{gap:24px}
+  .dk-about-copy h2{
+    margin:4px 0 10px;
+    font-size:clamp(42px,13vw,60px);
+    line-height:.96;
+    overflow-wrap:normal;
+  }
+  .dk-about-copy p{margin:0;font-size:16px;line-height:1.8}
+  .dk-value-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
+  .dk-value-card{min-width:82vw;scroll-snap-align:center}
+
+  .dk-contact-page{width:min(100% - 36px,1180px);margin:58px auto 88px}
+  .dk-contact-intro{gap:18px;margin-bottom:34px}
+  .dk-contact-intro h2{font-size:clamp(42px,13vw,60px)}
+  .dk-contact-intro p{margin:0;font-size:15px;line-height:1.65}
+  .dk-contact-panel{gap:34px;padding:34px 22px 30px}
+  .dk-contact-details h3{font-size:25px;line-height:1.05}
+  .dk-contact-details a{overflow-wrap:anywhere}
+  .dk-project-form{grid-template-columns:1fr}.dk-project-form .wide,.dk-project-form button{grid-column:auto}
+  .dk-project-form{gap:20px}
+  .dk-project-form input,.dk-project-form select,.dk-project-form textarea{
+    min-height:54px;
+    padding:14px 15px;
+    font-size:16px;
+  }
+  .dk-project-form textarea{min-height:170px}
+  .dk-project-form button{width:100%;justify-self:stretch;padding:17px 16px;text-align:center}
+
+  /* Small circular control avoids obscuring forms and footer links. */
+  .dk-back-to-future{
+    right:14px;
+    bottom:18px;
+    width:52px;
+    height:52px;
+    justify-content:center;
+    padding:0;
+    border-radius:50%;
+  }
+  .dk-back-to-future strong{display:none}
+  .dk-back-to-future span{font-size:18px;line-height:1}
+
+  .dk-footer{
+    min-height:0!important;
+    padding:68px 22px 38px!important;
+  }
+  .dk-footer>a:first-child img{width:auto!important;height:86px!important;object-fit:contain}
+  .dk-footer>p{margin:26px auto 34px!important;font-size:13px;line-height:1.5;text-align:center}
+  .dk-footer-nav{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px!important;width:100%;max-width:330px;margin:0 auto 36px!important;text-align:center}
+  .dk-footer-nav a{font-size:9px!important;line-height:1.45}
+  .dk-footer small{display:block;padding-top:24px!important;font-size:10px!important;text-align:center}
+  .dk-home-page-hero{min-height:0;gap:42px;padding:126px 24px 72px}
+  body.admin-bar .dk-home-page-hero{padding-top:172px}
+  .dk-home-page-copy h1{font-size:clamp(42px,12.5vw,58px);line-height:.96}
+  .dk-home-page-copy>p:last-of-type{margin-top:24px;font-size:15px;line-height:1.65}
+  .dk-home-actions{display:grid;justify-items:center;gap:20px;margin-top:28px}
+  .dk-home-orbit{width:min(82vw,390px)}
+  .dk-landing{min-height:100svh}
+  .dk-client-logo-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;border-left:0}
+  .dk-client-logo{min-width:42vw;min-height:125px;scroll-snap-align:start;border-left:1px solid rgba(125,192,255,.16)}
+  .dk-client-logo img{max-width:118px;height:62px}
+  .dk-giveaways-hero{min-height:680px;padding:145px 24px 70px}.dk-giveaway-rings{right:-48vw;top:120px;width:120vw;opacity:.45}.dk-giveaways-hero h1{font-size:clamp(47px,14vw,66px)}.dk-giveaways-page{width:calc(100% - 36px);padding:70px 0 90px}.dk-giveaway-group{padding-bottom:75px}.dk-giveaway-grid{grid-template-columns:1fr}.dk-giveaway-card.is-featured{grid-column:auto}.dk-giveaway-card>a{display:block}.dk-giveaway-image{height:240px}.dk-giveaway-card-content{padding:27px 23px}.dk-giveaway-card h3{font-size:28px}.dk-giveaway-heading>span{margin-left:0}.dk-giveaway-single-hero{min-height:650px;padding:150px 24px 65px}.dk-giveaway-single-copy h1{font-size:43px}.dk-giveaway-single-layout{width:calc(100% - 42px);padding:65px 0}.dk-giveaway-description{font-size:17px}.dk-giveaway-entry{width:calc(100% - 36px);padding:35px 22px}.dk-giveaway-back{width:calc(100% - 42px);margin-bottom:75px}
+  .dk-related{padding-bottom:60px}
+  .dk-related-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory}
+  .dk-related-card{min-width:82vw;scroll-snap-align:center}
+  .dk-story-navigation{grid-template-columns:1fr;margin-bottom:75px}
+  .dk-story-navigation div:last-child{text-align:left}
+  .dk-story-navigation a{min-height:0;padding:24px}
+}
+
+@media(max-width:380px){
+  .dk-page-hero{padding-inline:22px!important}
+  .dk-page-copy h1{font-size:42px!important}
+  .dk-about-copy h2{font-size:39px}
+  .dk-contact-panel{padding-inline:18px}
+}
+
+/* ================================================================
+   DK Expressions V4.5 Enterprise Conversion Layer — v1.12.0
+   ================================================================ */
+.dk-enterprise-hero{min-height:860px;background:radial-gradient(circle at 78% 42%,rgba(92,41,255,.28),transparent 28%),radial-gradient(circle at 18% 20%,rgba(0,188,255,.15),transparent 34%),linear-gradient(145deg,#02050a 10%,#071527 62%,#050713)}
+.dk-enterprise-grid{position:absolute;inset:0;z-index:-1;opacity:.12;background-image:linear-gradient(rgba(91,190,255,.25) 1px,transparent 1px),linear-gradient(90deg,rgba(91,190,255,.25) 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 70%,transparent)}
+.dk-hero-proof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;max-width:720px;margin:48px 0 0;padding:0;border:1px solid rgba(113,193,255,.2);list-style:none;background:rgba(113,193,255,.18)}
+.dk-hero-proof li{padding:18px;background:rgba(3,11,20,.86)}.dk-hero-proof strong,.dk-hero-proof span{display:block}.dk-hero-proof strong{color:#fff;font-size:18px}.dk-hero-proof span{margin-top:4px;color:#7f96aa;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.dk-experience-pathways{padding-top:120px}.dk-pathway-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.dk-pathway-card{position:relative;min-height:480px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding:44px;border:1px solid rgba(125,192,255,.22);isolation:isolate;transition:transform .35s,border-color .35s,box-shadow .35s}.dk-pathway-card:before{content:"";position:absolute;inset:0;z-index:-1;transition:transform .6s}.dk-pathway-media:before{background:radial-gradient(circle at 70% 20%,rgba(0,194,255,.35),transparent 35%),linear-gradient(145deg,#071727,#03101b)}.dk-pathway-agency:before{background:radial-gradient(circle at 72% 22%,rgba(165,65,255,.38),transparent 36%),linear-gradient(145deg,#130927,#070814)}.dk-pathway-card:hover{transform:translateY(-7px);border-color:#62c8ff;box-shadow:0 25px 80px rgba(20,113,213,.22)}.dk-pathway-card:hover:before{transform:scale(1.05)}.dk-pathway-index{position:absolute;top:30px;left:34px;color:#5fc7ff;font:700 10px/1 monospace;letter-spacing:.16em}.dk-pathway-card h3{max-width:560px;margin:0;color:#fff;font-size:clamp(36px,4vw,64px);line-height:.98;text-transform:uppercase}.dk-pathway-card p{max-width:570px;margin:24px 0;color:#a9bac9;font-size:15px;line-height:1.7}.dk-pathway-card strong{color:#fff;font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.dk-authority-strip{overflow:hidden;padding:28px 0;border-block:1px solid rgba(125,192,255,.16);background:#040b13}.dk-authority-strip>p{margin:0 0 20px;text-align:center;color:#637b91;font-size:9px;letter-spacing:.2em;text-transform:uppercase}.dk-authority-marquee{display:flex;width:max-content;gap:48px;animation:dkAuthority 28s linear infinite}.dk-authority-marquee span{color:#e8f6ff;font-size:14px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap}.dk-authority-marquee span:after{content:"✦";margin-left:48px;color:#3eb9ff}@keyframes dkAuthority{to{transform:translateX(-50%)}}
+.dk-eos-bridge{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:8vw;padding-block:140px;background:radial-gradient(circle at 80% 50%,rgba(145,45,255,.2),transparent 30%)}.dk-eos-copy h2{margin:18px 0 28px;color:#fff;font-size:clamp(46px,6vw,82px);line-height:.92;text-transform:uppercase}.dk-eos-copy h2 em{color:#7d66ff;font-style:normal}.dk-eos-copy>p{max-width:650px;color:#aebdcb;line-height:1.75}.dk-eos-console{position:relative;display:grid;gap:10px;padding:28px;border:1px solid rgba(104,164,255,.32);background:linear-gradient(145deg,rgba(10,28,49,.95),rgba(8,9,24,.95));box-shadow:0 0 75px rgba(98,56,255,.2)}.dk-eos-console>span{margin-bottom:10px;color:#58c4ff;font:800 10px/1 monospace;letter-spacing:.16em}.dk-eos-console>div{display:flex;justify-content:space-between;padding:18px;border:1px solid rgba(120,177,255,.15);background:rgba(255,255,255,.025)}.dk-eos-console b{color:#9eb0c2;font-size:12px}.dk-eos-console strong{color:#fff;font-size:12px}.dk-eos-console small{margin-top:12px;color:#6d668d;font-size:9px;letter-spacing:.16em}.dk-conversion-final .dk-home-actions{justify-content:center}.dk-conversion-final .dk-text-link{align-self:center}
+@media (prefers-reduced-motion:reduce){.dk-authority-marquee{animation:none}.dk-pathway-card,.dk-pathway-card:before{transition:none}}
+@media(max-width:900px){.dk-pathway-grid,.dk-eos-bridge{grid-template-columns:1fr}.dk-pathway-card{min-height:390px}.dk-eos-bridge{gap:52px}.dk-hero-proof{grid-template-columns:1fr}}
+@media(max-width:620px){.dk-enterprise-hero{min-height:auto;padding-top:130px}.dk-pathway-card{min-height:420px;padding:30px 24px}.dk-pathway-card h3{font-size:40px}.dk-authority-marquee{gap:30px}.dk-authority-marquee span:after{margin-left:30px}.dk-eos-bridge{padding-block:90px}.dk-eos-console{padding:18px}.dk-eos-console>div{padding:15px}.dk-hero-proof li{padding:14px}}
+
+/* ================================================================
+   Home metrics consistency hotfix — v1.12.1
+   Scoped only to the Enterprise Home numbers section.
+   ================================================================ */
+.dk-home-metrics strong,
+.dk-home-metrics strong *{
+  display:inline!important;
+  color:#43aaff!important;
+  -webkit-text-fill-color:#43aaff!important;
+  font-family:inherit!important;
+  font-size:clamp(26px,2.5vw,36px)!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+  text-shadow:0 0 2px #38b4ff,0 0 8px rgba(22,143,255,.8)!important;
+  animation:none!important;
+}
+.dk-home-metrics .dk-auto-red{
+  color:inherit!important;
+  -webkit-text-fill-color:inherit!important;
+  font-size:inherit!important;
+  font-weight:inherit!important;
+  text-shadow:inherit!important;
+}
+@media(max-width:700px){
+  .dk-home-metrics strong,
+  .dk-home-metrics strong *{font-size:30px!important}
+}
+
+
+/* ================================================================
+   DK Expressions V4.5 Enterprise — Homepage KPI typography v1.13.0
+   Approved rule: semantic numbers remain red and bold; bold text
+   retains its authored colour and receives the running blue outline.
+   Homepage only. No global semantic-highlighting rules are changed.
+   ================================================================ */
+body.home .dk-hero-proof strong,
+body.home .dk-home-metrics strong,
+body.home .dk-home-metrics strong * {
+  display:block!important;
+  color:#ff3838!important;
+  -webkit-text-fill-color:#ff3838!important;
+  font-family:inherit!important;
+  font-size:clamp(48px,5vw,68px)!important;
+  font-weight:850!important;
+  line-height:.94!important;
+  letter-spacing:-.045em!important;
+  text-align:center!important;
+  text-shadow:0 0 1px #35b5ff,0 0 5px #168fff,0 0 12px rgba(0,145,255,.84)!important;
+  animation:dkNeonOutline 3.2s ease-in-out infinite alternate!important;
+}
+body.home .dk-hero-proof strong {
+  font-size:clamp(42px,4.4vw,62px)!important;
+  white-space:normal;
+}
+body.home .dk-home-metrics .dk-auto-red,
+body.home .dk-hero-proof .dk-auto-red {
+  color:#ff3838!important;
+  -webkit-text-fill-color:#ff3838!important;
+  font-size:inherit!important;
+  font-weight:inherit!important;
+  line-height:inherit!important;
+  text-shadow:inherit!important;
+  animation:inherit!important;
+}
+body.home .dk-home-metrics>div,
+body.home .dk-hero-proof li {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  min-height:175px;
+  text-align:center;
+}
+body.home .dk-home-metrics span,
+body.home .dk-hero-proof li>span {
+  margin-top:16px;
+}
+@media(max-width:700px){
+  body.home .dk-hero-proof strong,
+  body.home .dk-home-metrics strong,
+  body.home .dk-home-metrics strong * {
+    font-size:48px!important;
+  }
+  body.home .dk-hero-proof li,
+  body.home .dk-home-metrics>div {
+    min-height:164px;
+  }
+}
+@media(max-width:380px){
+  body.home .dk-hero-proof strong,
+  body.home .dk-home-metrics strong,
+  body.home .dk-home-metrics strong * {
+    font-size:43px!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  body.home .dk-hero-proof strong,
+  body.home .dk-home-metrics strong,
+  body.home .dk-home-metrics strong * {animation:none!important}
+}
+
+/* ================================================================
+   DK Expressions V4.5 Enterprise — Readability & Type Standards
+   Version 1.14.0
+   These rules intentionally target the shared DK design classes so
+   future sections using the same classes inherit the same standards.
+   ================================================================ */
+
+/* 1. Eyebrows / kickers: larger, consistently electric blue. */
+.dk-kicker,
+.dk-eyebrow,
+.dk-taxonomy,
+.dk-pathway-index,
+.dk-giveaway-prize,
+.dk-giveaway-status,
+.dk-giveaway-facts small,
+.dk-authority-strip > p {
+  color:#43b7ff;
+  -webkit-text-fill-color:#43b7ff;
+  font-size:clamp(12px,1.05vw,15px);
+  font-weight:800;
+  line-height:1.35;
+  letter-spacing:.20em;
+}
+
+/* 2. Shared introductions and supporting copy: high contrast and larger. */
+.dk-section-head > p,
+.dk-home-page-copy > p:last-of-type,
+.dk-giveaways-hero-copy > p:last-of-type,
+.dk-page-copy > p:not(.dk-kicker),
+.dk-contact-intro p,
+.dk-about-copy,
+.dk-about-copy p,
+.dk-pathway-card p,
+.dk-eos-copy > p,
+.dk-contact > p,
+.dk-sidebar-card p,
+.dk-giveaway-empty p,
+.dk-giveaway-disclaimer {
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(17px,1.35vw,20px);
+  line-height:1.75;
+}
+
+.dk-section-head > p {
+  max-width:500px;
+  font-size:clamp(18px,1.45vw,21px);
+}
+
+.dk-home-page-copy > p:last-of-type,
+.dk-giveaways-hero-copy > p:last-of-type {
+  font-size:clamp(19px,1.7vw,23px);
+  line-height:1.7;
+}
+
+/* 3. Service-card descriptions: larger, white and easier to scan. */
+.dk-card p,
+.dk-value-card p {
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(16px,1.2vw,18px);
+  line-height:1.72;
+}
+
+/* 4. Page, article and giveaway body copy. */
+.dk-content,
+.dk-article-body,
+.dk-giveaway-description {
+  color:#f4f8fc;
+  -webkit-text-fill-color:#f4f8fc;
+  font-size:clamp(19px,1.45vw,22px);
+  line-height:1.9;
+}
+.dk-article-body > p:first-child,
+.dk-about-lead {
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(25px,2.35vw,34px);
+  line-height:1.55;
+}
+.dk-giveaway-entry p {
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(17px,1.25vw,20px);
+}
+.dk-giveaway-facts strong {
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(15px,1.05vw,17px);
+}
+
+/* 5. Homepage authority / trust statement. */
+.dk-authority-strip {
+  padding-block:38px;
+}
+.dk-authority-strip > p {
+  max-width:950px;
+  margin:0 auto 28px;
+  padding-inline:24px;
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(14px,1.25vw,18px);
+  line-height:1.55;
+  letter-spacing:.18em;
+}
+.dk-authority-marquee span {
+  font-size:clamp(16px,1.35vw,21px);
+}
+
+/* 6. Homepage statistics: consistent size, red numeric values,
+      white non-numeric values, and larger bold white descriptions. */
+body.home .dk-home-metrics > div {
+  min-height:205px;
+  gap:0;
+  padding:30px 18px;
+}
+body.home .dk-home-metrics strong,
+body.home .dk-home-metrics strong * {
+  display:block!important;
+  font-size:clamp(50px,5.4vw,74px)!important;
+  font-weight:900!important;
+  line-height:.95!important;
+  letter-spacing:-.05em!important;
+  text-align:center!important;
+  text-shadow:0 0 1px #35b5ff,0 0 5px #168fff,0 0 13px rgba(0,145,255,.82)!important;
+  animation:dkNeonOutline 3.2s ease-in-out infinite alternate!important;
+}
+body.home .dk-home-metrics .is-numeric strong,
+body.home .dk-home-metrics .is-numeric strong * {
+  color:#ff3838!important;
+  -webkit-text-fill-color:#ff3838!important;
+}
+body.home .dk-home-metrics .is-textual strong,
+body.home .dk-home-metrics .is-textual strong * {
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body.home .dk-home-metrics span {
+  display:block;
+  margin-top:22px;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:clamp(12px,1.05vw,16px)!important;
+  font-weight:800!important;
+  line-height:1.45!important;
+  letter-spacing:.14em!important;
+  text-transform:uppercase;
+}
+
+/* Keep the introductory proof statistics legible without changing
+   the site's global semantic-colour engine. */
+body.home .dk-hero-proof span {
+  margin-top:12px;
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+  font-size:clamp(12px,1vw,15px);
+  font-weight:800;
+  line-height:1.45;
+  letter-spacing:.10em;
+}
+
+/* 7. Footer: larger, bright and consistently white. */
+.dk-footer,
+.dk-footer > p,
+.dk-footer a,
+.dk-footer-nav a,
+.dk-social-nav a,
+.dk-footer small {
+  color:#fff;
+  -webkit-text-fill-color:#fff;
+}
+.dk-footer {
+  font-size:14px;
+}
+.dk-footer > p {
+  font-size:clamp(15px,1.2vw,18px);
+  line-height:1.65;
+}
+.dk-footer-nav a,
+.dk-social-nav a {
+  font-size:clamp(12px,.95vw,14px);
+  font-weight:700;
+  line-height:1.5;
+}
+.dk-footer small {
+  font-size:clamp(12px,.9vw,14px);
+  line-height:1.5;
+}
+.dk-footer-nav .back-footer {
+  color:#53bbff;
+  -webkit-text-fill-color:#53bbff;
+}
+
+@media(max-width:700px){
+  .dk-kicker,
+  .dk-eyebrow,
+  .dk-taxonomy,
+  .dk-pathway-index,
+  .dk-giveaway-prize,
+  .dk-giveaway-status,
+  .dk-giveaway-facts small {
+    font-size:13px;
+  }
+  .dk-section-head > p,
+  .dk-home-page-copy > p:last-of-type,
+  .dk-giveaways-hero-copy > p:last-of-type,
+  .dk-page-copy > p:not(.dk-kicker),
+  .dk-contact-intro p,
+  .dk-about-copy,
+  .dk-about-copy p,
+  .dk-pathway-card p,
+  .dk-eos-copy > p,
+  .dk-contact > p {
+    font-size:18px;
+    line-height:1.72;
+  }
+  .dk-card p,
+  .dk-value-card p {
+    font-size:17px;
+  }
+  .dk-content,
+  .dk-article-body,
+  .dk-giveaway-description {
+    font-size:19px;
+    line-height:1.85;
+  }
+  .dk-authority-strip > p {
+    font-size:14px;
+    line-height:1.6;
+  }
+  body.home .dk-home-metrics > div {
+    min-height:190px;
+    padding:28px 12px;
+  }
+  body.home .dk-home-metrics strong,
+  body.home .dk-home-metrics strong * {
+    font-size:clamp(46px,13vw,62px)!important;
+  }
+  body.home .dk-home-metrics span {
+    margin-top:20px;
+    font-size:13px!important;
+  }
+  .dk-footer > p {
+    font-size:16px!important;
+  }
+  .dk-footer-nav a,
+  .dk-social-nav a {
+    font-size:12px!important;
+  }
+  .dk-footer small {
+    font-size:12px!important;
+  }
+}

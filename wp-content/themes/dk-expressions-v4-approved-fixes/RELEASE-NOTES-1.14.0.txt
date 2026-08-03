@@ -1,0 +1,18 @@
+DK EXPRESSIONS V4.5 ENTERPRISE — VERSION 1.14.0
+
+READABILITY AND TYPOGRAPHY RELEASE
+
+• Increased all shared kicker and eyebrow headings by approximately two sizes.
+• Preserved electric-blue kicker text.
+• Changed shared supporting copy from grey to high-contrast white.
+• Increased introductions and supporting paragraphs by one to two sizes.
+• Increased service-card descriptions and changed them to white.
+• Increased article, page and giveaway body copy and improved contrast.
+• Increased footer wording and links and changed them to white.
+• Preserved enlarged homepage statistic values.
+• Numeric statistics remain bold red.
+• Non-numeric statistics, including “Millions”, display in white.
+• Statistic descriptions are larger, bold, white and spaced farther below values.
+• Increased and brightened the authority statement above the client marquee.
+• Applied these standards to shared DK design classes so future sections inherit them.
+• Existing semantic highlighting and animated neon-outline behaviour remain intact.

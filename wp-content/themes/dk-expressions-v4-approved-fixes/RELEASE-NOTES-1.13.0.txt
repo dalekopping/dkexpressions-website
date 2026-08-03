@@ -1,0 +1,12 @@
+DK Expressions V4.5 Enterprise — v1.13.0
+
+Homepage KPI typography release.
+
+Changes:
+- Enlarges the three hero proof statistics and six authority statistics.
+- Uses one consistent responsive visual scale.
+- Keeps all homepage numbers, dates and numeric values red and bold.
+- Preserves the approved animated neon-blue outline on bold text.
+- Leaves site-wide semantic highlighting logic unchanged.
+- Scopes every new rule to body.home only.
+- Preserves all v1.12.0 Enterprise homepage sections and functionality.

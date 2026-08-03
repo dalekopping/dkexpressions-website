@@ -1,0 +1,28 @@
+DK Expressions V4 Approved Fixes — Version 1.12.0
+Enterprise Conversion Release
+
+WHAT CHANGED
+- Conversion-led hero with outcome-focused positioning.
+- Media vs Agency visitor pathways.
+- Authority marquee featuring selected artists, events and partners.
+- Expanded trust metrics and outcome-oriented services presentation.
+- Expressions OS client-workspace preview section.
+- Stronger final strategy-call conversion section.
+- Responsive and reduced-motion support.
+- Lightweight vanilla JavaScript only; no page-builder dependency.
+
+INSTALLATION
+1. Back up the current active child theme and database.
+2. WordPress Admin > Appearance > Themes > Add New > Upload Theme.
+3. Upload this ZIP. WordPress may ask to replace the existing theme.
+4. Activate “DK Expressions V4 — Approved Fixes”.
+5. Clear all WordPress/server/CDN caches.
+6. Ensure the page at /home/ uses template “DK Expressions Home — Enterprise”.
+7. Review desktop, tablet and mobile before publishing.
+
+ROLLBACK
+Upload and activate the supplied rollback ZIP (v1.11.1), then clear caches.
+
+NOTES
+- Existing DK Experience settings, giveaways, clients, posts and navigation are preserved.
+- The Expressions OS preview currently links to https://staging.dkexpressions.co.za/.

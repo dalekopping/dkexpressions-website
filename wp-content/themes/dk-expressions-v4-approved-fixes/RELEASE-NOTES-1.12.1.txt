@@ -1,0 +1,8 @@
+DK Expressions V4 — Approved Fixes v1.12.1
+
+HOTFIX
+- Preserves every conversion and Enterprise Home enhancement from v1.12.0.
+- Forces /home/ to use page-home.php even if the WordPress page-template setting changes.
+- Normalises all six Home metrics to one consistent number size.
+- Prevents semantic highlighting from splitting or recolouring Home metric values.
+- Changes apply to the Home metrics section only.
