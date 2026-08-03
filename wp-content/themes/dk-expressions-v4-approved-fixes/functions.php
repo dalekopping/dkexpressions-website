@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.15.0';
+	$release = '1.15.1';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -63,11 +63,6 @@ function dkx_fixes_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'dkx_fixes_assets', 20 );
 
-/**
- * Always use the approved Enterprise Home template for the WordPress page
- * whose slug is "home". This prevents a template selection or theme update
- * from silently reverting /home/ to the parent theme layout.
- */
 function dkxv4_force_enterprise_home_template( $template ) {
 	if ( is_page( 'home' ) ) {
 		$enterprise_template = get_stylesheet_directory() . '/page-home.php';
@@ -79,9 +74,6 @@ function dkxv4_force_enterprise_home_template( $template ) {
 }
 add_filter( 'template_include', 'dkxv4_force_enterprise_home_template', 99 );
 
-/**
- * Replace the parent theme's hard-coded organisation schema with editable data.
- */
 function dkxv4_replace_parent_schema() {
 	remove_action( 'wp_head', 'dkx_schema', 30 );
 }
