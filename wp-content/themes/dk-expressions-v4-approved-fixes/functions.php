@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.15.1';
+	$release = '1.15.2';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -43,10 +43,23 @@ function dkx_fixes_assets() {
 		array( 'additionalLocations' => preg_split( '/\R/', dkxv4_content( 'highlight_locations' ), -1, PREG_SPLIT_NO_EMPTY ) )
 	);
 	if ( is_page( 'home' ) ) {
+		wp_enqueue_style(
+			'dkx-home-layout-v1152',
+			get_stylesheet_directory_uri() . '/assets/home-layout-v1152.css',
+			array( 'dkx-enterprise-v115' ),
+			$release
+		);
 		wp_enqueue_script(
 			'dkx-enterprise-home',
 			get_stylesheet_directory_uri() . '/assets/enterprise-home.js',
 			array(),
+			$release,
+			true
+		);
+		wp_enqueue_script(
+			'dkx-home-layout-v1152',
+			get_stylesheet_directory_uri() . '/assets/home-layout-v1152.js',
+			array( 'dkx-enterprise-home' ),
 			$release,
 			true
 		);
