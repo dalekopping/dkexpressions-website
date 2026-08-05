@@ -1,0 +1,84 @@
+/* DK Expressions v1.16.1 — locked homepage order and top-section corrections */
+.dk-v1161-logo-intro{
+  position:relative;
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:clamp(110px,10vw,150px) 24px 60px;
+  overflow:hidden;
+  isolation:isolate;
+  background:radial-gradient(circle at 50% 52%,rgba(18,143,235,.24),transparent 34%),linear-gradient(180deg,#02070d,#04111d);
+}
+.dk-v1161-logo-intro::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-2;
+  opacity:.34;
+  background-image:radial-gradient(circle,#27a9ff 1px,transparent 1.5px);
+  background-size:92px 92px;
+}
+.dk-v1161-logo-wrap{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:min(76vw,720px);
+  aspect-ratio:1;
+}
+.dk-v1161-logo-ring{
+  position:absolute;
+  inset:1%;
+  border:3px solid rgba(50,180,255,.9);
+  border-top-color:transparent;
+  border-radius:50%;
+  box-shadow:0 0 32px rgba(35,168,255,.9),inset 0 0 30px rgba(35,168,255,.45);
+  animation:dkxV1161Spin 9s linear infinite;
+}
+.dk-v1161-logo-ring::before,
+.dk-v1161-logo-ring::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+}
+.dk-v1161-logo-ring::before{inset:7%;border:1px dashed rgba(96,203,255,.72);animation:dkxV1161Spin 15s linear infinite reverse}
+.dk-v1161-logo-ring::after{inset:-5%;border:1px solid rgba(26,138,226,.38)}
+.dk-v1161-logo-wrap img{
+  position:relative;
+  z-index:2;
+  display:block;
+  width:88%;
+  height:88%;
+  object-fit:contain;
+  filter:drop-shadow(0 0 28px rgba(35,168,255,.48));
+}
+.dk-v1161-enter{
+  position:absolute;
+  left:50%;
+  bottom:clamp(24px,4vw,46px);
+  transform:translateX(-50%);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+
+/* Millions now follows the same approved red statistic treatment. */
+.dk-v116-metric.is-text strong{
+  color:var(--dkx-red,#ff2638)!important;
+  font-weight:950!important;
+}
+
+/* Trust strip one size larger while retaining the rolling behaviour. */
+.dk-v116-trust>p{font-size:clamp(14px,.9vw,17px)!important}
+.dk-v116-marquee span{font-size:clamp(16px,1.35vw,22px)!important}
+.dk-v116-marquee{gap:34px!important}
+
+@keyframes dkxV1161Spin{to{transform:rotate(360deg)}}
+@media(max-width:760px){
+  .dk-v1161-logo-intro{min-height:92svh;padding-top:95px}
+  .dk-v1161-logo-wrap{width:min(92vw,520px)}
+  .dk-v1161-enter{font-size:10px;letter-spacing:.13em}
+}
+@media(prefers-reduced-motion:reduce){.dk-v1161-logo-ring,.dk-v1161-logo-ring::before{animation:none}}

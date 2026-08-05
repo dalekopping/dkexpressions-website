@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.16.0';
+	$release = '1.16.1';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -51,12 +51,33 @@ function dkx_fixes_assets() {
 			array( 'dkx-enterprise-base' ),
 			$release
 		);
+		wp_enqueue_style(
+			'dkx-home-order-v1161',
+			get_stylesheet_directory_uri() . '/assets/home-order-v1161.css',
+			array( 'dkx-design-system-v116' ),
+			$release
+		);
 		wp_enqueue_script(
 			'dkx-enterprise-home',
 			get_stylesheet_directory_uri() . '/assets/enterprise-home.js',
 			array(),
 			$release,
 			true
+		);
+		wp_enqueue_script(
+			'dkx-home-order-v1161',
+			get_stylesheet_directory_uri() . '/assets/home-order-v1161.js',
+			array( 'dkx-enterprise-home' ),
+			$release,
+			true
+		);
+		wp_localize_script(
+			'dkx-home-order-v1161',
+			'dkxHomeV1161',
+			array(
+				'logoUrl' => dkx_logo_url(),
+				'logoAlt' => get_bloginfo( 'name' ),
+			)
 		);
 	}
 
