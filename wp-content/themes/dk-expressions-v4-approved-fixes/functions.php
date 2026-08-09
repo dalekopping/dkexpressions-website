@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.16.2';
+	$release = '1.16.3';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
