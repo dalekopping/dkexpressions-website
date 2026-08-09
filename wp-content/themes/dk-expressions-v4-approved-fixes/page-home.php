@@ -29,6 +29,10 @@ for ( $i = 1; $i <= 3; $i++ ) {
 ?>
 
 <section class="dk-v116-hero" id="top">
+	<div class="dk-v116-hero-logo" aria-label="DK Expressions">
+		<span class="dk-v116-hero-logo-ring" aria-hidden="true"></span>
+		<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" decoding="async" fetchpriority="high">
+	</div>
 	<div class="dk-v116-hero-copy">
 		<p class="dk-kicker">Premium media. Creative storytelling. Measurable impact.</p>
 		<h1>We create experiences.<br><em>We drive outcomes.</em></h1>
@@ -37,15 +41,6 @@ for ( $i = 1; $i <= 3; $i++ ) {
 			<a class="dk-button" href="<?php echo esc_url( dkxv4_content_url( 'home_page_primary_url' ) ); ?>">Book a strategy call ↗</a>
 			<a class="dk-text-link" href="#capabilities">View our services →</a>
 		</div>
-	</div>
-	<div class="dk-v116-hero-side" aria-label="Core capabilities">
-		<?php foreach ( array_slice( $services, 0, 4 ) as $service ) : ?>
-			<article class="dk-v116-mini-service">
-				<span aria-hidden="true"><?php echo esc_html( $service[3] ); ?></span>
-				<h3><?php echo esc_html( $service[1] ); ?></h3>
-				<p><?php echo esc_html( $service[2] ); ?></p>
-			</article>
-		<?php endforeach; ?>
 	</div>
 </section>
 
