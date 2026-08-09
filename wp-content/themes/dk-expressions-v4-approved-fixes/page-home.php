@@ -59,7 +59,7 @@ for ( $i = 1; $i <= 3; $i++ ) {
 <section class="dk-v116-trust" aria-label="Trusted brands and events">
 	<p>Trusted across global entertainment, major events and ambitious brands</p>
 	<div class="dk-v116-marquee">
-		<?php $trust = array( 'Justin Bieber','Comic Con Africa','Big Concerts','Disney On Ice','Tiësto','Ultra South Africa','MTV','Live Nation' ); foreach ( $trust as $index => $brand ) : ?>
+		<?php $trust = array( 'Justin Bieber', 'Comic Con Africa', 'Big Concerts', 'Disney On Ice', 'Tiësto', 'Ultra South Africa', 'MTV', 'Live Nation', 'Nitro Circus Live', 'John Legend', 'Kings Of Chaos', 'Showtime Management', 'Delicious International Food & Music Festival', 'Massive.Management' ); foreach ( $trust as $index => $brand ) : ?>
 			<span><?php echo esc_html( $brand ); ?></span><?php if ( $index < count( $trust ) - 1 ) : ?><i>◆</i><?php endif; ?>
 		<?php endforeach; ?>
 	</div>
