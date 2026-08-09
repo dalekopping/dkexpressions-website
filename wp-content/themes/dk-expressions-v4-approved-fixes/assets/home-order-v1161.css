@@ -91,3 +91,60 @@
   .dk-v116-hero-logo-ring,
   .dk-v116-hero-logo-ring::before{animation:none}
 }
+
+
+/* v1.16.3 immediate correction: force logo left and keep marquee on one rolling track. */
+.dk-v116-hero{
+  grid-template-areas:"logo copy"!important;
+}
+.dk-v116-hero-logo{
+  grid-area:logo!important;
+  justify-self:start!important;
+}
+.dk-v116-hero-copy{
+  grid-area:copy!important;
+}
+
+/* Support both enterprise marquee selectors used across the preview theme. */
+.dk-v116-trust,
+.dk-trust-strip,
+.dk-trusted-brands{
+  overflow:hidden!important;
+}
+.dk-v116-marquee,
+[data-dkx-marquee]{
+  display:flex!important;
+  width:max-content!important;
+  max-width:none!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  white-space:nowrap!important;
+  animation:dkxV1163Marquee 28s linear infinite!important;
+  will-change:transform;
+}
+.dk-v116-marquee > *,
+[data-dkx-marquee] > *{
+  flex:0 0 auto!important;
+}
+@keyframes dkxV1163Marquee{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+@media(max-width:760px){
+  .dk-v116-hero{
+    grid-template-areas:"logo" "copy"!important;
+  }
+  .dk-v116-marquee,
+  [data-dkx-marquee]{
+    animation-duration:22s!important;
+    overflow:visible!important;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .dk-v116-marquee,
+  [data-dkx-marquee]{
+    animation:none!important;
+    transform:none!important;
+  }
+}
