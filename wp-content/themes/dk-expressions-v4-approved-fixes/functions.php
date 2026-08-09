@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.16.7';
+	$release = '1.16.8';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -23,6 +23,15 @@ function dkx_fixes_assets() {
 		array( 'dkx-approved-fixes' ),
 		$release
 	);
+
+	if ( is_home() || is_archive() || is_page( 'insights' ) ) {
+		wp_enqueue_style(
+			'dkx-insights-v1168',
+			get_stylesheet_directory_uri() . '/assets/insights-v1168.css',
+			array( 'dkx-enterprise-base' ),
+			$release
+		);
+	}
 
 	wp_enqueue_script(
 		'dkx-mobile-fixes',
@@ -98,6 +107,12 @@ function dkxv4_force_enterprise_home_template( $template ) {
 		$enterprise_template = get_stylesheet_directory() . '/page-home.php';
 		if ( file_exists( $enterprise_template ) ) {
 			return $enterprise_template;
+		}
+	}
+	if ( is_page( 'insights' ) ) {
+		$insights_template = get_stylesheet_directory() . '/page-insights.php';
+		if ( file_exists( $insights_template ) ) {
+			return $insights_template;
 		}
 	}
 	return $template;
