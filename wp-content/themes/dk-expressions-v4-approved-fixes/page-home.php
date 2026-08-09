@@ -34,8 +34,8 @@ for ( $i = 1; $i <= 3; $i++ ) {
 		<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" decoding="async" fetchpriority="high">
 	</div>
 	<div class="dk-v116-hero-copy">
-		<p class="dk-kicker">Premium media. Creative storytelling. Measurable impact.</p>
-		<h1>We create experiences.<br><em>We drive outcomes.</em></h1>
+		<p class="dk-kicker dk-v116-hero-kicker">Premium culture, content &amp; brand storytelling</p>
+		<h1 class="dk-v116-hero-title"><span>We help<br>brands</span><em>dominate<br>attention.</em></h1>
 		<p>DK Expressions combines editorial authority, world-class visual storytelling and digital growth strategy to create experiences people remember—and results businesses can measure.</p>
 		<div class="dk-v116-actions">
 			<a class="dk-button" href="<?php echo esc_url( dkxv4_content_url( 'home_page_primary_url' ) ); ?>">Book a strategy call ↗</a>
@@ -65,23 +65,43 @@ for ( $i = 1; $i <= 3; $i++ ) {
 	</div>
 </section>
 
-<section class="dk-v116-stories" aria-labelledby="latest-stories-title">
-	<div class="dk-v116-stories-head"><p class="dk-kicker">Latest stories, reviews &amp; insights</p><h2 id="latest-stories-title" class="screen-reader-text">Latest stories</h2></div>
-	<div class="dk-v116-story-grid">
+<section class="dk-v116-stories dk-v116-sticky-stories" aria-labelledby="latest-stories-title">
+	<div class="dk-v116-stories-head">
+		<p class="dk-kicker">Featured stories, reviews &amp; insights</p>
+		<h2 id="latest-stories-title" class="screen-reader-text">Featured sticky stories</h2>
+	</div>
+	<div class="dk-v116-sticky-list">
 		<?php
-		$latest = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => min( 6, max( 1, absint( dkxv4_content( 'home_posts_count' ) ) ) ), 'no_found_rows' => true ) );
-		if ( $latest->have_posts() ) : while ( $latest->have_posts() ) : $latest->the_post();
-			$categories = get_the_category(); ?>
-			<article class="dk-v116-story">
-				<a href="<?php the_permalink(); ?>">
-					<div class="dk-v116-story-media"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'large', array( 'loading' => 'lazy', 'alt' => get_the_title() ) ); } ?></div>
-					<div class="dk-v116-story-copy">
-						<div class="dk-v116-story-meta"><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'd.m.y' ) ); ?></time><small><?php echo esc_html( $categories ? $categories[0]->name : 'Story' ); ?></small></div>
-						<h3><?php the_title(); ?></h3><span class="dk-v116-read">Read story ↗</span>
-					</div>
-				</a>
-			</article>
-		<?php endwhile; wp_reset_postdata(); endif; ?>
+		$sticky_ids = array_values( array_filter( array_map( 'absint', (array) get_option( 'sticky_posts', array() ) ) ) );
+		if ( $sticky_ids ) :
+			$sticky_posts = new WP_Query(
+				array(
+					'post_type'           => 'post',
+					'post_status'         => 'publish',
+					'post__in'            => $sticky_ids,
+					'posts_per_page'      => count( $sticky_ids ),
+					'orderby'             => 'date',
+					'order'               => 'DESC',
+					'ignore_sticky_posts' => true,
+					'no_found_rows'       => true,
+				)
+			);
+			while ( $sticky_posts->have_posts() ) :
+				$sticky_posts->the_post();
+				$categories = get_the_category();
+				?>
+				<article class="dk-v116-sticky-story">
+					<a href="<?php the_permalink(); ?>">
+						<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'd.m.y' ) ); ?></time>
+						<small><?php echo esc_html( $categories ? $categories[0]->name : 'Story' ); ?></small>
+						<h3><?php the_title(); ?></h3>
+					</a>
+				</article>
+				<?php
+			endwhile;
+			wp_reset_postdata();
+		endif;
+		?>
 	</div>
 </section>
 
