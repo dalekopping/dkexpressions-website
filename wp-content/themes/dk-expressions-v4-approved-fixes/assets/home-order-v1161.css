@@ -148,3 +148,33 @@
     transform:none!important;
   }
 }
+
+
+/* v1.16.4 — isolated single-row trust strip correction. */
+.dk-v116-trust{
+  overflow:hidden!important;
+}
+.dk-v116-trust .dk-v116-marquee,
+.dk-v116-trust [data-dkx-marquee]{
+  display:flex!important;
+  flex-direction:row!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  width:max-content!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  height:auto!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  column-gap:34px!important;
+}
+.dk-v116-trust .dk-v116-marquee > *,
+.dk-v116-trust [data-dkx-marquee] > *{
+  display:inline-flex!important;
+  flex:0 0 auto!important;
+  width:auto!important;
+  max-width:none!important;
+  white-space:nowrap!important;
+  margin:0!important;
+}
