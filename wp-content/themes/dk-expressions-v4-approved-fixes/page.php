@@ -1,70 +1,71 @@
 <?php
-/**
- * Clean core pages without legacy Divi shortcode output.
- *
- * @package DK_Expressions_V4_Fixes
- */
 get_header();
-$slug = get_post_field( 'post_name', get_queried_object_id() );
-$option_slug = 'our-work' === $slug ? 'our_work' : str_replace( '-', '_', $slug );
-$hero = array(
-	dkxv4_content( "{$option_slug}_hero_kicker" ),
-	dkxv4_content( "{$option_slug}_hero_title_1" ),
-	dkxv4_content( "{$option_slug}_hero_title_2" ),
-	dkxv4_content( "{$option_slug}_hero_text" ),
-);
-if ( ! array_filter( $hero ) ) {
-	$hero = array( 'DK Expressions', get_the_title(), 'Experience Everything.', get_bloginfo( 'description' ) );
-}
-?>
-<section class="dk-page-hero"><div class="dk-stars" aria-hidden="true"></div><div class="dk-page-ring" aria-hidden="true"></div><div class="dk-page-copy"><p class="dk-kicker"><?php echo esc_html( $hero[0] ); ?></p><h1><?php echo esc_html( $hero[1] ); ?><em><?php echo esc_html( $hero[2] ); ?></em></h1><p><?php echo esc_html( $hero[3] ); ?></p></div></section>
+$slug=get_post_field('post_name',get_queried_object_id());
+$pages=array('solutions'=>array('k'=>'What We Do','t'=>'We Don’t Just Create Content.','a'=>'We Create Impact.','i'=>'DK Expressions connects brands, experiences and audiences through powerful storytelling, strategic digital amplification and content designed to be remembered.','l'=>'Since 2013, we have worked at the intersection of media, entertainment, photography, digital marketing and live experiences. Today, that experience forms an integrated suite of solutions built for brands that want more than visibility. They want attention. Engagement. Relevance. Results.','s'=>array(array('Brand Amplification','Your brand deserves more than another post in the feed.','We develop integrated campaigns designed to put brands in front of the right audiences through compelling content, digital publishing, social distribution and strategic amplification. From a single activation to an ongoing campaign, every element is designed around one objective: make people pay attention.','Campaign strategy • Digital amplification • Sponsored content • Branded storytelling • Social distribution • Audience engagement'),array('Content & Storytelling','Every brand has a story. The difference is how you tell it.','DK Expressions transforms announcements, launches, experiences and ideas into content people actually want to consume. Our editorial heritage gives us a different perspective: we identify the story within the marketing.','Editorial content • SEO articles • Brand stories • Interviews • Press-release transformation • Website content • Social storytelling'),array('Event Domination','The event lasts a few hours. Its digital impact shouldn’t.','We capture, document and amplify events before, during and after they happen. From anticipation and announcements to photography, live content, reviews and post-event amplification, a single event becomes an entire content ecosystem.','Before • During • After • Everywhere'),array('Photography & Visual Storytelling','Our roots are behind the lens.','From international performers and packed stadiums to intimate launches and corporate environments, DK Expressions has spent more than two decades capturing moments that cannot be repeated.','Concerts • Events • Brands • Corporate • Lifestyle • Property • Portraiture • Behind-the-scenes'),array('Digital & Social Media','Great content achieves very little if nobody sees it.','We combine creative production with digital distribution to extend campaigns across websites, search and social platforms.','Social campaigns • Content calendars • Campaign creative • Paid-media support • Community engagement • Digital strategy'),array('SEO & Digital Publishing','Built to be discovered.','We combine editorial experience with search-led content architecture, structured headings, keyword strategy, internal linking, metadata and evergreen content.','SEO strategy • Digital publishing • Search-led editorial • Content architecture'),array('Competitions & Audience Activation','Turn passive audiences into participants.','We develop competition and giveaway campaigns supporting launches, events, ticket sales and brand-awareness campaigns while generating measurable audience interaction.','Giveaways • Ticket competitions • Audience activation • Campaign engagement'),array('Executive & Personal Branding','Build authority around the people behind the business.','We help executives, entrepreneurs, creatives and professionals develop authoritative digital identities through strategic content, photography, thought leadership and social positioning.','Strategy • Photography • Thought leadership • Social positioning')),'ct'=>'Need Something Different?','cx'=>'Good ideas rarely fit neatly into a package. Tell us what you’re trying to achieve. We’ll build the solution around it.','cb'=>'Start a Project','cu'=>'/contact/'),'industries'=>array('k'=>'Where We Work','t'=>'Different Industries.','a'=>'One Obsession: Attention.','i'=>'DK Expressions has spent more than a decade working across industries where experience, reputation, visibility and storytelling matter.','l'=>'Our model starts with understanding the audience and objective—not forcing a business into a predefined template.','s'=>array(array('Entertainment & Live Events','This is where DK Expressions was forged.','Concerts. Festivals. Comedy. Theatre. Exhibitions. International tours. Cultural experiences. We understand the difference between simply announcing an event and creating anticipation around it.','Event promotion • Artist features • Photography • Reviews • Social amplification • Competitions • Interviews • SEO'),array('Music','From emerging performers to global stages.','Music has been part of the DK Expressions DNA since the beginning. Our journey has crossed paths with John Legend, Carlos Santana, Bruce Springsteen, Justin Bieber, Michael Bublé, One Direction, Foo Fighters, UB40 and many more.','Live coverage • Artist storytelling • Photography • Tour announcements'),array('Film, Theatre & Performing Arts','Extend the experience beyond the venue.','From premieres and productions to reviews and interviews, we create content that communicates the emotion and spectacle of live performance and screen entertainment.','Reviews • Premieres • Production coverage • Interviews'),array('Technology & Gaming','Specifications tell. Stories explain why it matters.','We provide technology launches, product experiences, reviews, gaming coverage and digital storytelling that translates technical products into human experiences.','Launches • Reviews • Product storytelling • Gaming'),array('Lifestyle & Hospitality','Sell the feeling, not only the features.','We create photography, editorial and digital campaigns for hospitality, travel, lifestyle and experience-driven businesses.','Photography • Editorial • Experiences • Digital campaigns'),array('Property & Real Estate','Turn property into opportunity.','We combine visual storytelling, digital advertising, copywriting, social content and campaign strategy to transform properties into compelling opportunities.','Property photography • Listing content • Social campaigns • Digital advertising'),array('Corporate & B2B','Corporate communication doesn’t have to feel corporate.','We help organisations translate complex propositions into clear, engaging stories through executive positioning, events, content, photography and digital campaigns.','Executive positioning • Events • Content • Photography • Digital campaigns')),'ct'=>'Your Industry Isn’t Listed?','cx'=>'That’s not a problem. Tell us who you need to reach and what you need to achieve.','cb'=>'Let’s Build Something','cu'=>'/contact/'),'our-work'=>array('k'=>'Selected Work','t'=>'We Were There.','a'=>'Proof, Not Promises.','i'=>'Some agencies talk about attention. We’ve spent years standing where attention happens.','l'=>'From stadiums and concert stages to premieres, conventions, launches, theatre productions and brand experiences, DK Expressions has documented and amplified moments across South Africa’s entertainment and cultural landscape.','s'=>array(array('Limp Bizkit — South Africa','First-ever South African show.','Editorial announcement and digital amplification surrounding Limp Bizkit’s first South African performance and the support-act announcement featuring Ecca Vandal and Jack Parow.','Event storytelling • Editorial • SEO • Social amplification'),array('Comic Con Africa','Culture, fandom and community.','Multi-layer editorial coverage encompassing guest announcements, event information, press content, audience engagement and competition activity.','Editorial • Event coverage • Competitions • Audience engagement'),array('Tyla — A*POP World Tour','A South African global story.','The South African tour announcement transformed into search-optimised editorial and social content.','Tour announcement • SEO • Social content'),array('Riverdance 30 — The New Generation','A global production returns.','National tour announcement developed into digital editorial content supporting the Pretoria and Cape Town performances.','Editorial • SEO • National event coverage'),array('Swan Lake — Montecasino','An experience-led review.','Production review capturing the scale, performance and emotional impact of Swan Lake at Montecasino.','Review • Theatre • Experience storytelling'),array('Disney On Ice','Family experience, authentically told.','Family-focused experiential coverage combining live-event storytelling with authentic audience perspective.','Review • Family entertainment • Event storytelling'),array('From Behind the Lens','Two decades of defining moments.','Our photography journey has crossed paths with John Legend, Carlos Santana, Bruce Springsteen, Foo Fighters, Seal, Michael Bublé, Justin Bieber, One Direction, Thirty Seconds to Mars, Chris Brown, UB40, Tiësto, Skrillex, Armin van Buuren, OneRepublic, Boyz II Men and many more.','Photography • Music • Culture • Live events')),'ct'=>'Your Brand Could Be Next.','cx'=>'Let’s create work worth remembering—and build the story around it.','cb'=>'Create With DK Expressions','cu'=>'/contact/'),'legacy'=>array('k'=>'Since 2013','t'=>'Before Content Was Content,','a'=>'We Were Already Creating It.','i'=>'Experience something. Capture it. Tell the story. Share it with the world.','l'=>'DK Expressions began in 2013 with a simple idea. What started as an independent digital publishing platform grew alongside a rapidly changing media landscape. Photography became storytelling. Storytelling became publishing. Publishing became social media. Social became campaigns. Campaigns became strategy. DK Expressions evolved with it.','s'=>array(array('The Time Travellers','Freezing Time and Space with the Time Travellers™','At the centre of DK Expressions has always been photography. A photograph stops something that can never happen again. A fraction of a second becomes permanent. We travel through experiences, capture fragments of time and bring them back for other people to experience.','The team identity behind the DK Expressions journey'),array('From The Lens To The Digital World','Find the story worth telling.','Over more than a decade, DK Expressions expanded beyond photography into entertainment news, interviews, reviews, technology, culture, events and experiences. The platform changed. The principle never did.','Photography • Publishing • Editorial • Digital • Experiences'),array('Thousands Of Moments','One continuing story.','Concerts. Festivals. Premieres. Theatre. Comedy. Technology. Brands. People. Culture. Some happened in front of thousands of people. Others happened quietly behind the scenes. Every one became part of the archive.','An evolving archive of South African culture and experience'),array('2013 → Today','Built on where we came from.','The next evolution brings together everything learned across photography, publishing, entertainment, digital media, marketing and technology into a more powerful proposition.','Media • Content • Experiences • Technology • Brand amplification'),array('The Next Chapter','Legacy isn’t about looking backwards.','It’s about having enough history to know where you’re going next. DK Expressions continues to inspire, preserve and build.','The story continues')),'ct'=>'Enter The Next Chapter.','cx'=>'Explore the work, discover the stories and experience what DK Expressions is becoming.','cb'=>'Experience DK Expressions','cu'=>'/our-work/'));
+if(isset($pages[$slug])):$p=$pages[$slug];?>
+<section class="dk-commercial-hero"><div class="dk-stars" aria-hidden="true"></div><div class="dk-commercial-orbit" aria-hidden="true"></div><div class="dk-commercial-copy"><p class="dk-kicker"><?php echo esc_html($p['k']);?></p><h1><?php echo esc_html($p['t']);?><em><?php echo esc_html($p['a']);?></em></h1><p><?php echo esc_html($p['i']);?></p></div></section>
+<main class="dk-commercial-page">
+<section class="dk-commercial-lead">
+  <div><p class="dk-kicker">The DK Advantage</p><h2>Built on experience.<br><em>Designed for impact.</em></h2></div>
+  <p><?php echo esc_html($p['l']);?></p>
+</section>
 
-<?php if ( 'about' === $slug ) : ?>
-	<section class="dk-core-page">
-		<p class="dk-about-lead"><?php echo esc_html( dkxv4_content( 'about_lead' ) ); ?></p>
-		<div class="dk-about-copy">
-			<h2><?php echo esc_html( dkxv4_content( 'about_heading_1' ) ); ?><br><?php echo esc_html( dkxv4_content( 'about_heading_2' ) ); ?></h2>
-			<?php for ( $i = 1; $i <= 4; $i++ ) : ?>
-				<p><?php echo esc_html( dkxv4_content( "about_paragraph_{$i}" ) ); ?></p>
-			<?php endfor; ?>
-		</div>
-		<div class="dk-value-grid">
-			<?php for ( $i = 1; $i <= 4; $i++ ) : ?>
-				<article class="dk-value-card"><span><?php echo esc_html( dkxv4_content( "value_{$i}_number" ) ); ?></span><h3><?php echo esc_html( dkxv4_content( "value_{$i}_title" ) ); ?></h3><p><?php echo esc_html( dkxv4_content( "value_{$i}_description" ) ); ?></p></article>
-			<?php endfor; ?>
-		</div>
-	</section>
-<?php elseif ( 'contact' === $slug ) : ?>
-	<section class="dk-contact-page">
-		<div class="dk-contact-intro"><h2><?php echo esc_html( dkxv4_content( 'contact_intro_heading_1' ) ); ?><br><?php echo esc_html( dkxv4_content( 'contact_intro_heading_2' ) ); ?></h2><p><?php echo esc_html( dkxv4_content( 'contact_intro_text' ) ); ?></p></div>
-		<div class="dk-contact-panel">
-			<div class="dk-contact-details"><p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'contact_kicker' ) ); ?></p><h3><?php echo esc_html( dkxv4_content( 'contact_heading' ) ); ?></h3><p><?php echo esc_html( dkxv4_content( 'contact_services' ) ); ?></p><a href="mailto:<?php echo esc_attr( dkxv4_content( 'contact_email' ) ); ?>"><?php echo esc_html( dkxv4_content( 'contact_email' ) ); ?></a><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', dkxv4_content( 'contact_phone' ) ) ); ?>"><?php echo esc_html( dkxv4_content( 'contact_phone' ) ); ?></a><p><?php echo esc_html( dkxv4_content( 'contact_location' ) ); ?></p><p><?php echo esc_html( dkxv4_content( 'contact_success_note' ) ); ?></p></div>
-			<form class="dk-project-form" action="mailto:<?php echo esc_attr( dkxv4_content( 'contact_email' ) ); ?>" method="post" enctype="text/plain">
-				<label>Your name *<input required name="Name" autocomplete="name" placeholder="Your full name"></label>
-				<label>Company<input name="Company" autocomplete="organization" placeholder="Company or organisation"></label>
-				<label>Email address *<input required type="email" name="Email" autocomplete="email" placeholder="name@company.co.za"></label>
-				<label>Project type<select name="Project type">
-					<?php foreach ( preg_split( '/\R/', dkxv4_content( 'contact_project_types' ) ) as $project_type ) : ?>
-						<?php if ( trim( $project_type ) ) : ?><option><?php echo esc_html( trim( $project_type ) ); ?></option><?php endif; ?>
-					<?php endforeach; ?>
-				</select></label>
-				<label class="wide">Tell us about the project *<textarea required name="Project brief" rows="6" placeholder="What are you creating, when is it happening and what would success look like?"></textarea></label>
-				<button type="submit"><?php echo esc_html( dkxv4_content( 'contact_button' ) ); ?> ↗</button>
-			</form>
-		</div>
-	</section>
-<?php else : ?>
-	<?php while ( have_posts() ) : the_post(); ?>
-		<article class="dk-content">
-			<?php
-			$content = get_the_content();
-			if ( str_contains( $content, '[et_pb_' ) ) {
-				echo '<h2>The next expression is being prepared.</h2><p>This page is now using the new DK Expressions design system. Legacy Divi formatting has been removed.</p>';
-			} else {
-				the_content();
-			}
-			?>
-		</article>
-	<?php endwhile; ?>
-<?php endif; ?>
-<?php get_footer(); ?>
+<section class="dk-stat-band" aria-label="DK Expressions proof points">
+  <article><strong>2013</strong><span>DK Expressions founded</span></article>
+  <article><strong>13+</strong><span>Years building the platform</span></article>
+  <article><strong>20+</strong><span>Years behind the lens</span></article>
+  <article><strong>1000s</strong><span>Published stories & moments</span></article>
+</section>
+
+<section class="dk-commercial-sections">
+<?php foreach($p['s'] as $i=>$x):?>
+  <article class="dk-commercial-section <?php echo 0===$i%2?'is-dark':'is-blue';?>">
+    <div class="dk-section-number"><?php echo esc_html(str_pad((string)($i+1),2,'0',STR_PAD_LEFT));?></div>
+    <div class="dk-section-copy">
+      <p class="dk-kicker"><?php echo esc_html($x[1]);?></p>
+      <h2><?php echo esc_html($x[0]);?></h2>
+      <p><?php echo esc_html($x[2]);?></p>
+      <strong><?php echo esc_html($x[3]);?></strong>
+    </div>
+    <div class="dk-section-art" aria-hidden="true"><span></span><i></i><b></b></div>
+  </article>
+<?php endforeach;?>
+</section>
+
+<section class="dk-proof-split">
+  <div class="dk-proof-panel">
+    <p class="dk-kicker">Why DK Expressions</p>
+    <h2>One partner.<br><em>Multiple disciplines.</em></h2>
+    <p>Strategy, original production, editorial thinking, photography, digital distribution and audience engagement work together as one connected system.</p>
+  </div>
+  <div class="dk-proof-points">
+    <article><span>01</span><h3>Editorial credibility</h3><p>More than a decade of publishing and culture coverage informs every commercial story we create.</p></article>
+    <article><span>02</span><h3>Original production</h3><p>We create the photographs, stories and campaign assets instead of relying only on supplied marketing material.</p></article>
+    <article><span>03</span><h3>Built-in distribution</h3><p>Content can live across the DK Expressions ecosystem while also being developed for client-owned channels.</p></article>
+    <article><span>04</span><h3>Commercial flexibility</h3><p>From single activations to retainers, projects can scale around the objective, audience and available budget.</p></article>
+  </div>
+</section>
+
+<section class="dk-rate-preview">
+  <div>
+    <p class="dk-kicker">Commercial Packages</p>
+    <h2>Transparent packages.<br><em>Built to scale.</em></h2>
+    <p>This section is reserved for the DK Expressions Rate Card. It is already designed into the page architecture so package pricing, deliverables and add-ons can be introduced without changing the visual system.</p>
+  </div>
+  <div class="dk-rate-preview-card">
+    <span>RATE CARD</span>
+    <strong>Coming Next</strong>
+    <p>Event Storytelling • Monthly Brand Content • Executive Personal Branding • Bespoke Campaigns</p>
+  </div>
+</section>
+
+<section class="dk-commercial-cta"><p class="dk-kicker">DK Expressions</p><h2><?php echo esc_html($p['ct']);?></h2><p><?php echo esc_html($p['cx']);?></p><a class="dk-button" href="<?php echo esc_url(home_url($p['cu']));?>"><?php echo esc_html($p['cb']);?> ↗</a></section>
+</main>
+<?php else:
+$option_slug='our-work'===$slug?'our_work':str_replace('-','_',$slug);
+$hero=array(dkxv4_content("{$option_slug}_hero_kicker"),dkxv4_content("{$option_slug}_hero_title_1"),dkxv4_content("{$option_slug}_hero_title_2"),dkxv4_content("{$option_slug}_hero_text"));
+if(!array_filter($hero))$hero=array('DK Expressions',get_the_title(),'Experience Everything.',get_bloginfo('description'));?>
+<section class="dk-page-hero"><div class="dk-stars"></div><div class="dk-page-ring"></div><div class="dk-page-copy"><p class="dk-kicker"><?php echo esc_html($hero[0]);?></p><h1><?php echo esc_html($hero[1]);?><em><?php echo esc_html($hero[2]);?></em></h1><p><?php echo esc_html($hero[3]);?></p></div></section>
+<?php if('about'===$slug):?><section class="dk-core-page"><p class="dk-about-lead"><?php echo esc_html(dkxv4_content('about_lead'));?></p><div class="dk-about-copy"><h2><?php echo esc_html(dkxv4_content('about_heading_1'));?><br><?php echo esc_html(dkxv4_content('about_heading_2'));?></h2><?php for($i=1;$i<=4;$i++):?><p><?php echo esc_html(dkxv4_content("about_paragraph_{$i}"));?></p><?php endfor;?></div><div class="dk-value-grid"><?php for($i=1;$i<=4;$i++):?><article class="dk-value-card"><span><?php echo esc_html(dkxv4_content("value_{$i}_number"));?></span><h3><?php echo esc_html(dkxv4_content("value_{$i}_title"));?></h3><p><?php echo esc_html(dkxv4_content("value_{$i}_description"));?></p></article><?php endfor;?></div></section>
+<?php elseif('contact'===$slug):?><section class="dk-contact-page"><div class="dk-contact-intro"><h2><?php echo esc_html(dkxv4_content('contact_intro_heading_1'));?><br><?php echo esc_html(dkxv4_content('contact_intro_heading_2'));?></h2><p><?php echo esc_html(dkxv4_content('contact_intro_text'));?></p></div><div class="dk-contact-panel"><div class="dk-contact-details"><p class="dk-kicker"><?php echo esc_html(dkxv4_content('contact_kicker'));?></p><h3><?php echo esc_html(dkxv4_content('contact_heading'));?></h3><p><?php echo esc_html(dkxv4_content('contact_services'));?></p><a href="mailto:<?php echo esc_attr(dkxv4_content('contact_email'));?>"><?php echo esc_html(dkxv4_content('contact_email'));?></a><a href="tel:<?php echo esc_attr(preg_replace('/[^0-9+]/','',dkxv4_content('contact_phone')));?>"><?php echo esc_html(dkxv4_content('contact_phone'));?></a><p><?php echo esc_html(dkxv4_content('contact_location'));?></p></div><form class="dk-project-form" action="mailto:<?php echo esc_attr(dkxv4_content('contact_email'));?>" method="post" enctype="text/plain"><label>Your name *<input required name="Name"></label><label>Company<input name="Company"></label><label>Email address *<input required type="email" name="Email"></label><label>Project type<select name="Project type"><?php foreach(preg_split('/\R/',dkxv4_content('contact_project_types')) as $pt):if(trim($pt)):?><option><?php echo esc_html(trim($pt));?></option><?php endif;endforeach;?></select></label><label class="wide">Tell us about the project *<textarea required name="Project brief" rows="6"></textarea></label><button type="submit"><?php echo esc_html(dkxv4_content('contact_button'));?> ↗</button></form></div></section>
+<?php else:while(have_posts()):the_post();?><article class="dk-content"><?php $c=get_the_content();if(str_contains($c,'[et_pb_'))echo '<h2>The next expression is being prepared.</h2><p>This page is now using the new DK Expressions design system. Legacy Divi formatting has been removed.</p>';else the_content();?></article><?php endwhile;endif;endif;get_footer();

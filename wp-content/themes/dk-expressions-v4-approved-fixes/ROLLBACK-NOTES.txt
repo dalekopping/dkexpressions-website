@@ -1,0 +1,14 @@
+DK Expressions v1.15.2 rollback package
+
+Active theme code is restored to Git commit 410e799 (v1.15.2).
+
+The following later additions are retained in assets/ but are intentionally
+not enqueued, so they cannot alter the restored site:
+
+- design-system-v116.css
+- home-order-v1161.css
+- home-order-v1161.js
+
+The v1.16.0/v1.16.1 rewrites to functions.php and page-home.php are not active.
+This preserves the last stable layout while keeping the wholly new asset files
+available for selective reintroduction later.

@@ -13,16 +13,31 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.15.2';
+	$release = '1.18.0-dev';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
+	wp_enqueue_style(
+		'dkx-footer-v1176',
+		get_stylesheet_directory_uri() . '/assets/css/footer-v1176.css',
+		array( 'dkx-approved-fixes' ),
+		$release
+	);
 	wp_enqueue_style(
 		'dkx-enterprise-v115',
 		get_stylesheet_directory_uri() . '/assets/enterprise-v115.css',
 		array( 'dkx-approved-fixes' ),
 		$release
 	);
+	if ( is_home() || is_archive() || is_page( 'insights' ) ) {
+		wp_enqueue_style(
+			'dkx-insights-v1168',
+			get_stylesheet_directory_uri() . '/assets/insights-v1168.css',
+			array( 'dkx-enterprise-v115' ),
+			$release
+		);
+	}
+
 	wp_enqueue_script(
 		'dkx-mobile-fixes',
 		get_stylesheet_directory_uri() . '/assets/mobile-fixes.js',
@@ -64,7 +79,7 @@ function dkx_fixes_assets() {
 			true
 		);
 	}
-	if ( is_page( 'giveaways' ) || is_singular( 'dkx_giveaway' ) ) {
+	if ( is_page( array( 'giveaways', 'competitions' ) ) || is_singular( 'dkx_giveaway' ) ) {
 		wp_enqueue_script(
 			'dkx-giveaways',
 			get_stylesheet_directory_uri() . '/assets/giveaways.js',
@@ -81,6 +96,18 @@ function dkxv4_force_enterprise_home_template( $template ) {
 		$enterprise_template = get_stylesheet_directory() . '/page-home.php';
 		if ( file_exists( $enterprise_template ) ) {
 			return $enterprise_template;
+		}
+	}
+	if ( is_page( array( 'giveaways', 'competitions' ) ) ) {
+		$giveaway_template = get_stylesheet_directory() . '/page-giveaways.php';
+		if ( file_exists( $giveaway_template ) ) {
+			return $giveaway_template;
+		}
+	}
+	if ( is_page( 'insights' ) ) {
+		$insights_template = get_stylesheet_directory() . '/page-insights.php';
+		if ( file_exists( $insights_template ) ) {
+			return $insights_template;
 		}
 	}
 	return $template;
@@ -117,3 +144,21 @@ function dkxv4_editable_schema() {
 	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
 }
 add_action( 'wp_head', 'dkxv4_editable_schema', 30 );
+
+
+/**
+ * v1.18 recovery: commercial/content page design system.
+ * Homepage remains on the stable v1.15.2 layout assets.
+ */
+function dkxv4_commercial_experience_assets_v118() {
+	if ( is_page( array( 'solutions', 'industries', 'our-work', 'legacy', 'giveaways', 'competitions' ) ) ) {
+		$path = get_stylesheet_directory() . '/assets/css/commercial-v1173.css';
+		wp_enqueue_style(
+			'dkxv4-commercial-v1173',
+			get_stylesheet_directory_uri() . '/assets/css/commercial-v1173.css',
+			array( 'dkx-enterprise-v115' ),
+			file_exists( $path ) ? filemtime( $path ) : '1.17.3'
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', 'dkxv4_commercial_experience_assets_v118', 999 );
