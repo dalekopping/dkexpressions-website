@@ -13,17 +13,16 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.16.1';
+	$release = '1.15.2';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
 	wp_enqueue_style(
-		'dkx-enterprise-base',
+		'dkx-enterprise-v115',
 		get_stylesheet_directory_uri() . '/assets/enterprise-v115.css',
 		array( 'dkx-approved-fixes' ),
 		$release
 	);
-
 	wp_enqueue_script(
 		'dkx-mobile-fixes',
 		get_stylesheet_directory_uri() . '/assets/mobile-fixes.js',
@@ -43,18 +42,11 @@ function dkx_fixes_assets() {
 		'dkxHighlightConfig',
 		array( 'additionalLocations' => preg_split( '/\R/', dkxv4_content( 'highlight_locations' ), -1, PREG_SPLIT_NO_EMPTY ) )
 	);
-
 	if ( is_page( 'home' ) ) {
 		wp_enqueue_style(
-			'dkx-design-system-v116',
-			get_stylesheet_directory_uri() . '/assets/design-system-v116.css',
-			array( 'dkx-enterprise-base' ),
-			$release
-		);
-		wp_enqueue_style(
-			'dkx-home-order-v1161',
-			get_stylesheet_directory_uri() . '/assets/home-order-v1161.css',
-			array( 'dkx-design-system-v116' ),
+			'dkx-home-layout-v1152',
+			get_stylesheet_directory_uri() . '/assets/home-layout-v1152.css',
+			array( 'dkx-enterprise-v115' ),
 			$release
 		);
 		wp_enqueue_script(
@@ -65,22 +57,13 @@ function dkx_fixes_assets() {
 			true
 		);
 		wp_enqueue_script(
-			'dkx-home-order-v1161',
-			get_stylesheet_directory_uri() . '/assets/home-order-v1161.js',
+			'dkx-home-layout-v1152',
+			get_stylesheet_directory_uri() . '/assets/home-layout-v1152.js',
 			array( 'dkx-enterprise-home' ),
 			$release,
 			true
 		);
-		wp_localize_script(
-			'dkx-home-order-v1161',
-			'dkxHomeV1161',
-			array(
-				'logoUrl' => dkx_logo_url(),
-				'logoAlt' => get_bloginfo( 'name' ),
-			)
-		);
 	}
-
 	if ( is_page( 'giveaways' ) || is_singular( 'dkx_giveaway' ) ) {
 		wp_enqueue_script(
 			'dkx-giveaways',
