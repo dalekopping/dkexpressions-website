@@ -1,5 +1,5 @@
 (() => {
-  const root = document.querySelector('.dk-archive-shell');
+  const root = document.querySelector('.dk-archive-experience');
   if (!root) return;
 
   const filters = [...root.querySelectorAll('[data-dk-filter]')];
@@ -29,7 +29,7 @@
     document.body.classList.remove('dk-archive-lightbox-open');
   };
 
-  document.querySelectorAll('[data-dk-lightbox]').forEach((button) => {
+  root.querySelectorAll('[data-dk-lightbox]').forEach((button) => {
     button.addEventListener('click', () => {
       image.src = button.dataset.full || '';
       image.alt = button.dataset.title || '';
