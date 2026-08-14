@@ -1,128 +1,213 @@
 <?php
 /**
- * Template Name: DK Expressions Our Work Archive
- * Dedicated Our Work + Visual Archive template — v1.19.1
+ * Template Name: DK Expressions Our Work Experience
+ * Dedicated Selected Work + Visual Archive — v1.19.2
  *
  * @package DK_Expressions_V4_Fixes
  */
 
-wp_enqueue_style('dk-archive-v119', get_stylesheet_directory_uri() . '/assets/css/archive-v119.css', array(), '1.19.1');
-wp_enqueue_script('dk-archive-v119', get_stylesheet_directory_uri() . '/assets/archive-v119.js', array(), '1.19.1', true);
+wp_enqueue_style(
+    'dk-our-work-v1192',
+    get_stylesheet_directory_uri() . '/assets/css/our-work-v1192.css',
+    array(),
+    '1.19.2'
+);
+wp_enqueue_script(
+    'dk-our-work-v1192',
+    get_stylesheet_directory_uri() . '/assets/our-work-v1192.js',
+    array(),
+    '1.19.2',
+    true
+);
 
 get_header();
 
 $selected_work = array(
-    array('Limp Bizkit — South Africa','First-ever South African show.','Editorial announcement and digital amplification surrounding Limp Bizkit’s first South African performance and the support-act announcement featuring Ecca Vandal and Jack Parow.','Event storytelling • Editorial • SEO • Social amplification'),
-    array('Comic Con Africa','Culture, fandom and community.','Multi-layer editorial coverage encompassing guest announcements, event information, press content, audience engagement and competition activity.','Editorial • Event coverage • Competitions • Audience engagement'),
-    array('Tyla — A*POP World Tour','A South African global story.','The South African tour announcement transformed into search-optimised editorial and social content.','Tour announcement • SEO • Social content'),
-    array('Riverdance 30 — The New Generation','A global production returns.','National tour announcement developed into digital editorial content supporting the Pretoria and Cape Town performances.','Editorial • SEO • National event coverage'),
-    array('Swan Lake — Montecasino','An experience-led review.','Production review capturing the scale, performance and emotional impact of Swan Lake at Montecasino.','Review • Theatre • Experience storytelling'),
-    array('Disney On Ice','Family experience, authentically told.','Family-focused experiential coverage combining live-event storytelling with authentic audience perspective.','Review • Family entertainment • Event storytelling'),
-    array('From Behind the Lens','Two decades of defining moments.','Our photography journey has crossed paths with John Legend, Carlos Santana, Bruce Springsteen, Foo Fighters, Seal, Michael Bublé, Justin Bieber, One Direction, Thirty Seconds to Mars, Chris Brown, UB40, Tiësto, Skrillex, Armin van Buuren, OneRepublic, Boyz II Men and many more.','Photography • Music • Culture • Live events'),
+    array('01','Limp Bizkit — South Africa','First-ever South African show.','Editorial announcement and digital amplification surrounding Limp Bizkit’s first South African performance and the support-act announcement featuring Ecca Vandal and Jack Parow.','Event storytelling · Editorial · SEO · Social amplification'),
+    array('02','Comic Con Africa','Culture, fandom and community.','Multi-layer editorial coverage spanning guest announcements, event information, press content, audience engagement and competition activity.','Editorial · Event coverage · Competitions · Audience engagement'),
+    array('03','Tyla — A*POP World Tour','A South African global story.','The South African tour announcement transformed into search-led editorial and social content built to travel beyond the announcement itself.','Tour announcement · SEO · Social content'),
+    array('04','Riverdance 30 — The New Generation','A global production returns.','National tour announcement developed into digital editorial content supporting the Pretoria and Cape Town performances.','Editorial · SEO · National event coverage'),
+    array('05','Swan Lake — Montecasino','An experience-led review.','A personal production review capturing the scale, performance and emotional impact of Swan Lake at Montecasino.','Review · Theatre · Experience storytelling'),
+    array('06','Disney On Ice','Family experience, authentically told.','Family-focused experiential coverage combining live-event storytelling with an authentic audience perspective.','Review · Family entertainment · Event storytelling'),
+    array('07','From Behind The Lens','Two decades of defining moments.','From international artists and packed arenas to theatre, festivals, action sport, weddings, wildlife and brand experiences — the camera has always been part of the story.','Photography · Music · Culture · Live events'),
 );
 
-if ( ! function_exists( 'dkx_archive_normalize' ) ) {
-    function dkx_archive_normalize( $value ) {
-        $value = pathinfo( (string) $value, PATHINFO_FILENAME );
-        $value = remove_accents( strtolower( $value ) );
-        return preg_replace( '/[^a-z0-9]+/', '', $value );
-    }
+function dkx_work_normalize($value){
+    $value = pathinfo((string)$value, PATHINFO_FILENAME);
+    $value = remove_accents(strtolower($value));
+    return preg_replace('/[^a-z0-9]+/','',$value);
 }
-
-if ( ! function_exists( 'dkx_archive_media_index' ) ) {
-    function dkx_archive_media_index() {
-        static $index = null;
-        if ( null !== $index ) return $index;
-        $index = array();
-        $attachments = get_posts( array(
-            'post_type' => 'attachment', 'post_status' => 'inherit', 'post_mime_type' => 'image',
-            'posts_per_page' => 1000, 'orderby' => 'date', 'order' => 'DESC',
-        ) );
-        foreach ( $attachments as $attachment ) {
-            $file = get_attached_file( $attachment->ID );
-            $guid = wp_get_attachment_url( $attachment->ID );
-            $keys = array_unique( array_filter( array(
-                dkx_archive_normalize( $attachment->post_title ),
-                dkx_archive_normalize( $file ),
-                dkx_archive_normalize( $guid ),
-            ) ) );
-            $index[] = array( 'id' => (int) $attachment->ID, 'keys' => $keys );
-        }
-        return $index;
+function dkx_work_media_pool(){
+    static $pool = null;
+    if(null !== $pool) return $pool;
+    $pool = array();
+    $attachments = get_posts(array(
+        'post_type'=>'attachment','post_status'=>'inherit','post_mime_type'=>'image',
+        'posts_per_page'=>500,'orderby'=>'date','order'=>'DESC'
+    ));
+    foreach($attachments as $attachment){
+        $title = dkx_work_normalize($attachment->post_title);
+        $file  = dkx_work_normalize(get_attached_file($attachment->ID));
+        $pool[] = array('id'=>$attachment->ID,'title'=>$title,'file'=>$file);
     }
+    return $pool;
 }
-
-if ( ! function_exists( 'dkx_archive_attachment_id' ) ) {
-    function dkx_archive_attachment_id( $candidates ) {
-        $index = dkx_archive_media_index();
-        $normalized = array_values( array_filter( array_map( 'dkx_archive_normalize', (array) $candidates ) ) );
-        foreach ( $normalized as $needle ) {
-            foreach ( $index as $row ) {
-                if ( in_array( $needle, $row['keys'], true ) ) return $row['id'];
-            }
-        }
-        $best_id = 0; $best_score = 0;
-        foreach ( $normalized as $needle ) {
-            if ( strlen( $needle ) < 5 ) continue;
-            foreach ( $index as $row ) {
-                foreach ( $row['keys'] as $key ) {
-                    if ( false !== strpos( $key, $needle ) || false !== strpos( $needle, $key ) ) {
-                        $score = min( strlen( $needle ), strlen( $key ) );
-                        if ( $score > $best_score ) { $best_score = $score; $best_id = $row['id']; }
-                    }
+function dkx_work_find_image($candidates){
+    $pool = dkx_work_media_pool();
+    $best_id = 0; $best_score = 0;
+    foreach((array)$candidates as $candidate){
+        $needle = dkx_work_normalize($candidate);
+        if(!$needle) continue;
+        foreach($pool as $media){
+            foreach(array($media['title'],$media['file']) as $hay){
+                if(!$hay) continue;
+                if($hay === $needle) return (int)$media['id'];
+                $score = 0;
+                if(strpos($hay,$needle)!==false || strpos($needle,$hay)!==false){
+                    $score = min(strlen($hay),strlen($needle)) / max(strlen($hay),strlen($needle));
+                    $score += .6;
+                } elseif(strlen($needle)>5){
+                    similar_text($hay,$needle,$pct);
+                    $score = $pct/100;
+                }
+                if($score>$best_score && $score>.68){
+                    $best_score=$score; $best_id=(int)$media['id'];
                 }
             }
         }
-        return $best_id;
     }
+    return $best_id;
 }
 
-$archive_items = array(
-    array('Adrian Smith — Iron Maiden','Live Music','live-music',array('ADRIAN SMITH OF IRON MAIDEN','ADRIAN SMITH IRON MAIDEN','adrian-smith'),'hero'),
-    array('Tomorrowland Unite SA','Festival Experience','festivals',array('TOMORROWLAND SA UNITE','TOMORROWLAND UNITE SA 1','TOMORROWLAND UNITE SA','tomorrowland'),'cinema'),
-    array('Red Bull X-Fighters','Action & Experiential','action',array('REDBULL X-FIGHTERS','RED BULL X-FIGHTERS','x-fighters'),'cinema'),
-    array('Alvin Ailey American Dance Company','Theatre & Performing Arts','theatre',array('Alvin Ailey - American Dance Company 1','Alvin Ailey American Dance Company','alvin-ailey'),'portrait'),
-    array('John Legend','Live Music','live-music',array('JOHN LEGEND','john-legend'),'portrait'),
-    array('Mariah Carey','Live Music','live-music',array('MARIAH CAREY','mariah-carey'),'portrait'),
-    array('Jameson Vic Falls Carnival','Brand Experience','brand',array('JAMESON VIC FALLS CARNIVAL','vic-falls-carnival'),'cinema'),
-    array('Priscilla Queen of the Desert','Theatre & Performing Arts','theatre',array('PRISCILLA QUEEN OF THE DESERT','priscilla'),'portrait'),
-    array('Kings & Queens of Comedy','Comedy & Entertainment','comedy',array('KINGS & QUEENS OF COMEDY','kings-queens-comedy'),'cinema'),
-    array('Sowing the Seeds','Festival Storytelling','festivals',array('SOWING THE SEEDS','sowing-the-seeds'),'cinema'),
-    array('DJ Fresh','Nightlife & Live Events','live-music',array('DJ FRESH','dj-fresh'),'portrait'),
-    array('Boargazm — Oppikoppi','Live Music','live-music',array('BOARGAZM @ OPPIKOPPI 2016 #THEUNSEA','BOARGAZM OPPIKOPPI 2016','boargazm'),'cinema'),
-    array('Albert Hammond','Live Music','live-music',array('ALBERT HAMMOND','albert-hammond'),'cinema'),
-    array('Emma Hewitt','Artist Portrait / Nightlife','live-music',array('EMMA HEWITT','emma-hewitt'),'portrait'),
-    array('Jameson & Mixer','Commercial Brand Photography','brand',array('JAMESON & MIXER','JAMESON MIXER','jameson-mixer'),'portrait'),
-    array('Manaka Wedding','People & Celebrations','weddings',array('Manaka Wedding 2017','Manaka Wedding','manaka-wedding'),'cinema'),
-    array('Mr & Mrs Vitale','People & Celebrations','weddings',array('MR & MRS VITALE','mrs-vitale','vitale'),'cinema'),
-    array('Wildlife — Cheetah','Wildlife & Editorial','wildlife',array('WILDLIFE - CHEETAH','WILDLIFE CHEETAH','cheetah'),'portrait'),
-    array('Wildlife Encounter','Wildlife & Editorial','wildlife',array('NITRO CIRCUS','lion cub','lions'),'cinema'),
+$archive_blueprint = array(
+    array('Adrian Smith — Iron Maiden','Live Music','live-music','hero',array('ADRIAN SMITH OF IRON MAIDEN','ADRIAN SMITH IRON MAIDEN','IRON MAIDEN ADRIAN SMITH')),
+    array('Tomorrowland Unite SA','Festivals','festivals','landscape',array('TOMORROWLAND SA UNITE','TOMORROWLAND UNITE SA','TOMORROWLAND')),
+    array('Red Bull X-Fighters','Action','action','landscape',array('REDBULL X-FIGHTERS','RED BULL X-FIGHTERS','X FIGHTERS')),
+    array('Alvin Ailey American Dance Company','Theatre','theatre','landscape',array('ALVIN AILEY AMERICAN DANCE COMPANY','ALVIN AILEY')),
+    array('John Legend','Live Music','live-music','portrait',array('JOHN LEGEND')),
+    array('Priscilla Queen of the Desert','Theatre','theatre','portrait',array('PRISCILLA QUEEN OF THE DESERT','PRISCILLA')),
+    array('Jameson Vic Falls Carnival','Brand Experiences','brand','landscape',array('JAMESON VIC FALLS CARNIVAL','VIC FALLS CARNIVAL')),
+    array('Kings & Queens of Comedy','Comedy','comedy','landscape',array('KINGS & QUEENS OF COMEDY','KINGS AND QUEENS OF COMEDY')),
+    array('Sowing The Seeds','Festivals','festivals','wide',array('SOWING THE SEEDS')),
+    array('DJ Fresh','Live Music','live-music','portrait',array('DJ FRESH')),
+    array('Manaka Wedding','People & Weddings','people','portrait',array('MANAKA WEDDING 2017','MANAKA WEDDING')),
+    array('Wildlife — Cheetah','Wildlife','wildlife','portrait',array('WILDLIFE - CHEETAH','WILDLIFE CHEETAH','CHEETAH')),
+    array('Wildlife Encounter','Wildlife','wildlife','landscape',array('NITRO CIRCUS','LION CUBS','LION CUB')),
+    array('Albert Hammond','Live Music','live-music','landscape',array('ALBERT HAMMOND')),
+    array('Jameson & Mixer','Brand Experiences','brand','portrait',array('JAMESON & MIXER','JAMESON MIXER')),
 );
 
-$resolved_archive = array(); $used_ids = array();
-foreach ( $archive_items as $item ) {
-    $attachment_id = dkx_archive_attachment_id( $item[3] );
-    if ( ! $attachment_id || isset( $used_ids[$attachment_id] ) ) continue;
-    $full = wp_get_attachment_image_url( $attachment_id, 'full' );
-    if ( ! $full ) continue;
-    $used_ids[$attachment_id] = true;
-    $resolved_archive[] = array('title'=>$item[0],'label'=>$item[1],'category'=>$item[2],'class'=>$item[4],'id'=>$attachment_id,'full'=>$full);
+$archive = array();
+foreach($archive_blueprint as $item){
+    $id = dkx_work_find_image($item[4]);
+    if(!$id) continue;
+    $full = wp_get_attachment_image_url($id,'full');
+    if(!$full) continue;
+    $archive[] = array(
+        'title'=>$item[0],'label'=>$item[1],'category'=>$item[2],'layout'=>$item[3],
+        'id'=>$id,'full'=>$full
+    );
 }
 ?>
-<section class="dk-commercial-hero"><div class="dk-stars" aria-hidden="true"></div><div class="dk-commercial-orbit" aria-hidden="true"></div><div class="dk-commercial-copy"><p class="dk-kicker">Selected Work</p><h1>We Were There.<em>Proof, Not Promises.</em></h1><p>Some agencies talk about attention. We’ve spent years standing where attention happens.</p></div></section>
-<main class="dk-commercial-page dk-work-page">
-<section class="dk-commercial-lead"><div><p class="dk-kicker">The DK Advantage</p><h2>Built on experience.<br><em>Designed for impact.</em></h2></div><p>From stadiums and concert stages to premieres, conventions, launches, theatre productions and brand experiences, DK Expressions has documented and amplified moments across South Africa’s entertainment and cultural landscape.</p></section>
-<section class="dk-stat-band" aria-label="DK Expressions proof points"><article><strong>2013</strong><span>DK Expressions founded</span></article><article><strong>13+</strong><span>Years building the platform</span></article><article><strong>20+</strong><span>Years behind the lens</span></article><article><strong>1000s</strong><span>Published stories & moments</span></article></section>
-<section class="dk-commercial-sections"><?php foreach($selected_work as $i=>$x):?><article class="dk-commercial-section <?php echo 0===$i%2?'is-dark':'is-blue';?>"><div class="dk-section-number"><?php echo esc_html(str_pad((string)($i+1),2,'0',STR_PAD_LEFT));?></div><div class="dk-section-copy"><p class="dk-kicker"><?php echo esc_html($x[1]);?></p><h2><?php echo esc_html($x[0]);?></h2><p><?php echo esc_html($x[2]);?></p><strong><?php echo esc_html($x[3]);?></strong></div><div class="dk-section-art" aria-hidden="true"><span></span><i></i><b></b></div></article><?php endforeach;?></section>
-<?php if($resolved_archive):?>
-<section class="dk-archive-experience" id="archive"><header class="dk-archive-title"><p class="dk-kicker">From The Archive</p><div class="dk-archive-title-grid"><h2><span>13+ Years.</span><strong>Thousands Of Moments.</strong><em>One Continuing Archive.</em></h2><div><p>Long before every campaign became content, we were already there — in the pit, backstage, trackside, in theatres, at festivals and alongside the people whose moments mattered.</p><small><?php echo esc_html(count($resolved_archive));?> moments currently selected from the archive.</small></div></div></header>
-<div class="dk-archive-toolbar-wrap"><div class="dk-archive-toolbar" role="group" aria-label="Filter visual archive"><button type="button" class="is-active" data-dk-filter="all">All</button><button type="button" data-dk-filter="live-music">Live Music</button><button type="button" data-dk-filter="festivals">Festivals</button><button type="button" data-dk-filter="theatre">Theatre</button><button type="button" data-dk-filter="comedy">Comedy</button><button type="button" data-dk-filter="brand">Brand Experiences</button><button type="button" data-dk-filter="weddings">People & Weddings</button><button type="button" data-dk-filter="action">Action</button><button type="button" data-dk-filter="wildlife">Wildlife</button></div></div>
-<div class="dk-archive-canvas"><?php foreach($resolved_archive as $i=>$item):?><figure class="dk-archive-shot <?php echo esc_attr('is-'.$item['class']);?>" data-dk-category="<?php echo esc_attr($item['category']);?>"><button type="button" class="dk-archive-open" data-dk-lightbox data-full="<?php echo esc_url($item['full']);?>" data-title="<?php echo esc_attr($item['title']);?>" data-label="<?php echo esc_attr($item['label']);?>" aria-label="<?php echo esc_attr('View '.$item['title']);?>"><?php echo wp_get_attachment_image($item['id'],'large',false,array('loading'=>$i<3?'eager':'lazy','decoding'=>'async'));?><span class="dk-archive-index"><?php echo esc_html(str_pad((string)($i+1),2,'0',STR_PAD_LEFT));?></span><span class="dk-archive-overlay"><small><?php echo esc_html($item['label']);?></small><strong><?php echo esc_html($item['title']);?></strong><em>Open frame ↗</em></span></button></figure><?php endforeach;?></div>
-<footer class="dk-archive-end"><span>THE ARCHIVE CONTINUES</span><strong>Every frame is a piece of time we refused to lose.</strong></footer></section>
-<div class="dk-archive-lightbox" data-dk-lightbox-panel hidden><button type="button" class="dk-archive-lightbox-close" data-dk-lightbox-close aria-label="Close image">×</button><div class="dk-archive-lightbox-stage"><img src="" alt="" data-dk-lightbox-image><div><small data-dk-lightbox-label></small><strong data-dk-lightbox-title></strong></div></div></div>
-<?php endif;?>
-<section class="dk-proof-split"><div class="dk-proof-panel"><p class="dk-kicker">Why DK Expressions</p><h2>One partner.<br><em>Multiple disciplines.</em></h2><p>Strategy, original production, editorial thinking, photography, digital distribution and audience engagement work together as one connected system.</p></div><div class="dk-proof-points"><article><span>01</span><h3>Editorial credibility</h3><p>More than a decade of publishing and culture coverage informs every commercial story we create.</p></article><article><span>02</span><h3>Original production</h3><p>We create the photographs, stories and campaign assets instead of relying only on supplied marketing material.</p></article><article><span>03</span><h3>Built-in distribution</h3><p>Content can live across the DK Expressions ecosystem while also being developed for client-owned channels.</p></article><article><span>04</span><h3>Commercial flexibility</h3><p>From single activations to retainers, projects can scale around the objective, audience and available budget.</p></article></div></section>
-<section class="dk-rate-preview"><div><p class="dk-kicker">Commercial Packages</p><h2>Transparent packages.<br><em>Built to scale.</em></h2><p>This section is reserved for the DK Expressions Rate Card. It is already designed into the page architecture so package pricing, deliverables and add-ons can be introduced without changing the visual system.</p></div><div class="dk-rate-preview-card"><span>RATE CARD</span><strong>Coming Next</strong><p>Event Storytelling • Monthly Brand Content • Executive Personal Branding • Bespoke Campaigns</p></div></section>
-<section class="dk-commercial-cta"><p class="dk-kicker">DK Expressions</p><h2>Your Brand Could Be Next.</h2><p>Let’s create work worth remembering—and build the story around it.</p><a class="dk-button" href="<?php echo esc_url(home_url('/contact/'));?>">Create With DK Expressions ↗</a></section>
-</main>
+<div class="dkow">
+
+<section class="dkow-hero">
+    <div class="dkow-hero-orbit" aria-hidden="true"><i></i><b></b><span></span></div>
+    <div class="dkow-hero-inner">
+        <p class="dkow-eyebrow">OUR WORK · DK EXPRESSIONS</p>
+        <h1><span>WE WERE</span><strong>THERE.</strong></h1>
+        <p class="dkow-hero-deck">Not watching from the sidelines. In the pit. Backstage. Trackside. In theatres. At festivals. Beside the people and brands creating the moments everyone remembers.</p>
+        <a href="#selected-work" class="dkow-enter">EXPLORE THE WORK <span>↓</span></a>
+    </div>
+    <div class="dkow-hero-index">2013 — NOW</div>
+</section>
+
+<section class="dkow-chapter dkow-selected" id="selected-work">
+    <header class="dkow-chapter-head">
+        <div><span>01</span><p>SELECTED WORK</p></div>
+        <h2>PROOF,<br><em>NOT PROMISES.</em></h2>
+        <p>Campaigns, productions, reviews and experiences that show how DK Expressions turns moments into stories with a life beyond the event itself.</p>
+    </header>
+
+    <div class="dkow-case-list">
+    <?php foreach($selected_work as $i=>$case): ?>
+        <article class="dkow-case <?php echo $i%2 ? 'is-blue' : 'is-black'; ?>">
+            <div class="dkow-case-number"><?php echo esc_html($case[0]); ?></div>
+            <div class="dkow-case-copy">
+                <p><?php echo esc_html($case[2]); ?></p>
+                <h3><?php echo esc_html($case[1]); ?></h3>
+                <div class="dkow-case-body"><?php echo esc_html($case[3]); ?></div>
+                <strong><?php echo esc_html($case[4]); ?></strong>
+            </div>
+            <div class="dkow-case-orbit" aria-hidden="true"><span></span><i></i><b></b></div>
+        </article>
+    <?php endforeach; ?>
+    </div>
+</section>
+
+<?php if($archive): ?>
+<section class="dkow-archive" id="archive">
+    <div class="dkow-archive-opening">
+        <div class="dkow-archive-chapter"><span>02</span><p>THE ARCHIVE</p></div>
+        <p class="dkow-archive-kicker">13+ YEARS OF STORIES.</p>
+        <h2>THOUSANDS<br>OF MOMENTS.<br><em>ONE CONTINUING<br>ARCHIVE.</em></h2>
+        <div class="dkow-archive-opening-copy">
+            <p>Long before every campaign became content, we were already there — in the pit, backstage, trackside, ringside, in theatres, at festivals and alongside the people whose moments mattered.</p>
+            <a href="#archive-images">ENTER THE ARCHIVE <span>↓</span></a>
+        </div>
+    </div>
+
+    <div class="dkow-filter-wrap" id="archive-images">
+        <div class="dkow-filters" role="group" aria-label="Filter visual archive">
+            <button class="is-active" data-dkow-filter="all">ALL</button>
+            <button data-dkow-filter="live-music">LIVE MUSIC</button>
+            <button data-dkow-filter="festivals">FESTIVALS</button>
+            <button data-dkow-filter="theatre">THEATRE</button>
+            <button data-dkow-filter="comedy">COMEDY</button>
+            <button data-dkow-filter="brand">BRAND EXPERIENCES</button>
+            <button data-dkow-filter="people">PEOPLE / WEDDINGS</button>
+            <button data-dkow-filter="action">ACTION</button>
+            <button data-dkow-filter="wildlife">WILDLIFE</button>
+        </div>
+    </div>
+
+    <div class="dkow-gallery">
+    <?php foreach($archive as $i=>$item): ?>
+        <figure class="dkow-frame dkow-<?php echo esc_attr($item['layout']); ?>" data-dkow-category="<?php echo esc_attr($item['category']); ?>">
+            <button type="button" class="dkow-image" data-dkow-lightbox data-full="<?php echo esc_url($item['full']); ?>" data-title="<?php echo esc_attr($item['title']); ?>" data-label="<?php echo esc_attr($item['label']); ?>">
+                <?php echo wp_get_attachment_image($item['id'],'large',false,array('loading'=>$i<3?'eager':'lazy','decoding'=>'async')); ?>
+                <span class="dkow-frame-index"><?php echo esc_html(str_pad((string)($i+1),2,'0',STR_PAD_LEFT)); ?></span>
+                <span class="dkow-caption">
+                    <small><?php echo esc_html($item['label']); ?></small>
+                    <strong><?php echo esc_html($item['title']); ?></strong>
+                    <em>OPEN FRAME ↗</em>
+                </span>
+            </button>
+        </figure>
+    <?php endforeach; ?>
+    </div>
+
+    <div class="dkow-archive-close">
+        <p>WHY DK EXPRESSIONS</p>
+        <h3>EVERY FRAME IS A PIECE<br>OF TIME WE REFUSED TO LOSE.</h3>
+        <span>Photography · Editorial · Experience · Culture</span>
+    </div>
+
+    <div class="dkow-lightbox" data-dkow-panel hidden>
+        <button type="button" class="dkow-lightbox-close" data-dkow-close aria-label="Close image">×</button>
+        <div class="dkow-lightbox-stage">
+            <img src="" alt="" data-dkow-image>
+            <div><small data-dkow-label></small><strong data-dkow-title></strong></div>
+        </div>
+    </div>
+</section>
+<?php endif; ?>
+
+<section class="dkow-end">
+    <p>YOUR BRAND COULD BE NEXT.</p>
+    <h2>LET'S CREATE WORK<br>WORTH REMEMBERING.</h2>
+    <a href="<?php echo esc_url(home_url('/contact/')); ?>">START YOUR PROJECT ↗</a>
+</section>
+
+</div>
 <?php get_footer(); ?>
