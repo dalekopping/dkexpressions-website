@@ -638,4 +638,4 @@ body.home .dk-hero-proof span {
   .dk-footer small {
     font-size:12px!important;
   }
-}
+.dk-header, .dk-header a, .dk-nav a, footer, footer a { color: white !important;}
