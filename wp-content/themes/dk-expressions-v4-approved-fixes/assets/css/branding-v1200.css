@@ -1,0 +1,254 @@
+/*
+ * DK Expressions v1.20.0
+ * Approved global logo, navigation, landing CTA and footer refinements.
+ */
+
+/* The tightly cropped official white logo remains legible on every dark surface. */
+body .dk-brand img {
+  width:auto!important;
+  max-width:none!important;
+  height:72px!important;
+  object-fit:contain!important;
+}
+body .dk-header.is-stuck .dk-brand img {
+  height:58px!important;
+}
+body .dk-nav-menu {
+  gap:clamp(10px,1.25vw,22px);
+}
+
+/* Landing page hierarchy and three clearly differentiated pathways. */
+body .dk-landing .dk-tagline {
+  margin:27px 0 34px;
+  color:#43b7ff;
+  -webkit-text-fill-color:#43b7ff;
+  font-size:clamp(15px,1.65vw,21px);
+  font-weight:850;
+  line-height:1.45;
+  letter-spacing:.2em;
+  text-wrap:balance;
+}
+.dk-landing-actions {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:12px;
+}
+.dk-landing-cta {
+  display:inline-flex;
+  min-width:190px;
+  min-height:50px;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+  padding:15px 20px;
+  border:1px solid rgba(255,255,255,.32);
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  box-shadow:0 10px 32px rgba(0,0,0,.22);
+  font-size:9px;
+  font-weight:850;
+  line-height:1.25;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  transition:transform .25s ease,filter .25s ease,box-shadow .25s ease;
+}
+.dk-landing-cta.is-enter { background:#0d8ee9; }
+.dk-landing-cta.is-work { background:#e63142; }
+.dk-landing-cta.is-project { background:#6448cf; }
+.dk-landing-cta:hover,
+.dk-landing-cta:focus-visible {
+  transform:translateY(-3px);
+  filter:brightness(1.12);
+  box-shadow:0 15px 36px rgba(0,0,0,.34);
+}
+
+/* Footer: exact approved information architecture and stronger brand block. */
+body .dk-footer-logo img {
+  width:auto!important;
+  max-width:none!important;
+  height:84px!important;
+  object-fit:contain!important;
+}
+body .dk-footer-brand-block>p {
+  max-width:315px!important;
+  margin:0 0 25px!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+  font-size:16px!important;
+  font-weight:850!important;
+  line-height:1.55!important;
+}
+body .dk-footer-project-btn,
+body .dk-footer-whatsapp {
+  display:flex!important;
+  width:min(100%,270px)!important;
+  min-height:46px!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  font-size:10px!important;
+  font-weight:850!important;
+  line-height:1.3!important;
+  letter-spacing:.1em!important;
+  text-transform:uppercase!important;
+}
+body .dk-footer-project-btn {
+  margin:0 0 12px!important;
+  background:#39aef2!important;
+  border-color:#39aef2!important;
+}
+body .dk-footer-whatsapp {
+  padding:10px 14px!important;
+  border:1px solid #19db79!important;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+body .dk-footer-whatsapp strong {
+  margin-left:6px;
+  color:#ff4457!important;
+  -webkit-text-fill-color:#ff4457!important;
+  text-shadow:none!important;
+}
+
+@media (min-width:901px) {
+  body .dk-footer-shell {
+    grid-template-columns:1.45fr .9fr .9fr .9fr!important;
+    gap:clamp(38px,4.5vw,72px)!important;
+  }
+}
+
+@media (max-width:1100px) {
+  body .dk-brand img,
+  body .dk-header.is-stuck .dk-brand img {
+    height:60px!important;
+  }
+}
+
+@media (max-width:900px) {
+  body .dk-footer-shell {
+    width:min(100% - 40px,620px)!important;
+    max-width:620px!important;
+    padding:48px 0 32px!important;
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+    align-items:start!important;
+    gap:34px 30px!important;
+  }
+  body .dk-footer-brand-block {
+    grid-column:1/-1!important;
+    width:100%!important;
+    align-items:center!important;
+    text-align:center!important;
+  }
+  body .dk-footer-logo {
+    margin:0 0 18px!important;
+  }
+  body .dk-footer-logo img {
+    height:84px!important;
+  }
+  body .dk-footer-brand-block>p {
+    max-width:420px!important;
+    margin:0 auto 24px!important;
+    font-size:16px!important;
+    text-align:center!important;
+  }
+  body .dk-footer-project-btn {
+    margin:0 auto 12px!important;
+  }
+  body .dk-footer-whatsapp {
+    margin:0 auto!important;
+  }
+  body .dk-footer-shell>.dk-footer-column:nth-of-type(2),
+  body .dk-footer-shell>.dk-footer-column:nth-of-type(3),
+  body .dk-footer-company {
+    display:block!important;
+    width:100%!important;
+    margin:0!important;
+    padding:0!important;
+    border:0!important;
+    text-align:left!important;
+  }
+  body .dk-footer-column h4,
+  body .dk-footer-company h4 {
+    display:block!important;
+    margin:0 0 17px!important;
+    text-align:left!important;
+  }
+  body .dk-footer-column nav,
+  body .dk-footer-company nav {
+    display:flex!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    align-items:flex-start!important;
+    gap:0!important;
+    margin:0!important;
+    padding:0!important;
+  }
+  body .dk-footer-column nav a,
+  body .dk-footer-company nav a {
+    display:block!important;
+    width:auto!important;
+    margin:0 0 12px!important;
+    padding:0!important;
+    font-size:10px!important;
+    line-height:1.45!important;
+    letter-spacing:.07em!important;
+    white-space:normal!important;
+    text-align:left!important;
+  }
+  body .dk-footer-company {
+    grid-column:1/-1!important;
+    padding-top:24px!important;
+    border-top:1px solid rgba(67,183,255,.14)!important;
+  }
+  body .dk-footer-company nav {
+    flex-direction:row!important;
+    flex-wrap:wrap!important;
+    gap:10px 22px!important;
+  }
+  body .dk-footer-company nav a {
+    margin:0!important;
+  }
+}
+
+@media (max-width:700px) {
+  body .dk-brand img,
+  body .dk-header.is-stuck .dk-brand img {
+    height:58px!important;
+  }
+  body .dk-landing .dk-hero-copy {
+    padding-inline:20px;
+  }
+  body .dk-landing .dk-tagline {
+    font-size:14px;
+    line-height:1.65;
+    letter-spacing:.13em;
+  }
+  .dk-landing-actions {
+    width:min(100%,340px);
+    margin-inline:auto;
+  }
+  .dk-landing-cta {
+    width:100%;
+    min-width:0;
+  }
+}
+
+@media (max-width:420px) {
+  body .dk-footer-shell {
+    width:calc(100% - 32px)!important;
+    grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)!important;
+    gap:30px 22px!important;
+  }
+  body .dk-footer-logo img {
+    height:78px!important;
+  }
+  body .dk-footer-brand-block>p {
+    font-size:15px!important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .dk-landing-cta { transition:none; }
+}

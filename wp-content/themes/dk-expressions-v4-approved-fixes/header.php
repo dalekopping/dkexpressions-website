@@ -5,14 +5,16 @@
  * @package DK_Expressions_V4_Fixes
  */
 $current_path = trim( wp_parse_url( home_url( add_query_arg( array(), $GLOBALS['wp']->request ?? '' ) ), PHP_URL_PATH ), '/' );
-$menu_items = array();
-for ( $menu_index = 1; $menu_index <= 9; $menu_index++ ) {
-	$menu_label = dkxv4_content( "nav_{$menu_index}_label" );
-	$menu_path  = dkxv4_content( "nav_{$menu_index}_url" );
-	if ( $menu_label && $menu_path ) {
-		$menu_items[ $menu_label ] = $menu_path;
-	}
-}
+$menu_items = array(
+	'Home'       => '/home/',
+	'Solutions'  => '/solutions/',
+	'Our Work'   => '/our-work/',
+	'Industries' => '/industries/',
+	'Insights'   => '/insights/',
+	'About'      => '/about/',
+	'Contact'    => '/contact/',
+	'Rates'      => '/rates/',
+);
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>

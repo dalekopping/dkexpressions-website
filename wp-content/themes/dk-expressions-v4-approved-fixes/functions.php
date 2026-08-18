@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.18.0-dev';
+	$release = '1.20.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -27,6 +27,12 @@ function dkx_fixes_assets() {
 		'dkx-enterprise-v115',
 		get_stylesheet_directory_uri() . '/assets/enterprise-v115.css',
 		array( 'dkx-approved-fixes' ),
+		$release
+	);
+	wp_enqueue_style(
+		'dkx-branding-v1200',
+		get_stylesheet_directory_uri() . '/assets/css/branding-v1200.css',
+		array( 'dkx-footer-v1176', 'dkx-enterprise-v115' ),
 		$release
 	);
 	if ( is_home() || is_archive() || is_page( 'insights' ) ) {
@@ -133,7 +139,7 @@ function dkxv4_editable_schema() {
 			'@type' => 'Person',
 			'name'  => dkxv4_content( 'founder_name' ),
 		),
-		'slogan'       => dkxv4_content( 'tagline' ),
+		'slogan'       => dkxv4_registered_slogan( dkxv4_content( 'tagline' ) ),
 		'address'      => array(
 			'@type'           => 'PostalAddress',
 			'addressLocality' => dkxv4_content( 'address_locality' ),
