@@ -15,17 +15,18 @@
 	<div class="dk-footer-shell">
 
 		<section class="dk-footer-brand-block">
-			<a class="dk-footer-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+			<a class="dk-footer-logo" href="<?php echo esc_url( home_url( '/home/' ) ); ?>">
 				<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
 			</a>
-			<p><?php echo esc_html( dkxv4_content( 'footer_tagline' ) ); ?></p>
+			<p><?php echo esc_html( dkxv4_registered_slogan( dkxv4_content( 'footer_tagline' ) ) ); ?></p>
 			<a class="dk-footer-project-btn" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start Your Project ↗</a>
+			<a class="dk-footer-whatsapp" href="https://wa.me/27722460451" target="_blank" rel="noopener noreferrer"><span>WhatsApp</span> <strong>+27 72 246 0451</strong> ↗</a>
 		</section>
 
 		<section class="dk-footer-column">
 			<h4>Explore</h4>
 			<nav aria-label="<?php esc_attr_e( 'Explore navigation', 'dk-expressions-v4-fixes' ); ?>">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
+				<a href="<?php echo esc_url( home_url( '/home/' ) ); ?>">Home</a>
 				<a href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>">Solutions</a>
 				<a href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">Our Work</a>
 				<a href="<?php echo esc_url( home_url( '/industries/' ) ); ?>">Industries</a>
@@ -46,7 +47,6 @@
 					'instagram_url' => 'Instagram',
 					'x_url'         => 'X',
 					'youtube_url'   => 'YouTube',
-					'tiktok_url'    => 'TikTok',
 					'linkedin_url'  => 'LinkedIn',
 				);
 				foreach ( $socials as $key => $label ) :

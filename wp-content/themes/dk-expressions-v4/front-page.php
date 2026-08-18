@@ -26,7 +26,7 @@ $work = array(
 	<div class="dk-hero-copy">
 		<p class="dk-kicker">DK Expressions presents</p>
 		<h1>Freezing Time <span>and Space</span></h1>
-		<p class="dk-tagline">with the Time Travellers<sup>™</sup></p>
+		<p class="dk-tagline">with the Time Travellers®</p>
 		<button class="dk-enter" type="button" data-enter>Enter the experience <span>↓</span></button>
 	</div>
 </section>

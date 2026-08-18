@@ -51,14 +51,7 @@ function dkx_assets() {
 add_action( 'wp_enqueue_scripts', 'dkx_assets' );
 
 function dkx_logo_url() {
-	$custom_logo_id = get_theme_mod( 'custom_logo' );
-	if ( $custom_logo_id ) {
-		$image = wp_get_attachment_image_src( $custom_logo_id, 'full' );
-		if ( $image ) {
-			return $image[0];
-		}
-	}
-	return get_template_directory_uri() . '/assets/images/dk-expressions-logo-white-transparent.png';
+	return apply_filters( 'dkx_logo_url', get_template_directory_uri() . '/assets/images/dk-expressions-logo-white-tight.png' );
 }
 
 function dkx_primary_fallback() {
@@ -157,7 +150,7 @@ function dkx_schema() {
 		'email'        => 'dale@dkexpressions.co.za',
 		'foundingDate' => '2013',
 		'founder'      => array( '@type' => 'Person', 'name' => 'Dale Kopping' ),
-		'slogan'       => 'Freezing Time and Space with the Time Travellers',
+		'slogan'       => 'Freezing Time and Space with the Time Travellers®',
 		'address'      => array(
 			'@type'           => 'PostalAddress',
 			'addressLocality' => 'Johannesburg',
@@ -168,4 +161,3 @@ function dkx_schema() {
 	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES ) . '</script>' . "\n";
 }
 add_action( 'wp_head', 'dkx_schema', 30 );
-

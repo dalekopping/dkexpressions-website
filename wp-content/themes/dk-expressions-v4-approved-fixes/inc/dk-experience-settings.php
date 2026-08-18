@@ -14,7 +14,7 @@ function dkxv4_content_defaults() {
 		'organisation_name' => 'DK Expressions',
 		'founder_name'      => 'Dale Kopping',
 		'founding_year'     => '2013',
-		'tagline'           => 'Freezing Time and Space with the Time Travellers™',
+		'tagline'           => 'Freezing Time and Space with the Time Travellers®',
 		'contact_email'     => 'dale@dkexpressions.co.za',
 		'contact_phone'     => '+27 72 246 0451',
 		'contact_location'  => 'Johannesburg · South Africa · Worldwide',
@@ -24,7 +24,7 @@ function dkxv4_content_defaults() {
 		'copyright_text'    => 'DK Expressions. All moments reserved.',
 		'header_cta_label'  => 'Start your project',
 		'header_cta_url'    => '/contact/',
-		'footer_tagline'    => 'Freezing Time and Space with the Time Travellers™',
+		'footer_tagline'    => 'Freezing Time and Space with the Time Travellers®',
 		'footer_insights_label' => 'Insights',
 		'footer_insights_url'   => '/insights/',
 		'footer_contact_label'  => 'Contact',
@@ -123,9 +123,8 @@ function dkxv4_content_defaults() {
 		array( 'Industries', '/industries/' ),
 		array( 'Insights', '/insights/' ),
 		array( 'About', '/about/' ),
-		array( 'Legacy', '/legacy/' ),
 		array( 'Contact', '/contact/' ),
-		array( 'Giveaways', '/giveaways/' ),
+		array( 'Rates', '/rates/' ),
 	);
 	foreach ( $navigation as $index => $item ) {
 		$n = $index + 1;
@@ -223,6 +222,20 @@ function dkxv4_content_url( $key ) {
 		return home_url( $url );
 	}
 	return $url;
+}
+
+/**
+ * Keep the registered trademark consistent even when an older saved setting
+ * still contains the former TM symbol.
+ */
+function dkxv4_registered_phrase( $phrase ) {
+	$phrase = preg_replace( '/\s*(?:™|®)\s*$/u', '', trim( (string) $phrase ) );
+	return $phrase . '®';
+}
+
+function dkxv4_registered_slogan( $slogan = '' ) {
+	$slogan = $slogan ?: 'Freezing Time and Space with the Time Travellers';
+	return dkxv4_registered_phrase( $slogan );
 }
 
 function dkxv4_sanitize_content( $input ) {
