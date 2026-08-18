@@ -142,7 +142,7 @@ Text Domain: dk-expressions-v4-fixes
   body.admin-bar .dk-header{top:46px}
 
   .dk-header{height:70px;padding:0 22px}
-  .dk-brand img{width:auto!important;max-width:none;height:54px!important;object-fit:contain}
+  .dk-brand img{width:auto!important;max-width:none;height:62px!important;object-fit:contain}
   .dk-menu-toggle{width:44px;height:44px}
 
   /* Compact, dark mobile navigation; no oversized solid-blue screen. */
