@@ -61,7 +61,7 @@ $server_metrics = array(
 	</div>
 </section>
 <?php elseif ( $conversion_preview ) : ?>
-<main class="dkxv4-conversion-landing" id="booking-preview" data-dkx-preview="conversion">
+<main class="dkxv4-conversion-landing dk-no-semantic-highlight" id="booking-preview" data-dkx-preview="conversion">
 	<section class="dkxv4-booking" aria-labelledby="dkxv4-booking-title">
 		<div class="dkxv4-booking-grid" aria-hidden="true"></div>
 		<div class="dkxv4-booking-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
