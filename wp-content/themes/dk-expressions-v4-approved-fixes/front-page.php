@@ -9,16 +9,6 @@ get_header();
 $three_doors_preview = function_exists( 'dkxv4_is_three_doors_landing_preview' ) && dkxv4_is_three_doors_landing_preview();
 $conversion_preview  = function_exists( 'dkxv4_is_conversion_landing_preview' ) && dkxv4_is_conversion_landing_preview();
 
-$landing_metrics = array();
-if ( $conversion_preview ) {
-	for ( $metric_index = 1; $metric_index <= 6; $metric_index++ ) {
-		$landing_metrics[] = array(
-			dkxv4_content( "metric_{$metric_index}_value" ),
-			dkxv4_content( "metric_{$metric_index}_label" ),
-		);
-	}
-}
-
 $server_metrics = array(
 	array( '01', '1.10M+', 'Visits', 'People entering the DK Expressions universe.', 'is-visits' ),
 	array( '02', '2.47M+', 'Pages viewed', '', 'is-pages' ),
@@ -61,24 +51,7 @@ $server_metrics = array(
 	</div>
 </section>
 <?php elseif ( $conversion_preview ) : ?>
-<main class="dkxv4-conversion-landing dk-no-semantic-highlight" id="booking-preview" data-dkx-preview="conversion">
-	<section class="dkxv4-booking" aria-labelledby="dkxv4-booking-title">
-		<div class="dkxv4-booking-grid" aria-hidden="true"></div>
-		<div class="dkxv4-booking-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
-		<div class="dkxv4-booking-shell">
-			<p class="dkxv4-booking-availability"><strong>DK Expressions</strong><i aria-hidden="true"></i><b>Currently booking Q3 &amp; Q4</b></p>
-			<h2 id="dkxv4-booking-title">We help brands <em>dominate attention.</em></h2>
-			<p class="dkxv4-booking-intro"><strong>Premium culture, content and brand storytelling.</strong></p>
-			<p class="dkxv4-booking-pricing">Packages start from <strong class="is-start">R6,000</strong>. Full production from <strong class="is-production">R32,000</strong>.</p>
-			<div class="dkxv4-booking-actions">
-				<a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><strong>Start a Project</strong><span>↗</span></a>
-				<a class="is-secondary" href="<?php echo esc_url( home_url( '/solutions/#packages' ) ); ?>"><strong>See Packages</strong><span>→</span></a>
-			</div>
-			<p class="dkxv4-booking-slots"><i aria-hidden="true"></i><strong>Only <span>5</span> retainer slots left for September–October</strong></p>
-			<p class="dkxv4-booking-trust"><strong>Trusted by Big Concerts, Comic Con Africa, Showtime Management</strong></p>
-		</div>
-	</section>
-
+<main class="dkxv4-conversion-landing dk-no-semantic-highlight" id="analytics-preview" data-dkx-preview="conversion">
 	<section class="dkxv4-proof" aria-labelledby="dkxv4-proof-title">
 		<header class="dkxv4-proof-head">
 			<div>
@@ -99,15 +72,6 @@ $server_metrics = array(
 			<?php endforeach; ?>
 		</div>
 		<p class="dkxv4-proof-verified"><i aria-hidden="true"></i>Verified server analytics · Webalizer</p>
-
-		<div class="dkxv4-track-record">
-			<header><p>Beyond the traffic</p><h3>A track record built across years, projects, stories and cities.</h3></header>
-			<div class="dkxv4-track-grid">
-				<?php foreach ( $landing_metrics as $metric ) : ?>
-				<article><strong><?php echo esc_html( $metric[0] ); ?></strong><span><?php echo esc_html( $metric[1] ); ?></span></article>
-				<?php endforeach; ?>
-			</div>
-		</div>
 	</section>
 </main>
 <?php endif; ?>
