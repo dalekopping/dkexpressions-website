@@ -27,17 +27,21 @@ $work_fallbacks = array(
 ?>
 
 <main class="dkx1200-home" id="top">
-	<section class="dkx1200-hero">
-		<div class="dkx1200-hero-grid" aria-hidden="true"></div>
-		<div class="dkx1200-portal" aria-hidden="true"><span></span><span></span><span></span><span></span><img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt=""></div>
-		<div class="dkx1200-hero-copy">
-			<p class="dkx1200-eyebrow"><?php echo esc_html( dkxv4_page_meta( 'home_kicker', 'Premium culture, content & brand storytelling' ) ); ?></p>
-			<h1><?php echo wp_kses_post( dkxv4_multiline_heading( dkxv4_page_meta( 'home_heading', "We help brands\ndominate attention." ) ) ); ?></h1>
-			<p class="dkx1200-hero-sub"><?php echo esc_html( dkxv4_page_meta( 'home_intro', 'DK Expressions combines editorial authority, world-class visual storytelling and digital growth strategy to create experiences people remember—and results businesses can measure.' ) ); ?></p>
-			<div class="dkx1200-hero-offer"><b>MEDIA</b><span>+</span><b>CREATIVE</b><span>+</span><b>EXPERIENCES</b><span>+</span><b>TECHNOLOGY</b></div>
-			<div class="dkx1200-actions"><a class="dkx1200-btn dkx1200-btn-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project ↗</a><a class="dkx1200-btn dkx1200-btn-ghost" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">See the proof →</a></div>
+	<section class="dkxv4-booking dkxv4-booking-home dk-no-semantic-highlight" aria-labelledby="dkxv4-home-booking-title">
+		<div class="dkxv4-booking-grid" aria-hidden="true"></div>
+		<div class="dkxv4-booking-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+		<div class="dkxv4-booking-shell">
+			<p class="dkxv4-booking-availability"><strong>DK Expressions</strong><i aria-hidden="true"></i><b>Currently booking Q3 &amp; Q4</b></p>
+			<h1 id="dkxv4-home-booking-title">We help brands <em>dominate attention.</em></h1>
+			<p class="dkxv4-booking-intro"><strong>Premium culture, content and brand storytelling.</strong></p>
+			<p class="dkxv4-booking-pricing">Packages start from <strong class="is-start">R6,000</strong>. Full production from <strong class="is-production">R32,000</strong>.</p>
+			<div class="dkxv4-booking-actions">
+				<a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><strong>Start a Project</strong><span>↗</span></a>
+				<a class="is-secondary" href="<?php echo esc_url( home_url( '/solutions/#packages' ) ); ?>"><strong>See Packages</strong><span>→</span></a>
+			</div>
+			<p class="dkxv4-booking-slots"><i aria-hidden="true"></i><strong>Only <span>5</span> retainer slots left for September–October</strong></p>
+			<p class="dkxv4-booking-trust"><strong>Trusted by Big Concerts, Comic Con Africa, Showtime Management</strong></p>
 		</div>
-		<div class="dkx1200-hero-tag">DK EXPRESSIONS / JOHANNESBURG<br>FREEZING TIME AND SPACE®</div>
 	</section>
 
 	<section class="dkx1200-stats dk-no-semantic-highlight" aria-label="DK Expressions in numbers">
