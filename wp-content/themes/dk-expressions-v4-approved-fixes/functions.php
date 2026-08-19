@@ -19,12 +19,32 @@ require_once get_stylesheet_directory() . '/inc/giveaways.php';
  * present on the front page.
  */
 function dkxv4_landing_preview_key() {
-	if ( ! is_front_page() || ! isset( $_GET['dk-preview'] ) ) {
+	if ( ! isset( $_GET['dk-preview'] ) ) {
 		return '';
 	}
 
-	return sanitize_key( wp_unslash( $_GET['dk-preview'] ) );
+	$preview_key = sanitize_key( wp_unslash( $_GET['dk-preview'] ) );
+
+	return in_array( $preview_key, array( 'three-doors', 'conversion' ), true ) ? $preview_key : '';
 }
+
+/* Tell compatible page caches to leave approved comparison URLs dynamic. */
+if ( '' !== dkxv4_landing_preview_key() && ! defined( 'DONOTCACHEPAGE' ) ) {
+	define( 'DONOTCACHEPAGE', true );
+}
+
+/**
+ * Prevent browser, proxy and WordPress page caches from masking a preview.
+ */
+function dkxv4_disable_landing_preview_cache() {
+	if ( '' === dkxv4_landing_preview_key() ) {
+		return;
+	}
+
+	nocache_headers();
+	header( 'X-DK-Landing-Preview: ' . dkxv4_landing_preview_key() );
+}
+add_action( 'template_redirect', 'dkxv4_disable_landing_preview_cache', 0 );
 
 /**
  * Whether the Three Doors comparison is active.
@@ -41,7 +61,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.20.5';
+	$release = '1.20.6';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
