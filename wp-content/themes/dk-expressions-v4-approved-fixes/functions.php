@@ -12,6 +12,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
+/**
+ * Non-destructive landing-page concept preview.
+ *
+ * The normal landing remains unchanged. The alternate Three Doors layout is
+ * shown only when the explicit preview query string is present.
+ */
+function dkxv4_is_three_doors_landing_preview() {
+	if ( ! is_front_page() || ! isset( $_GET['dk-preview'] ) ) {
+		return false;
+	}
+
+	return 'three-doors' === sanitize_key( wp_unslash( $_GET['dk-preview'] ) );
+}
+
 function dkx_fixes_assets() {
 	$release = '1.20.4';
 
@@ -69,7 +83,7 @@ function dkx_fixes_assets() {
 		'dkxHighlightConfig',
 		array( 'additionalLocations' => preg_split( '/\R/', dkxv4_content( 'highlight_locations' ), -1, PREG_SPLIT_NO_EMPTY ) )
 	);
-	if ( is_page( 'home' ) ) {
+	if ( is_page( 'home' ) || dkxv4_is_three_doors_landing_preview() ) {
 		wp_enqueue_style(
 			'dkx-home-v1200',
 			get_stylesheet_directory_uri() . '/assets/css/home-v1200.css',
