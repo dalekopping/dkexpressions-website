@@ -6,7 +6,44 @@
  */
 get_header();
 $three_doors_preview = function_exists( 'dkxv4_is_three_doors_landing_preview' ) && dkxv4_is_three_doors_landing_preview();
+$conversion_preview  = function_exists( 'dkxv4_is_conversion_landing_preview' ) && dkxv4_is_conversion_landing_preview();
+
+$landing_metrics = array();
+if ( $conversion_preview ) {
+	for ( $metric_index = 1; $metric_index <= 6; $metric_index++ ) {
+		$landing_metrics[] = array(
+			dkxv4_content( "metric_{$metric_index}_value" ),
+			dkxv4_content( "metric_{$metric_index}_label" ),
+		);
+	}
+}
 ?>
+<?php if ( $conversion_preview ) : ?>
+<main class="dkxv4-conversion-landing" id="top">
+	<section class="dkxv4-conversion-hero" aria-labelledby="dkxv4-conversion-title">
+		<div class="dkxv4-conversion-grid" aria-hidden="true"></div>
+		<div class="dkxv4-conversion-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+		<div class="dkxv4-conversion-shell">
+			<p class="dkxv4-conversion-availability"><strong>DK Expressions</strong><i aria-hidden="true"></i>Currently booking <b>Q3 &amp; Q4</b></p>
+			<h1 id="dkxv4-conversion-title">We help brands<br><em>dominate attention.</em></h1>
+			<p class="dkxv4-conversion-intro">Premium culture, content and brand storytelling.</p>
+			<p class="dkxv4-conversion-pricing">Packages start from <strong class="is-start">R6,000</strong>. Full production from <strong class="is-production">R32,000</strong>.</p>
+			<div class="dkxv4-conversion-actions">
+				<a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project <span>↗</span></a>
+				<a class="is-secondary" href="<?php echo esc_url( home_url( '/solutions/#packages' ) ); ?>">See Packages <span>→</span></a>
+			</div>
+			<p class="dkxv4-conversion-slots"><i aria-hidden="true"></i><strong>Only 5</strong> retainer slots left for <b>September–October</b></p>
+			<p class="dkxv4-conversion-trust"><span>Trusted by</span><strong>Big Concerts</strong><i>·</i><strong>Comic Con Africa</strong><i>·</i><strong>Showtime Management</strong></p>
+		</div>
+	</section>
+
+	<section class="dkx1200-stats dkxv4-conversion-stats dk-no-semantic-highlight" aria-label="DK Expressions server statistics">
+		<?php foreach ( $landing_metrics as $metric ) : ?>
+			<article><strong><?php echo esc_html( $metric[0] ); ?></strong><span><?php echo esc_html( $metric[1] ); ?></span></article>
+		<?php endforeach; ?>
+	</section>
+</main>
+<?php else : ?>
 <section class="dk-home-hero dk-landing" id="top">
 	<div class="dk-stars" aria-hidden="true"></div>
 	<div class="dk-city" aria-hidden="true"></div>
@@ -39,5 +76,6 @@ $three_doors_preview = function_exists( 'dkxv4_is_three_doors_landing_preview' )
 		<a class="archive" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>"><span>03 / TIME VAULT</span><h3>See where we have travelled.</h3><p>Photography, motion, recommendations and moments frozen across more than a decade.</p><b>Open Our Work →</b></a>
 	</div>
 </section>
+<?php endif; ?>
 <?php endif; ?>
 <?php get_footer(); ?>
