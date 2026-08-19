@@ -13,7 +13,7 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 function dkx_fixes_assets() {
-	$release = '1.20.0';
+	$release = '1.20.4';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -33,6 +33,12 @@ function dkx_fixes_assets() {
 		'dkx-branding-v1200',
 		get_stylesheet_directory_uri() . '/assets/css/branding-v1200.css',
 		array( 'dkx-footer-v1176', 'dkx-enterprise-v115' ),
+		$release
+	);
+	wp_enqueue_style(
+		'dkx-recovery-v1204',
+		get_stylesheet_directory_uri() . '/assets/css/recovery-v1204.css',
+		array( 'dkx-branding-v1200' ),
 		$release
 	);
 	if ( is_home() || is_archive() || is_page( 'insights' ) ) {
@@ -65,24 +71,18 @@ function dkx_fixes_assets() {
 	);
 	if ( is_page( 'home' ) ) {
 		wp_enqueue_style(
-			'dkx-home-layout-v1152',
-			get_stylesheet_directory_uri() . '/assets/home-layout-v1152.css',
-			array( 'dkx-enterprise-v115' ),
+			'dkx-home-v1200',
+			get_stylesheet_directory_uri() . '/assets/css/home-v1200.css',
+			array( 'dkx-recovery-v1204' ),
 			$release
 		);
-		wp_enqueue_script(
-			'dkx-enterprise-home',
-			get_stylesheet_directory_uri() . '/assets/enterprise-home.js',
-			array(),
-			$release,
-			true
-		);
-		wp_enqueue_script(
-			'dkx-home-layout-v1152',
-			get_stylesheet_directory_uri() . '/assets/home-layout-v1152.js',
-			array( 'dkx-enterprise-home' ),
-			$release,
-			true
+	}
+	if ( is_page( 'solutions' ) ) {
+		wp_enqueue_style(
+			'dkx-solutions-v1197',
+			get_stylesheet_directory_uri() . '/assets/css/solutions-v1197.css',
+			array( 'dkx-recovery-v1204' ),
+			$release
 		);
 	}
 	if ( is_page( array( 'giveaways', 'competitions' ) ) || is_singular( 'dkx_giveaway' ) ) {
@@ -98,10 +98,21 @@ function dkx_fixes_assets() {
 add_action( 'wp_enqueue_scripts', 'dkx_fixes_assets', 20 );
 
 function dkxv4_force_enterprise_home_template( $template ) {
-	if ( is_page( 'home' ) ) {
-		$enterprise_template = get_stylesheet_directory() . '/page-home.php';
-		if ( file_exists( $enterprise_template ) ) {
-			return $enterprise_template;
+	$managed_templates = array(
+		'home'       => 'page-home.php',
+		'about'      => 'page-about.php',
+		'solutions'  => 'page-solutions.php',
+		'our-work'   => 'page-our-work.php',
+		'industries' => 'page-industries.php',
+		'contact'    => 'page-contact.php',
+		'rates'      => 'page-rates.php',
+	);
+	foreach ( $managed_templates as $slug => $filename ) {
+		if ( is_page( $slug ) ) {
+			$managed_template = get_stylesheet_directory() . '/' . $filename;
+			if ( file_exists( $managed_template ) ) {
+				return $managed_template;
+			}
 		}
 	}
 	if ( is_page( array( 'giveaways', 'competitions' ) ) ) {
@@ -168,3 +179,218 @@ function dkxv4_commercial_experience_assets_v118() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_commercial_experience_assets_v118', 999 );
+
+/**
+ * v1.20.4 recovery helpers.
+ *
+ * The v1.20.3 page templates survived the server-side Git overlay, while the
+ * shared page loader did not. These helpers restore the native page fields,
+ * curated media and forms used by those templates.
+ */
+function dkxv4_multiline_heading( $value ) {
+	return nl2br( esc_html( trim( (string) $value ) ) );
+}
+
+function dkxv4_page_meta( $key, $default = '', $post_id = 0 ) {
+	$post_id = $post_id ?: get_queried_object_id();
+	$keys    = array( '_dkx_page_' . $key, '_dkx_' . $key, 'dkx_' . $key );
+	foreach ( $keys as $meta_key ) {
+		$value = get_post_meta( $post_id, $meta_key, true );
+		if ( '' !== $value && null !== $value ) {
+			return $value;
+		}
+	}
+	return $default;
+}
+
+function dkxv4_page_field_groups() {
+	return array(
+		'home' => array(
+			'home_kicker' => array( 'Hero kicker', 'Premium culture, content & brand storytelling' ),
+			'home_heading' => array( 'Hero heading', "We help brands\ndominate attention." ),
+			'home_intro' => array( 'Hero introduction', 'DK Expressions combines editorial authority, world-class visual storytelling and digital growth strategy to create experiences people remember—and results businesses can measure.' ),
+			'home_final_heading' => array( 'Final CTA heading', "Make something\npeople cannot ignore." ),
+			'home_final_copy' => array( 'Final CTA copy', 'Tell us what you are launching, promoting or transforming. We will build the right combination of story, strategy and execution.' ),
+		),
+		'about' => array(
+			'about_tm_kicker' => array( 'Hero kicker', 'Since February 2013' ),
+			'about_tm_heading' => array( 'Hero heading', "Not a media company.\nA time machine." ),
+			'about_tm_intro' => array( 'Hero introduction', 'DK Expressions began in Johannesburg with one camera, determination, imagination and the belief that moments matter.' ),
+			'about_origin_heading' => array( 'Origin heading', "Born in Johannesburg.\nBuilt for everywhere." ),
+			'about_team_section_heading' => array( 'Team heading', "The minds behind\nthe moments." ),
+			'about_join_heading' => array( 'Recruitment heading', "Think you belong\nin the timeline?" ),
+		),
+		'solutions' => array(
+			'solutions_kicker' => array( 'Hero kicker', 'What we do' ),
+			'solutions_heading' => array( 'Hero heading', "We don’t just create content.\nWe create impact." ),
+			'solutions_intro' => array( 'Hero introduction', 'DK Expressions connects brands, experiences and audiences through powerful storytelling, strategic digital amplification and content designed to be remembered.' ),
+		),
+		'our-work' => array(
+			'work_kicker' => array( 'Hero kicker', 'The DK Expressions Time Vault' ),
+			'work_heading' => array( 'Hero heading', "WE\nWERE\nTHERE." ),
+			'work_intro' => array( 'Hero introduction', 'Not stock. Not mock-ups. Not promises. This is work captured, filmed and produced by DK Expressions.' ),
+		),
+		'industries' => array(
+			'industries_kicker' => array( 'Hero kicker', 'Where we work' ),
+			'industries_heading' => array( 'Hero heading', "Different industries.\nOne obsession:\nattention." ),
+			'industries_intro' => array( 'Hero introduction', 'We start with the audience and the objective—not a generic marketing template.' ),
+		),
+		'contact' => array(
+			'contact_kicker' => array( 'Hero kicker', 'Start a Project · DK Expressions 2026' ),
+			'contact_heading' => array( 'Hero heading', "Tell us what\nneeds attention." ),
+			'contact_intro' => array( 'Hero introduction', 'Give us the objective, the timeline and enough context to understand what success should look like. We’ll take it from there.' ),
+		),
+	);
+}
+
+function dkxv4_page_content_meta_box() {
+	global $post;
+	if ( ! $post || 'page' !== $post->post_type ) {
+		return;
+	}
+	$groups = dkxv4_page_field_groups();
+	if ( isset( $groups[ $post->post_name ] ) ) {
+		add_meta_box( 'dkx-page-content', 'DK Expressions Page Content', 'dkxv4_render_page_content_meta_box', 'page', 'normal', 'high' );
+	}
+}
+add_action( 'add_meta_boxes_page', 'dkxv4_page_content_meta_box' );
+
+function dkxv4_render_page_content_meta_box( $post ) {
+	$groups = dkxv4_page_field_groups();
+	$fields = $groups[ $post->post_name ] ?? array();
+	wp_nonce_field( 'dkxv4_page_content', 'dkxv4_page_content_nonce' );
+	echo '<p>These fields control the live DK Expressions template. Leave a field empty to use the approved default.</p><div style="display:grid;gap:18px">';
+	foreach ( $fields as $key => $definition ) {
+		$value = get_post_meta( $post->ID, '_dkx_page_' . $key, true );
+		echo '<label style="display:grid;gap:7px"><strong>' . esc_html( $definition[0] ) . '</strong><textarea rows="3" name="dkx_page_fields[' . esc_attr( $key ) . ']" placeholder="' . esc_attr( $definition[1] ) . '" style="width:100%">' . esc_textarea( $value ) . '</textarea></label>';
+	}
+	echo '</div>';
+}
+
+function dkxv4_save_page_content_meta( $post_id ) {
+	if ( ! isset( $_POST['dkxv4_page_content_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dkxv4_page_content_nonce'] ) ), 'dkxv4_page_content' ) ) {
+		return;
+	}
+	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		return;
+	}
+	$fields = isset( $_POST['dkx_page_fields'] ) ? (array) wp_unslash( $_POST['dkx_page_fields'] ) : array();
+	foreach ( $fields as $key => $value ) {
+		$key = sanitize_key( $key );
+		$value = sanitize_textarea_field( $value );
+		if ( '' === $value ) {
+			delete_post_meta( $post_id, '_dkx_page_' . $key );
+		} else {
+			update_post_meta( $post_id, '_dkx_page_' . $key, $value );
+		}
+	}
+}
+add_action( 'save_post_page', 'dkxv4_save_page_content_meta' );
+
+function dkxv4_get_team_media( $key, $aliases = array() ) {
+	$selected = absint( dkxv4_page_meta( 'about_' . $key . '_media_id', 0 ) );
+	if ( $selected && wp_attachment_is_image( $selected ) ) {
+		return get_post( $selected );
+	}
+	$aliases[] = $key;
+	$attachments = get_posts( array( 'post_type' => 'attachment', 'post_mime_type' => 'image', 'post_status' => 'inherit', 'posts_per_page' => 250, 'orderby' => 'date', 'order' => 'DESC' ) );
+	foreach ( $attachments as $attachment ) {
+		$haystack = strtolower( $attachment->post_title . ' ' . wp_basename( get_attached_file( $attachment->ID ) ) );
+		foreach ( $aliases as $alias ) {
+			if ( $alias && false !== strpos( $haystack, strtolower( $alias ) ) ) {
+				return $attachment;
+			}
+		}
+	}
+	return null;
+}
+
+function dkxv4_get_work_media() {
+	$meta_keys = array( '_dkx_show_in_our_work', '_dkx_our_work', '_dkx_featured_work' );
+	foreach ( $meta_keys as $meta_key ) {
+		$items = get_posts( array(
+			'post_type' => 'attachment',
+			'post_status' => 'inherit',
+			'post_mime_type' => array( 'image', 'video' ),
+			'posts_per_page' => 60,
+			'meta_key' => $meta_key,
+			'meta_value' => '1',
+			'orderby' => 'menu_order date',
+			'order' => 'ASC',
+		) );
+		if ( $items ) {
+			return $items;
+		}
+	}
+	return get_posts( array( 'post_type' => 'attachment', 'post_status' => 'inherit', 'post_mime_type' => 'video', 'posts_per_page' => 3, 'orderby' => 'date', 'order' => 'DESC' ) );
+}
+
+function dkxv4_attachment_work_field( $fields, $post ) {
+	$fields['dkx_show_in_our_work'] = array(
+		'label' => 'Show in DK Expressions Our Work',
+		'input' => 'html',
+		'html' => '<label><input type="checkbox" name="attachments[' . absint( $post->ID ) . '][_dkx_show_in_our_work]" value="1" ' . checked( get_post_meta( $post->ID, '_dkx_show_in_our_work', true ), '1', false ) . '> Include this photo/video in the Time Vault</label>',
+	);
+	return $fields;
+}
+add_filter( 'attachment_fields_to_edit', 'dkxv4_attachment_work_field', 10, 2 );
+
+function dkxv4_save_attachment_work_field( $post, $attachment ) {
+	update_post_meta( $post['ID'], '_dkx_show_in_our_work', ! empty( $attachment['_dkx_show_in_our_work'] ) ? '1' : '0' );
+	return $post;
+}
+add_filter( 'attachment_fields_to_save', 'dkxv4_save_attachment_work_field', 10, 2 );
+
+function dkxv4_project_enquiry_handler() {
+	check_admin_referer( 'dkx_project_enquiry', 'dkx_project_nonce' );
+	$name = sanitize_text_field( wp_unslash( $_POST['project_name'] ?? '' ) );
+	$email = sanitize_email( wp_unslash( $_POST['project_email'] ?? '' ) );
+	$brief = sanitize_textarea_field( wp_unslash( $_POST['project_brief'] ?? '' ) );
+	if ( ! $name || ! is_email( $email ) || ! $brief ) {
+		wp_safe_redirect( add_query_arg( 'project', 'invalid', home_url( '/contact/' ) ) );
+		exit;
+	}
+	$details = array(
+		'Name: ' . $name,
+		'Company: ' . sanitize_text_field( wp_unslash( $_POST['project_company'] ?? '' ) ),
+		'Email: ' . $email,
+		'Service: ' . sanitize_text_field( wp_unslash( $_POST['project_service'] ?? '' ) ),
+		'Budget: ' . sanitize_text_field( wp_unslash( $_POST['project_budget'] ?? '' ) ),
+		'Timeline: ' . sanitize_text_field( wp_unslash( $_POST['project_timeline'] ?? '' ) ),
+		'',
+		$brief,
+	);
+	wp_mail( dkxv4_content( 'contact_email' ), 'New DK Expressions project enquiry — ' . $name, implode( "\n", $details ), array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
+	wp_safe_redirect( add_query_arg( 'project', 'sent', home_url( '/contact/' ) ) );
+	exit;
+}
+add_action( 'admin_post_nopriv_dkx_project_enquiry', 'dkxv4_project_enquiry_handler' );
+add_action( 'admin_post_dkx_project_enquiry', 'dkxv4_project_enquiry_handler' );
+
+function dkxv4_time_traveller_application_handler() {
+	check_admin_referer( 'dkx_time_traveller_application', 'dkx_time_traveller_nonce' );
+	$name = sanitize_text_field( wp_unslash( $_POST['applicant_name'] ?? '' ) );
+	$email = sanitize_email( wp_unslash( $_POST['applicant_email'] ?? '' ) );
+	$reason = sanitize_textarea_field( wp_unslash( $_POST['applicant_reason'] ?? '' ) );
+	if ( ! $name || ! is_email( $email ) || ! $reason ) {
+		wp_safe_redirect( add_query_arg( 'application', 'invalid', home_url( '/about/#join-the-time-travellers' ) ) );
+		exit;
+	}
+	$attachments = array();
+	if ( ! empty( $_FILES['portfolio_file']['name'] ) ) {
+		require_once ABSPATH . 'wp-admin/includes/file.php';
+		$uploaded = wp_handle_upload( $_FILES['portfolio_file'], array( 'test_form' => false ) );
+		if ( empty( $uploaded['error'] ) && ! empty( $uploaded['file'] ) ) {
+			$attachments[] = $uploaded['file'];
+		}
+	}
+	$message = "Name: {$name}\nEmail: {$email}\nRole: " . sanitize_text_field( wp_unslash( $_POST['applicant_role'] ?? '' ) ) . "\nPortfolio: " . esc_url_raw( wp_unslash( $_POST['portfolio_url'] ?? '' ) ) . "\n\nWhy they want to join:\n{$reason}";
+	wp_mail( dkxv4_content( 'contact_email' ), 'Time Traveller application — ' . $name, $message, array( 'Reply-To: ' . $name . ' <' . $email . '>' ), $attachments );
+	wp_safe_redirect( add_query_arg( 'application', 'sent', home_url( '/about/#join-the-time-travellers' ) ) );
+	exit;
+}
+add_action( 'admin_post_nopriv_dkx_time_traveller_application', 'dkxv4_time_traveller_application_handler' );
+add_action( 'admin_post_dkx_time_traveller_application', 'dkxv4_time_traveller_application_handler' );

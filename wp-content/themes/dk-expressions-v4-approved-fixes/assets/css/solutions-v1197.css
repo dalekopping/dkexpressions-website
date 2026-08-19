@@ -1,0 +1,497 @@
+
+/* DK Expressions Solutions v1.19.7
+   Loaded AFTER solutions-v1181.css so this file is authoritative.
+*/
+.dk-solutions-page{
+  width:100%!important;
+  max-width:100%!important;
+  overflow:hidden!important;
+  background:#02070b!important;
+}
+.dk-solutions-page .dk-sol-services-v1196{
+  display:grid!important;
+  width:min(1240px,calc(100% - 48px))!important;
+  max-width:1240px!important;
+  margin:0 auto!important;
+  padding:80px 0 110px!important;
+  gap:18px!important;
+}
+.dk-solutions-page .dk-sol-wow-service{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:
+    radial-gradient(circle at 90% 12%,color-mix(in srgb,var(--service-accent) 11%,transparent),transparent 28%),
+    linear-gradient(145deg,#07131c,#03070b 72%)!important;
+  border:1px solid color-mix(in srgb,var(--service-accent) 38%,#172732)!important;
+  border-radius:0!important;
+}
+.dk-solutions-page .dk-sol-wow-service:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;top:0!important;bottom:0!important;
+  width:5px!important;
+  background:var(--service-accent)!important;
+  box-shadow:0 0 30px color-mix(in srgb,var(--service-accent) 30%,transparent)!important;
+}
+.dk-solutions-page .dk-sol-wow-head{
+  display:grid!important;
+  grid-template-columns:110px minmax(0,1fr)!important;
+  gap:26px!important;
+  align-items:end!important;
+  width:100%!important;
+  box-sizing:border-box!important;
+  padding:30px 34px 24px!important;
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+}
+.dk-solutions-page .dk-sol-wow-head>span{
+  display:block!important;
+  width:auto!important;
+  margin:0!important;
+  padding:0!important;
+  color:var(--service-accent)!important;
+  font-size:clamp(4rem,6vw,6.8rem)!important;
+  font-weight:950!important;
+  line-height:.72!important;
+  letter-spacing:-.075em!important;
+  text-shadow:0 0 24px color-mix(in srgb,var(--service-accent) 28%,transparent)!important;
+}
+.dk-solutions-page .dk-sol-wow-head>div{
+  min-width:0!important;
+  max-width:100%!important;
+}
+.dk-solutions-page .dk-sol-wow-head small{
+  display:block!important;
+  margin:0 0 10px!important;
+  color:var(--service-accent)!important;
+  font-size:.68rem!important;
+  font-weight:900!important;
+  line-height:1.45!important;
+  letter-spacing:.15em!important;
+  text-transform:uppercase!important;
+}
+.dk-solutions-page .dk-sol-wow-head h2{
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  padding:0!important;
+  color:#fff!important;
+  font-size:clamp(2.75rem,4.8vw,5.6rem)!important;
+  font-weight:950!important;
+  line-height:.86!important;
+  letter-spacing:-.055em!important;
+  text-transform:uppercase!important;
+  overflow-wrap:normal!important;
+}
+.dk-solutions-page .dk-sol-wow-grid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1.05fr) minmax(360px,.95fr)!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+.dk-solutions-page .dk-sol-wow-copy{
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  padding:34px 38px 38px!important;
+  order:1!important;
+}
+.dk-solutions-page .dk-sol-wow-service.is-alt .dk-sol-wow-copy{order:2!important}
+.dk-solutions-page .dk-sol-wow-copy>p{
+  width:100%!important;
+  max-width:760px!important;
+  margin:0 0 26px!important;
+  color:#bdc8d0!important;
+  font-size:1rem!important;
+  line-height:1.72!important;
+}
+.dk-solutions-page .dk-sol-wow-tags{
+  width:100%!important;
+  box-sizing:border-box!important;
+  margin:0 0 28px!important;
+  padding:14px 0!important;
+  color:color-mix(in srgb,var(--service-accent) 75%,white)!important;
+  border-top:1px solid rgba(255,255,255,.08)!important;
+  border-bottom:1px solid rgba(255,255,255,.08)!important;
+  font-size:.67rem!important;
+  font-weight:900!important;
+  line-height:1.55!important;
+  letter-spacing:.075em!important;
+  text-transform:uppercase!important;
+}
+.dk-solutions-page .dk-sol-wow-rate{
+  display:grid!important;
+  grid-template-columns:minmax(185px,.7fr) minmax(0,1.3fr)!important;
+  grid-template-rows:auto auto!important;
+  gap:8px 22px!important;
+  align-items:center!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:142px!important;
+  box-sizing:border-box!important;
+  margin:auto 0 0!important;
+  padding:20px!important;
+  background:linear-gradient(135deg,color-mix(in srgb,var(--service-accent) 9%,#061019),#03070a)!important;
+  border:1px solid color-mix(in srgb,var(--service-accent) 40%,#14232e)!important;
+}
+.dk-solutions-page .dk-sol-wow-rate>div{
+  grid-column:1!important;
+  grid-row:1/3!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:7px!important;
+  min-width:0!important;
+}
+.dk-solutions-page .dk-sol-wow-rate>div small{
+  color:#748997!important;
+  font-size:.55rem!important;
+  font-weight:900!important;
+  letter-spacing:.14em!important;
+}
+.dk-solutions-page .dk-sol-wow-rate strong{
+  display:block!important;
+  margin:0!important;
+  color:var(--service-accent)!important;
+  font-size:clamp(1.7rem,2.4vw,2.8rem)!important;
+  font-weight:950!important;
+  line-height:.92!important;
+  letter-spacing:-.045em!important;
+}
+.dk-solutions-page .dk-sol-wow-rate>p{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:end!important;
+  margin:0!important;
+  color:#d1dce3!important;
+  font-size:.82rem!important;
+  line-height:1.5!important;
+}
+.dk-solutions-page .dk-sol-wow-rate>a{
+  grid-column:2!important;
+  grid-row:2!important;
+  justify-self:start!important;
+  margin:0!important;
+  color:var(--service-accent)!important;
+  font-size:.62rem!important;
+  font-weight:900!important;
+  letter-spacing:.1em!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+}
+.dk-solutions-page .dk-sol-wow-media{
+  position:relative!important;
+  width:100%!important;
+  min-width:0!important;
+  min-height:440px!important;
+  overflow:hidden!important;
+  background:#02070b!important;
+  border-left:1px solid rgba(255,255,255,.08)!important;
+  order:2!important;
+}
+.dk-solutions-page .dk-sol-wow-service.is-alt .dk-sol-wow-media{
+  order:1!important;
+  border-left:0!important;
+  border-right:1px solid rgba(255,255,255,.08)!important;
+}
+.dk-solutions-page .dk-sol-wow-media img,
+.dk-solutions-page .dk-sol-wow-media video{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:440px!important;
+  object-fit:cover!important;
+  background:#000!important;
+}
+.dk-solutions-page .dk-sol-wow-placeholder{
+  position:absolute!important;
+  inset:0!important;
+  display:grid!important;
+  place-items:center!important;
+  align-content:center!important;
+  gap:10px!important;
+  min-height:440px!important;
+  padding:28px!important;
+  text-align:center!important;
+  background:
+    repeating-radial-gradient(circle at center,transparent 0 52px,color-mix(in srgb,var(--service-accent) 14%,transparent) 53px 54px),
+    radial-gradient(circle at center,color-mix(in srgb,var(--service-accent) 12%,transparent),transparent 46%)!important;
+}
+.dk-solutions-page .dk-sol-wow-placeholder>span{
+  color:color-mix(in srgb,var(--service-accent) 24%,transparent)!important;
+  font-size:7.5rem!important;
+  font-weight:950!important;
+  line-height:.7!important;
+}
+.dk-solutions-page .dk-sol-wow-placeholder>b{
+  color:#fff!important;
+  font-size:.76rem!important;
+  letter-spacing:.14em!important;
+}
+.dk-solutions-page .dk-sol-wow-placeholder>small{
+  max-width:260px!important;
+  color:#748591!important;
+  font-size:.65rem!important;
+  line-height:1.5!important;
+}
+
+/* Keep the lower Why DK + package sections visually separated. */
+.dk-solutions-page .dk-sol-why{margin-top:0!important}
+.dk-solutions-page .dk-packages{margin-top:0!important}
+
+/* Tablet */
+@media(max-width:980px){
+  .dk-solutions-page .dk-sol-wow-grid{
+    grid-template-columns:minmax(0,1fr) minmax(300px,.8fr)!important;
+  }
+  .dk-solutions-page .dk-sol-wow-head{
+    grid-template-columns:84px minmax(0,1fr)!important;
+  }
+}
+
+/* Phone: same visual language, single clean column, zero horizontal overflow */
+@media(max-width:760px){
+  .dk-solutions-page .dk-sol-services-v1196{
+    width:calc(100% - 24px)!important;
+    max-width:none!important;
+    margin:0 12px!important;
+    padding:58px 0 72px!important;
+    gap:14px!important;
+  }
+  .dk-solutions-page .dk-sol-wow-service{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    overflow:hidden!important;
+  }
+  .dk-solutions-page .dk-sol-wow-head{
+    grid-template-columns:54px minmax(0,1fr)!important;
+    gap:12px!important;
+    align-items:start!important;
+    padding:20px 16px 18px!important;
+  }
+  .dk-solutions-page .dk-sol-wow-head>span{
+    font-size:3.1rem!important;
+    line-height:.82!important;
+  }
+  .dk-solutions-page .dk-sol-wow-head small{
+    margin-bottom:7px!important;
+    font-size:.54rem!important;
+    line-height:1.4!important;
+    letter-spacing:.09em!important;
+    white-space:normal!important;
+    overflow-wrap:anywhere!important;
+  }
+  .dk-solutions-page .dk-sol-wow-head h2{
+    font-size:clamp(1.95rem,9.3vw,3.05rem)!important;
+    line-height:.9!important;
+    letter-spacing:-.04em!important;
+    white-space:normal!important;
+    overflow-wrap:break-word!important;
+    word-break:normal!important;
+  }
+  .dk-solutions-page .dk-sol-wow-grid{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    max-width:100%!important;
+  }
+  .dk-solutions-page .dk-sol-wow-copy,
+  .dk-solutions-page .dk-sol-wow-service.is-alt .dk-sol-wow-copy{
+    order:1!important;
+    width:100%!important;
+    padding:22px 16px 24px!important;
+  }
+  .dk-solutions-page .dk-sol-wow-copy>p{
+    margin-bottom:20px!important;
+    font-size:.94rem!important;
+    line-height:1.6!important;
+  }
+  .dk-solutions-page .dk-sol-wow-tags{
+    margin-bottom:20px!important;
+    padding:12px 0!important;
+    font-size:.56rem!important;
+    line-height:1.45!important;
+    letter-spacing:.055em!important;
+  }
+  .dk-solutions-page .dk-sol-wow-rate{
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto auto!important;
+    gap:10px!important;
+    min-height:0!important;
+    padding:16px!important;
+  }
+  .dk-solutions-page .dk-sol-wow-rate>div{grid-column:1!important;grid-row:1!important}
+  .dk-solutions-page .dk-sol-wow-rate strong{
+    font-size:clamp(1.55rem,8vw,2.35rem)!important;
+    line-height:.95!important;
+    white-space:normal!important;
+    overflow-wrap:break-word!important;
+  }
+  .dk-solutions-page .dk-sol-wow-rate>p{
+    grid-column:1!important;grid-row:2!important;
+    align-self:start!important;
+    font-size:.75rem!important;line-height:1.45!important;
+  }
+  .dk-solutions-page .dk-sol-wow-rate>a{grid-column:1!important;grid-row:3!important}
+  .dk-solutions-page .dk-sol-wow-media,
+  .dk-solutions-page .dk-sol-wow-service.is-alt .dk-sol-wow-media{
+    order:2!important;
+    width:100%!important;
+    min-height:230px!important;
+    border-left:0!important;border-right:0!important;
+    border-top:1px solid rgba(255,255,255,.08)!important;
+  }
+  .dk-solutions-page .dk-sol-wow-media img,
+  .dk-solutions-page .dk-sol-wow-media video{
+    width:100%!important;
+    height:250px!important;
+    min-height:250px!important;
+    object-fit:cover!important;
+  }
+  .dk-solutions-page .dk-sol-wow-placeholder{
+    position:relative!important;
+    inset:auto!important;
+    min-height:230px!important;
+  }
+  .dk-solutions-page .dk-sol-wow-placeholder>span{font-size:4.8rem!important}
+}
+
+
+/* =========================================================
+   v1.20.1 — SERVICE RATE CARDS
+   Mirrors the package-card language at the bottom of Solutions.
+   No neon glow behind pricing.
+   ========================================================= */
+.dk-solutions-page .dk-sol-wow-rate-card{
+  position:relative!important;
+  display:flex!important;
+  flex-direction:column!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-height:300px!important;
+  margin-top:auto!important;
+  padding:24px 24px 22px!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  background:#061018!important;
+  border:1px solid color-mix(in srgb,var(--service-accent) 42%,#172631)!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;right:0!important;top:0!important;
+  height:4px!important;
+  background:var(--service-accent)!important;
+  box-shadow:none!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card:after{
+  content:""!important;
+  position:absolute!important;
+  width:180px!important;height:180px!important;
+  right:-90px!important;top:-90px!important;
+  border:1px solid color-mix(in srgb,var(--service-accent) 30%,transparent)!important;
+  border-radius:50%!important;
+  opacity:.22!important;
+  box-shadow:none!important;
+  pointer-events:none!important;
+}
+.dk-solutions-page .dk-sol-rate-eyebrow{
+  position:relative!important;
+  z-index:1!important;
+  display:block!important;
+  margin:0 0 12px!important;
+  color:var(--service-accent)!important;
+  font-size:.56rem!important;
+  font-weight:900!important;
+  letter-spacing:.15em!important;
+  text-transform:uppercase!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card h3{
+  position:relative!important;
+  z-index:1!important;
+  margin:0 0 16px!important;
+  color:#fff!important;
+  font-size:clamp(1.3rem,1.8vw,1.85rem)!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+  text-transform:uppercase!important;
+}
+.dk-solutions-page .dk-sol-rate-price{
+  position:relative!important;
+  z-index:1!important;
+  margin:0 0 20px!important;
+  color:var(--service-accent)!important;
+  font-size:clamp(2rem,3vw,3.1rem)!important;
+  font-weight:950!important;
+  line-height:.92!important;
+  letter-spacing:-.05em!important;
+  text-shadow:none!important;
+  filter:none!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card ul{
+  position:relative!important;
+  z-index:1!important;
+  list-style:none!important;
+  margin:0 0 22px!important;
+  padding:0!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card li{
+  margin:0!important;
+  padding:9px 0!important;
+  border-bottom:1px solid rgba(255,255,255,.07)!important;
+  color:#b8c5cd!important;
+  font-size:.8rem!important;
+  line-height:1.45!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card li:before{
+  content:"↗"!important;
+  margin-right:8px!important;
+  color:var(--service-accent)!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card>a{
+  position:relative!important;
+  z-index:1!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  align-self:flex-start!important;
+  min-height:38px!important;
+  margin-top:auto!important;
+  padding:0 12px!important;
+  border:1px solid var(--service-accent)!important;
+  color:var(--service-accent)!important;
+  background:transparent!important;
+  font-size:.58rem!important;
+  font-weight:900!important;
+  letter-spacing:.09em!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+}
+.dk-solutions-page .dk-sol-wow-rate-card>a:hover{
+  background:var(--service-accent)!important;
+  color:#020508!important;
+}
+@media(max-width:760px){
+  .dk-solutions-page .dk-sol-wow-rate-card{
+    min-height:0!important;
+    padding:20px!important;
+  }
+  .dk-solutions-page .dk-sol-rate-price{
+    font-size:clamp(1.85rem,9vw,2.6rem)!important;
+  }
+  .dk-solutions-page .dk-sol-wow-rate-card h3{
+    font-size:1.35rem!important;
+  }
+}

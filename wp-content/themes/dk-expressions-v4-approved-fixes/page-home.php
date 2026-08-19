@@ -1,121 +1,117 @@
 <?php
 /**
- * DK Expressions V4.5 conversion-led Home page.
- *
- * Template Name: DK Expressions Home — Enterprise
- * @package DK_Expressions_V4_Fixes
+ * Template Name: DK Expressions Home — Conversion Experience
+ * Restored v1.20.3 Home with v1.20.4 loader compatibility.
  */
 get_header();
 
-$services = array();
-for ( $i = 1; $i <= 8; $i++ ) {
-	$services[] = array(
-		dkxv4_content( "service_{$i}_number" ),
-		dkxv4_content( "service_{$i}_title" ),
-		dkxv4_content( "service_{$i}_description" ),
-		dkxv4_content( "service_{$i}_icon" ),
-		dkxv4_content_url( "service_{$i}_url" ),
-	);
-}
-$work = array();
-for ( $i = 1; $i <= 3; $i++ ) {
-	$work[] = array(
-		dkxv4_content( "work_{$i}_category" ),
-		dkxv4_content( "work_{$i}_title" ),
-		dkxv4_content( "work_{$i}_colour" ),
-		dkxv4_content_url( "work_{$i}_url" ),
-	);
-}
-?>
-<section class="dk-home-page-hero dk-enterprise-hero" id="top">
-	<div class="dk-stars" aria-hidden="true"></div>
-	<div class="dk-enterprise-grid" aria-hidden="true"></div>
-	<div class="dk-home-page-copy">
-		<p class="dk-kicker">Premium culture, content &amp; brand storytelling</p>
-		<h1>We help brands <em>dominate attention.</em></h1>
-		<p>DK Expressions combines editorial authority, world-class visual storytelling and digital growth strategy to create experiences people remember—and results businesses can measure.</p>
-		<div class="dk-home-actions">
-			<a class="dk-button" href="<?php echo esc_url( dkxv4_content_url( 'home_page_primary_url' ) ); ?>">Book a strategy call ↗</a>
-			<a class="dk-text-link" href="#choose-your-experience">Choose your experience ↓</a>
-		</div>
-		<ul class="dk-hero-proof" aria-label="DK Expressions credentials">
-			<li><strong>Since 2013</strong><span>Independent media authority</span></li>
-			<li><strong>3,000+</strong><span>Stories published</span></li>
-			<li><strong>100+</strong><span>Brands &amp; partners</span></li>
-		</ul>
-	</div>
-	<div class="dk-home-orbit" aria-hidden="true"><img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt=""></div>
-</section>
-
-<section class="dk-experience-pathways dk-section" id="choose-your-experience" aria-labelledby="experience-title">
-	<div class="dk-section-head">
-		<div><p class="dk-kicker">Choose your experience</p><h2 id="experience-title">One brand.<br><em>Two powerful worlds.</em></h2></div>
-		<p>Enter through the pathway that matches what you need today. Both are powered by the same standard of creativity, credibility and execution.</p>
-	</div>
-	<div class="dk-pathway-grid">
-		<a class="dk-pathway-card dk-pathway-media" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>">
-			<span class="dk-pathway-index">01 / MEDIA</span><h3>Discover culture as it happens.</h3><p>Entertainment news, interviews, reviews, event coverage, competitions and the stories shaping South Africa.</p><strong>Explore DK Expressions Media →</strong>
-		</a>
-		<a class="dk-pathway-card dk-pathway-agency" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>">
-			<span class="dk-pathway-index">02 / AGENCY</span><h3>Build a brand people remember.</h3><p>Strategy, campaigns, photography, film, SEO, paid media and digital experiences engineered for growth.</p><strong>Grow your brand →</strong>
-		</a>
-	</div>
-</section>
-
-<section class="dk-authority-strip" aria-label="Selected authority and experience">
-	<p>Trusted across global entertainment, major events and ambitious brands</p>
-	<div class="dk-authority-marquee" data-dkx-marquee>
-		<span>John Legend</span><span>Foo Fighters</span><span>Justin Bieber</span><span>Comic Con Africa</span><span>Big Concerts</span><span>Disney On Ice</span><span>Tiësto</span><span>Finance Magnates</span><span>OneRepublic</span><span>Michael Bublé</span>
-	</div>
-</section>
-
-<section class="dk-metrics dk-home-metrics dk-no-semantic-highlight" aria-label="DK Expressions in numbers">
-	<?php for ( $i = 1; $i <= 6; $i++ ) :
-		$metric_value = (string) dkxv4_content( "metric_{$i}_value" );
-		$metric_class = preg_match( '/\d/u', $metric_value ) ? 'is-numeric' : 'is-textual';
-		?>
-		<div class="<?php echo esc_attr( $metric_class ); ?>"><strong><?php echo esc_html( $metric_value ); ?></strong><span><?php echo esc_html( dkxv4_content( "metric_{$i}_label" ) ); ?></span></div>
-	<?php endfor; ?>
-</section>
-
-<section class="dk-section">
-	<div class="dk-section-head"><div><p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'home_services_kicker' ) ); ?></p><h2>Capability built<br><em>around your outcome.</em></h2></div><p>Choose a focused service or combine capabilities into an integrated campaign designed around your commercial objective.</p></div>
-	<div class="dk-card-grid">
-		<?php foreach ( $services as $service ) : ?>
-			<article class="dk-card"><span class="dk-card-number"><?php echo esc_html( $service[0] ); ?></span><span class="dk-card-icon" aria-hidden="true"><?php echo esc_html( $service[3] ); ?></span><h3><?php echo esc_html( $service[1] ); ?></h3><p><?php echo esc_html( $service[2] ); ?></p><a href="<?php echo esc_url( $service[4] ); ?>">Explore ↗</a></article>
-		<?php endforeach; ?>
-	</div>
-</section>
-
-<section class="dk-section">
-	<div class="dk-section-head"><div><p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'home_work_kicker' ) ); ?></p><h2><?php echo esc_html( dkxv4_content( 'home_work_title_1' ) ); ?><br><em><?php echo esc_html( dkxv4_content( 'home_work_title_2' ) ); ?></em></h2></div><p><?php echo esc_html( dkxv4_content( 'home_work_intro' ) ); ?></p></div>
-	<div class="dk-work-grid">
-		<?php foreach ( $work as $item ) : ?>
-			<a class="dk-work-card" style="--tone:<?php echo esc_attr( $item[2] ); ?>" href="<?php echo esc_url( $item[3] ); ?>"><span class="dk-work-card-content"><small><?php echo esc_html( $item[0] ); ?></small><strong><?php echo esc_html( $item[1] ); ?></strong></span></a>
-		<?php endforeach; ?>
-	</div>
-</section>
-
-<?php
 $clients_post_type = dkxv4_clients_post_type();
-if ( $clients_post_type ) :
-	$clients = new WP_Query( array( 'post_type' => $clients_post_type, 'post_status' => 'publish', 'posts_per_page' => min( 40, max( 1, absint( dkxv4_content( 'home_clients_count' ) ) ) ), 'orderby' => array( 'menu_order' => 'ASC', 'title' => 'ASC' ), 'no_found_rows' => true ) );
-	if ( $clients->have_posts() ) : ?>
-	<section class="dk-section dk-clients-section">
-		<div class="dk-section-head"><div><p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'home_clients_kicker' ) ); ?></p><h2><?php echo esc_html( dkxv4_content( 'home_clients_title_1' ) ); ?><br><em><?php echo esc_html( dkxv4_content( 'home_clients_title_2' ) ); ?></em></h2></div><p><?php echo esc_html( dkxv4_content( 'home_clients_intro' ) ); ?></p></div>
-		<div class="dk-client-logo-grid"><?php while ( $clients->have_posts() ) : $clients->the_post(); ?><div class="dk-client-logo" title="<?php echo esc_attr( get_the_title() ); ?>"><?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'medium', array( 'loading' => 'lazy', 'alt' => get_the_title() ) ); } else { echo '<strong>' . esc_html( get_the_title() ) . '</strong>'; } ?></div><?php endwhile; wp_reset_postdata(); ?></div>
+$clients = $clients_post_type ? get_posts( array(
+	'post_type'      => $clients_post_type,
+	'post_status'    => 'publish',
+	'posts_per_page' => 40,
+	'orderby'        => array( 'menu_order' => 'ASC', 'title' => 'ASC' ),
+) ) : array();
+
+$metrics = array();
+for ( $i = 1; $i <= 6; $i++ ) {
+	$metrics[] = array( dkxv4_content( "metric_{$i}_value" ), dkxv4_content( "metric_{$i}_label" ) );
+}
+
+$work_media = array_slice( dkxv4_get_work_media(), 0, 3 );
+$work_fallbacks = array(
+	array( 'Live Events', 'Moments that only happen once.', 'Concerts, festivals and cultural experiences captured while the energy is still alive.' ),
+	array( 'Brand Stories', 'Campaigns built to keep moving.', 'Original photography, film, editorial and social content designed around an outcome.' ),
+	array( 'The Time Vault', 'Proof, not promises.', 'A growing archive of the stages, people, productions and brands we have travelled with.' ),
+);
+?>
+
+<main class="dkx1200-home" id="top">
+	<section class="dkx1200-hero">
+		<div class="dkx1200-hero-grid" aria-hidden="true"></div>
+		<div class="dkx1200-portal" aria-hidden="true"><span></span><span></span><span></span><span></span><img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt=""></div>
+		<div class="dkx1200-hero-copy">
+			<p class="dkx1200-eyebrow"><?php echo esc_html( dkxv4_page_meta( 'home_kicker', 'Premium culture, content & brand storytelling' ) ); ?></p>
+			<h1><?php echo wp_kses_post( dkxv4_multiline_heading( dkxv4_page_meta( 'home_heading', "We help brands\ndominate attention." ) ) ); ?></h1>
+			<p class="dkx1200-hero-sub"><?php echo esc_html( dkxv4_page_meta( 'home_intro', 'DK Expressions combines editorial authority, world-class visual storytelling and digital growth strategy to create experiences people remember—and results businesses can measure.' ) ); ?></p>
+			<div class="dkx1200-hero-offer"><b>MEDIA</b><span>+</span><b>CREATIVE</b><span>+</span><b>EXPERIENCES</b><span>+</span><b>TECHNOLOGY</b></div>
+			<div class="dkx1200-actions"><a class="dkx1200-btn dkx1200-btn-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project ↗</a><a class="dkx1200-btn dkx1200-btn-ghost" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">See the proof →</a></div>
+		</div>
+		<div class="dkx1200-hero-tag">DK EXPRESSIONS / JOHANNESBURG<br>FREEZING TIME AND SPACE®</div>
 	</section>
-	<?php endif; endif; ?>
 
-<section class="dk-section dk-eos-bridge">
-	<div class="dk-eos-copy"><p class="dk-kicker">Powered by Expressions OS</p><h2>Your project.<br><em>One intelligent workspace.</em></h2><p>Selected clients will collaborate through Expressions OS—our evolving enterprise platform for briefs, approvals, media assets, reporting, tasks and intelligent assistance.</p><div class="dk-home-actions"><a class="dk-button" href="https://staging.dkexpressions.co.za/" target="_blank" rel="noopener">Preview Expressions OS ↗</a><a class="dk-text-link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Request client access →</a></div></div>
-	<div class="dk-eos-console" aria-label="Expressions OS capabilities"><span>MISSION CONTROL</span><div><b>Projects</b><strong>12 active</strong></div><div><b>Approvals</b><strong>4 awaiting</strong></div><div><b>Media vault</b><strong>Connected</strong></div><div><b>Reporting</b><strong>Live</strong></div><small>EXPRESS · BUILD · EMPOWER</small></div>
-</section>
+	<section class="dkx1200-stats dk-no-semantic-highlight" aria-label="DK Expressions in numbers">
+		<?php foreach ( $metrics as $metric ) : ?><article><strong><?php echo esc_html( $metric[0] ); ?></strong><span><?php echo esc_html( $metric[1] ); ?></span></article><?php endforeach; ?>
+	</section>
 
-<section class="dk-section">
-	<div class="dk-section-head"><div><p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'home_insights_kicker' ) ); ?></p><h2><?php echo esc_html( dkxv4_content( 'home_insights_title_1' ) ); ?><br><em><?php echo esc_html( dkxv4_content( 'home_insights_title_2' ) ); ?></em></h2></div><p><?php echo esc_html( dkxv4_content( 'home_insights_intro' ) ); ?></p></div>
-	<div class="dk-insight-list"><?php $latest = new WP_Query( array( 'post_type' => 'post', 'posts_per_page' => min( 12, max( 1, absint( dkxv4_content( 'home_posts_count' ) ) ) ) ) ); if ( $latest->have_posts() ) : while ( $latest->have_posts() ) : $latest->the_post(); $categories = get_the_category(); ?><article><a href="<?php the_permalink(); ?>"><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'd.m.y' ) ); ?></time><small><?php echo esc_html( $categories ? $categories[0]->name : 'Story' ); ?></small><h3><?php the_title(); ?></h3><span>↗</span></a></article><?php endwhile; wp_reset_postdata(); else : ?><p>No stories have been published yet.</p><?php endif; ?></div>
-</section>
+	<?php if ( $clients ) : ?>
+	<section class="dkx1200-trust" aria-label="Selected clients and partners">
+		<div class="dkx1200-trust-label"><i></i>TRUSTED BY</div>
+		<div class="dkx1200-trust-window"><div class="dkx1200-trust-track">
+			<?php for ( $loop = 0; $loop < 2; $loop++ ) : foreach ( $clients as $client ) : if ( has_post_thumbnail( $client ) ) : ?>
+				<span title="<?php echo esc_attr( get_the_title( $client ) ); ?>"><?php echo get_the_post_thumbnail( $client, 'medium', array( 'loading' => 'lazy', 'alt' => get_the_title( $client ) ) ); ?></span>
+			<?php endif; endforeach; endfor; ?>
+		</div></div>
+	</section>
+	<?php endif; ?>
 
-<section class="dk-contact dk-conversion-final"><p class="dk-kicker">Your next chapter</p><h2>Let’s create something<br>people cannot ignore.</h2><p>Tell us what you are launching, promoting or transforming. We will build the right combination of story, strategy and execution.</p><div class="dk-home-actions"><a class="dk-button" href="<?php echo esc_url( dkxv4_content_url( 'header_cta_url' ) ); ?>">Book a strategy call ↗</a><a class="dk-text-link" href="mailto:<?php echo esc_attr( dkxv4_content( 'contact_email' ) ); ?>">Email DK Expressions →</a></div></section>
+	<section class="dkx1203-section dkx1203-proof" id="selected-work">
+		<header class="dkx1203-section-head"><p class="dkx1203-eyebrow">Selected Work</p><h2>Proof lives in<br>the experience.</h2><p>Real work. Real audiences. Stories created before, during and after the moment.</p></header>
+		<div class="dkx1203-proof-grid">
+			<?php for ( $i = 0; $i < 3; $i++ ) : $media = $work_media[ $i ] ?? null; $fallback = $work_fallbacks[ $i ]; ?>
+			<article class="dkx1203-proof-card">
+				<div class="dkx1203-proof-media">
+					<?php if ( $media && 0 === strpos( (string) get_post_mime_type( $media ), 'video/' ) ) : ?><video controls preload="metadata" playsinline><source src="<?php echo esc_url( wp_get_attachment_url( $media->ID ) ); ?>" type="<?php echo esc_attr( get_post_mime_type( $media ) ); ?>"></video><?php else : ?><div class="dkx1203-proof-placeholder"><span><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span></div><?php endif; ?>
+				</div>
+				<div class="dkx1203-proof-body"><p class="dkx1203-proof-meta"><?php echo esc_html( $fallback[0] ); ?></p><h3><?php echo esc_html( $media ? get_the_title( $media ) : $fallback[1] ); ?></h3><p><?php echo esc_html( $fallback[2] ); ?></p></div>
+			</article>
+			<?php endfor; ?>
+		</div>
+		<div class="dkx1203-actions"><a class="dkx1203-btn is-primary" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">Enter the Time Vault ↗</a></div>
+	</section>
+
+	<section class="dkx1203-section dkx1203-process" id="how-we-work">
+		<header class="dkx1203-section-head"><p class="dkx1203-eyebrow">How We Work</p><h2>One connected<br>creative system.</h2><p>Strategy and storytelling travel together. Every stage is built around the objective, the audience and what needs to happen next.</p></header>
+		<div class="dkx1203-process-grid">
+			<article><span>01 / DISCOVER</span><h3>Find the signal.</h3><p>We define the objective, audience, opportunity and the story worth telling.</p></article>
+			<article><span>02 / DESIGN</span><h3>Build the journey.</h3><p>We shape the concept, campaign, content plan and conversion path.</p></article>
+			<article><span>03 / CREATE</span><h3>Capture the moment.</h3><p>Photography, film, editorial and digital assets are produced as one system.</p></article>
+			<article><span>04 / AMPLIFY</span><h3>Keep it moving.</h3><p>Publishing, social distribution and reporting extend the impact beyond launch day.</p></article>
+		</div>
+		<p class="dkx1203-process-note">ONE BRIEF · ONE CONNECTED TEAM · ONE MEASURABLE OUTCOME</p>
+	</section>
+
+	<section class="dkx1203-section dkx1203-pricing" id="pricing">
+		<header class="dkx1203-section-head"><p class="dkx1203-eyebrow">Start Here</p><h2>Choose the level<br>of attention.</h2><p>Clear starting points for media exposure, event domination and ongoing brand growth.</p></header>
+		<div class="dkx1203-pricing-grid">
+			<article class="is-media"><p class="dkx1203-pricing-label">Media / Campaign</p><h3>Spotlight</h3><p class="dkx1203-pricing-price">R6,000 <span>/ campaign</span></p><ul><li>8 editorial listings</li><li>Social amplification on each</li><li>Instagram, Facebook and X coverage</li><li>Campaign-window placement</li></ul><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Choose Spotlight ↗</a></article>
+			<article class="is-events is-featured"><b class="dkx1203-pricing-badge">Most chosen</b><p class="dkx1203-pricing-label">Event Domination</p><h3>Signature</h3><p class="dkx1203-pricing-price">R32,000 <span>/ event</span></p><ul><li>Up to 8 hours coverage</li><li>Photography and video</li><li>Live event posting</li><li>Same-day teaser and recap</li></ul><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Choose Signature ↗</a></article>
+			<article class="is-brands"><p class="dkx1203-pricing-label">Always On</p><h3>Premium</h3><p class="dkx1203-pricing-price">R35,000 <span>/ month</span></p><ul><li>Two shoots per month</li><li>20 posts and 8 reels</li><li>Full social management</li><li>Strategy, creative and reporting</li></ul><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Choose Premium ↗</a></article>
+		</div>
+		<p class="dkx1203-pricing-note">Need a different scale? <a href="<?php echo esc_url( home_url( '/rates/' ) ); ?>">View the complete 2026 rate card →</a></p>
+	</section>
+
+	<section class="dkx1203-section dkx1203-testimonials" id="testimonials">
+		<header class="dkx1203-section-head"><p class="dkx1203-eyebrow">Don’t Take Our Word For It</p><h2>Reputation,<br>documented.</h2><p>Original recommendations from people and organisations DK Expressions has worked alongside.</p></header>
+		<div class="dkx1203-testimonials-grid">
+			<blockquote><p>“Committed, passionate and dedicated to his craft.”</p><footer><strong>Dionne Domyan-Mudie</strong><span>National Publicist, Big Concerts · The Publicity Workshop</span></footer></blockquote>
+			<blockquote><p>“I highly recommend associating any brand with DK Expressions.”</p><footer><strong>Mike Pocock</strong><span>PR Manager, One-Eyed Jack</span></footer></blockquote>
+			<blockquote><p>“The photography and other Social Media Services had been outstanding.”</p><footer><strong>Lloyd Cornwall</strong><span>Director, VWV Massive</span><span class="dkx1203-delicious">Delicious International Food & Music Festival</span></footer></blockquote>
+		</div>
+		<div class="dkx1203-actions dkx1203-testimonial-link"><a href="<?php echo esc_url( home_url( '/our-work/#recommendations' ) ); ?>">View the original recommendations ↗</a></div>
+	</section>
+
+	<section class="dkx1200-section dkx1200-pathways" id="three-doors">
+		<header class="dkx1200-section-head"><div><p class="dkx1200-eyebrow">Choose Your Experience</p><h2>Three doors.<br><em>One DK universe.</em></h2></div><p>Enter through the pathway that matches what you need today. Every door is powered by the same creativity, credibility and execution.</p></header>
+		<div class="dkx1200-pathway-grid">
+			<a class="agency" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><span>01 / AGENCY</span><h3>Build a brand people remember.</h3><p>Strategy, campaigns, photography, film, SEO and digital experiences engineered for growth.</p><b>Explore Solutions →</b></a>
+			<a class="media" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><span>02 / MEDIA</span><h3>Discover culture as it happens.</h3><p>Entertainment news, interviews, reviews, events and the stories shaping South Africa.</p><b>Enter Insights →</b></a>
+			<a class="archive" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>"><span>03 / TIME VAULT</span><h3>See where we have travelled.</h3><p>Photography, motion, recommendations and moments frozen across more than a decade.</p><b>Open Our Work →</b></a>
+		</div>
+	</section>
+
+	<section class="dkx1203-final">
+		<div class="dkx1203-final-inner"><p class="dkx1203-eyebrow">Your Next Chapter</p><h2><?php echo wp_kses_post( dkxv4_multiline_heading( dkxv4_page_meta( 'home_final_heading', "Make something\npeople cannot ignore." ) ) ); ?></h2><p><?php echo esc_html( dkxv4_page_meta( 'home_final_copy', 'Tell us what you are launching, promoting or transforming. We will build the right combination of story, strategy and execution.' ) ); ?></p><div class="dkx1203-actions"><a class="dkx1203-btn is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project ↗</a><a class="dkx1203-btn" href="https://wa.me/27722460451" target="_blank" rel="noopener">WhatsApp us →</a></div><p class="dkx1203-location">JOHANNESBURG · SOUTH AFRICA · WORLDWIDE</p></div>
+	</section>
+</main>
 <?php get_footer(); ?>
