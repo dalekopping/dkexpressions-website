@@ -26,9 +26,9 @@ get_header();
 	<section class="dk-sol-hero">
 		<div class="dk-sol-hero-bg" aria-hidden="true"></div>
 		<div class="dk-sol-hero-inner">
-			<p class="dk-kicker">What we do</p>
-			<h1>We don’t just create content.<br><em>We create impact.</em></h1>
-			<p class="dk-sol-lead">DK Expressions connects brands, experiences and audiences through powerful storytelling, strategic digital amplification and content designed to be remembered.</p>
+			<p class="dk-kicker"><?php echo esc_html( dkxv4_page_meta( 'solutions_kicker', 'What we do' ) ); ?></p>
+			<h1><?php echo wp_kses_post( dkxv4_multiline_heading( dkxv4_page_meta( 'solutions_heading', "We don’t just create content.\nWe create impact." ) ) ); ?></h1>
+			<p class="dk-sol-lead"><?php echo esc_html( dkxv4_page_meta( 'solutions_intro', 'DK Expressions connects brands, experiences and audiences through powerful storytelling, strategic digital amplification and content designed to be remembered.' ) ); ?></p>
 			<div class="dk-sol-hero-actions">
 				<a class="dk-button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project ↗</a>
 				<a class="dk-text-link" href="<?php echo esc_url( home_url( '/rates/' ) ); ?>">View 2026 rate card →</a>
