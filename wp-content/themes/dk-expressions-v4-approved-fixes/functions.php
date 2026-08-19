@@ -13,21 +13,35 @@ require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
 /**
- * Non-destructive landing-page concept preview.
+ * Return the requested non-destructive landing-page preview key.
  *
- * The normal landing remains unchanged. The alternate Three Doors layout is
- * shown only when the explicit preview query string is present.
+ * The normal landing remains unchanged unless an approved preview query is
+ * present on the front page.
  */
-function dkxv4_is_three_doors_landing_preview() {
+function dkxv4_landing_preview_key() {
 	if ( ! is_front_page() || ! isset( $_GET['dk-preview'] ) ) {
-		return false;
+		return '';
 	}
 
-	return 'three-doors' === sanitize_key( wp_unslash( $_GET['dk-preview'] ) );
+	return sanitize_key( wp_unslash( $_GET['dk-preview'] ) );
+}
+
+/**
+ * Whether the Three Doors comparison is active.
+ */
+function dkxv4_is_three_doors_landing_preview() {
+	return 'three-doors' === dkxv4_landing_preview_key();
+}
+
+/**
+ * Whether the booking-led conversion comparison is active.
+ */
+function dkxv4_is_conversion_landing_preview() {
+	return 'conversion' === dkxv4_landing_preview_key();
 }
 
 function dkx_fixes_assets() {
-	$release = '1.20.4';
+	$release = '1.20.5';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -83,11 +97,19 @@ function dkx_fixes_assets() {
 		'dkxHighlightConfig',
 		array( 'additionalLocations' => preg_split( '/\R/', dkxv4_content( 'highlight_locations' ), -1, PREG_SPLIT_NO_EMPTY ) )
 	);
-	if ( is_page( 'home' ) || dkxv4_is_three_doors_landing_preview() ) {
+	if ( is_page( 'home' ) || dkxv4_is_three_doors_landing_preview() || dkxv4_is_conversion_landing_preview() ) {
 		wp_enqueue_style(
 			'dkx-home-v1200',
 			get_stylesheet_directory_uri() . '/assets/css/home-v1200.css',
 			array( 'dkx-recovery-v1204' ),
+			$release
+		);
+	}
+	if ( dkxv4_is_conversion_landing_preview() ) {
+		wp_enqueue_style(
+			'dkx-landing-conversion-v1205',
+			get_stylesheet_directory_uri() . '/assets/css/landing-conversion-v1205.css',
+			array( 'dkx-home-v1200' ),
 			$release
 		);
 	}
