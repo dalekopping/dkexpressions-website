@@ -4,6 +4,13 @@
  * v1.18.9
  */
 get_header();
+$industries_preview = function_exists( 'dkxv4_industries_preview_key' ) ? dkxv4_industries_preview_key() : '';
+if ( '' !== $industries_preview ) {
+	get_template_part( 'template-parts/industries-options-preview', null, array( 'preview' => $industries_preview ) );
+	get_footer();
+	return;
+}
+
 $industries = array(
  array('01','ENTERTAINMENT & LIVE EVENTS','This is where DK Expressions was forged.','Concerts, festivals, comedy, theatre, exhibitions, international tours and cultural experiences. We understand the difference between simply announcing an event and making people feel that they cannot afford to miss it.','Event promotion · Artist features · Photography · Reviews · Social amplification · Competitions · Interviews · SEO','#43baff'),
  array('02','MUSIC','From emerging performers to global stages.','Music has been part of the DK Expressions DNA since the beginning. Our journey has crossed paths with John Legend, Carlos Santana, Bruce Springsteen, Justin Bieber, Michael Bublé, One Direction, Foo Fighters, UB40 and many more.','Live coverage · Artist storytelling · Photography · Tour announcements','#8d6bff'),
