@@ -1,0 +1,394 @@
+/* DK Expressions Solutions comparisons v1.21.7. */
+.dkxsp {
+	--ink: #02080e;
+	--panel: #06131d;
+	--panel-2: #091b28;
+	--line: rgba(77, 183, 255, .2);
+	--muted: #91a8b8;
+	--white: #f8fbff;
+	--blue: #38b6ff;
+	--gold: #ffc44d;
+	--purple: #9a6cff;
+	--red: #ff536d;
+	--aqua: #20ddce;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	overflow: hidden;
+	padding-bottom: 112px;
+	background: #02080e;
+	color: var(--white);
+	font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+}
+.dkxsp,
+.dkxsp * { box-sizing: border-box; }
+.dkxsp :is(h1, h2, h3, p, ol) { margin-top: 0; }
+.dkxsp :is(h1, h2, h3, strong, b, em) { text-shadow: none !important; animation: none !important; }
+.dkxsp a { color: inherit; text-decoration: none; }
+.dkxsp-shell { position: relative; z-index: 2; width: min(1400px, calc(100% - 88px)); margin: 0 auto; }
+
+.dkxsp-atmosphere {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background-image:
+		linear-gradient(rgba(56, 182, 255, .035) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(56, 182, 255, .035) 1px, transparent 1px);
+	background-size: 54px 54px;
+	-webkit-mask-image: linear-gradient(#000 0, transparent 31%);
+	mask-image: linear-gradient(#000 0, transparent 31%);
+}
+.dkxsp-atmosphere i { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 14px currentColor; }
+.dkxsp-atmosphere i:nth-child(1) { top: 7%; left: 8%; }
+.dkxsp-atmosphere i:nth-child(2) { top: 18%; right: 13%; color: var(--gold); background: var(--gold); }
+.dkxsp-atmosphere i:nth-child(3) { top: 27%; left: 57%; color: var(--purple); background: var(--purple); }
+
+.dkxsp-eyebrow {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 25px;
+	color: var(--blue);
+	font-size: 10px;
+	font-weight: 950;
+	letter-spacing: .2em;
+	line-height: 1.4;
+	text-transform: uppercase;
+}
+.dkxsp-eyebrow::before { width: 35px; height: 2px; background: currentColor; content: ""; }
+
+.dkxsp-hero {
+	position: relative;
+	order: 1;
+	display: flex;
+	align-items: center;
+	min-height: min(900px, calc(100vh - 70px));
+	padding: clamp(125px, 15vw, 190px) 0 clamp(84px, 10vw, 135px);
+	border-bottom: 1px solid var(--line);
+	background:
+		radial-gradient(circle at 80% 40%, rgba(56, 182, 255, .1), transparent 28rem),
+		linear-gradient(145deg, #02080e, #05131d 58%, #02080e);
+}
+.dkxsp-hero::after {
+	position: absolute;
+	right: -16vw;
+	bottom: -30vw;
+	width: 68vw;
+	height: 68vw;
+	border: 1px solid rgba(56, 182, 255, .15);
+	border-radius: 50%;
+	content: "";
+}
+.dkxsp-hero-grid { display: grid; grid-template-columns: minmax(190px, .28fr) minmax(0, 1fr); align-items: end; gap: clamp(40px, 7vw, 110px); }
+.dkxsp-hero-index { align-self: stretch; display: flex; flex-direction: column; justify-content: space-between; padding: 18px 0; border-top: 2px solid var(--gold); color: var(--muted); }
+.dkxsp-hero-index span { font-size: 9px; font-weight: 900; letter-spacing: .18em; text-transform: uppercase; }
+.dkxsp-hero-index b { color: rgba(255, 255, 255, .08); font-family: "Arial Black", Arial, sans-serif; font-size: clamp(100px, 13vw, 210px); letter-spacing: -.09em; line-height: .72; }
+.dkxsp-hero-copy { max-width: 1110px; }
+.dkxsp-hero h1 {
+	margin-bottom: 34px;
+	font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+	font-size: clamp(51px, 7.1vw, 112px);
+	font-weight: 950;
+	letter-spacing: -.072em;
+	line-height: .9;
+	text-transform: uppercase;
+}
+.dkxsp-hero h1 em { display: block; margin-top: 12px; color: var(--blue); font-style: normal; }
+.dkxsp-hero-copy > p:not(.dkxsp-eyebrow) { max-width: 880px; margin-bottom: 32px; color: #cbd9e1; font-size: clamp(17px, 1.8vw, 24px); font-weight: 620; line-height: 1.58; }
+.dkxsp-scroll-link {
+	display: inline-flex;
+	align-items: center;
+	gap: 38px;
+	min-height: 50px;
+	padding: 0 18px;
+	border: 1px solid var(--blue);
+	color: var(--white);
+	font-size: 10px;
+	font-weight: 950;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+}
+.dkxsp-scroll-link span { color: var(--blue); font-size: 17px; }
+
+.dkxsp-core {
+	position: relative;
+	order: 2;
+	padding: clamp(90px, 10vw, 155px) 0;
+	border-bottom: 1px solid var(--line);
+	background: #030a10;
+}
+.dkxsp-section-head { max-width: 1040px; margin-bottom: clamp(48px, 6vw, 78px); }
+.dkxsp-section-head h2,
+.dkxsp-capability-layout > header h2,
+.dkxsp-final h2 {
+	margin-bottom: 0;
+	font-family: "Arial Black", Arial, sans-serif;
+	font-size: clamp(43px, 6.4vw, 95px);
+	font-weight: 950;
+	letter-spacing: -.065em;
+	line-height: .92;
+	text-transform: uppercase;
+}
+.dkxsp-section-head h2 em,
+.dkxsp-capability-layout > header h2 em,
+.dkxsp-final h2 em { color: var(--blue); font-style: normal; }
+
+.dkxsp-solution-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.dkxsp-solution {
+	--solution-color: var(--blue);
+	position: relative;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
+	min-width: 0;
+	min-height: 760px;
+	overflow: hidden;
+	border: 1px solid color-mix(in srgb, var(--solution-color) 45%, transparent);
+	background: linear-gradient(150deg, color-mix(in srgb, var(--solution-color) 9%, #07131d), #02080e 66%);
+}
+.dkxsp-solution.is-retainer { --solution-color: var(--purple); }
+.dkxsp-solution::before { position: absolute; inset: 0 0 auto; height: 5px; background: var(--solution-color); content: ""; }
+.dkxsp-solution > header { position: relative; padding: clamp(35px, 4.5vw, 64px); }
+.dkxsp-solution > header::after {
+	position: absolute;
+	right: -22px;
+	top: 35px;
+	color: color-mix(in srgb, var(--solution-color) 7%, transparent);
+	content: "01";
+	font-family: "Arial Black", Arial, sans-serif;
+	font-size: 180px;
+	letter-spacing: -.08em;
+	line-height: .7;
+}
+.dkxsp-solution.is-retainer > header::after { content: "02"; }
+.dkxsp-solution > header > span { position: relative; z-index: 1; display: block; margin-bottom: 42px; color: var(--solution-color); font-size: 9px; font-weight: 950; letter-spacing: .17em; text-transform: uppercase; }
+.dkxsp-solution h3 { position: relative; z-index: 1; margin-bottom: 24px; font-family: "Arial Black", Arial, sans-serif; font-size: clamp(45px, 5.7vw, 84px); letter-spacing: -.07em; line-height: .84; text-transform: uppercase; }
+.dkxsp-solution > header p { position: relative; z-index: 1; max-width: 530px; margin-bottom: 0; color: #d4e0e7; font-size: 17px; font-weight: 700; line-height: 1.5; }
+
+.dkxsp-tier-list { align-self: end; display: grid; border-top: 1px solid color-mix(in srgb, var(--solution-color) 30%, transparent); }
+.dkxsp-tier-list > div { position: relative; display: grid; grid-template-columns: minmax(110px, .65fr) minmax(0, 1fr); align-items: center; gap: 22px; min-height: 104px; padding: 22px clamp(25px, 4vw, 52px); border-bottom: 1px solid color-mix(in srgb, var(--solution-color) 24%, transparent); }
+.dkxsp-tier-list > div.is-chosen { background: color-mix(in srgb, var(--solution-color) 12%, transparent); }
+.dkxsp-tier-list span { color: #d9e5ec; font-size: 10px; font-weight: 950; letter-spacing: .15em; text-transform: uppercase; }
+.dkxsp-tier-list strong { justify-self: end; color: var(--solution-color); font-family: "Arial Black", Arial, sans-serif; font-size: clamp(27px, 3vw, 43px); letter-spacing: -.055em; line-height: 1; white-space: nowrap; }
+.dkxsp-tier-list strong small { color: var(--muted); font-family: "Montserrat", Arial, sans-serif; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.dkxsp-tier-list i { position: absolute; top: 0; left: clamp(25px, 4vw, 52px); padding: 5px 8px; background: var(--solution-color); color: #02080e; font-size: 7px; font-style: normal; font-weight: 950; letter-spacing: .12em; text-transform: uppercase; }
+.dkxsp-solution > footer { padding: 30px clamp(25px, 4vw, 52px) 38px; }
+.dkxsp-solution > footer p { min-height: 66px; margin-bottom: 24px; color: var(--muted); font-size: 13px; font-weight: 650; line-height: 1.65; }
+.dkxsp-solution > footer a { display: flex; align-items: center; justify-content: space-between; min-height: 49px; padding: 0 17px; background: var(--solution-color); color: #02080e; font-size: 9px; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
+
+.dkxsp-capabilities {
+	position: relative;
+	order: 3;
+	padding: clamp(90px, 10vw, 150px) 0;
+	border-bottom: 1px solid var(--line);
+	background: linear-gradient(160deg, #06131d, #02080e 60%);
+}
+.dkxsp-capability-layout { display: grid; grid-template-columns: minmax(300px, .75fr) minmax(0, 1.35fr); gap: clamp(50px, 9vw, 145px); }
+.dkxsp-capability-layout > header { position: sticky; top: 125px; align-self: start; }
+.dkxsp-capability-list { border-top: 1px solid var(--line); }
+.dkxsp-capability-list article { display: grid; grid-template-columns: 70px minmax(0, 1fr) 35px; align-items: center; gap: 20px; min-height: 118px; border-bottom: 1px solid var(--line); }
+.dkxsp-capability-list article > span { color: var(--blue); font-family: "Arial Black", Arial, sans-serif; font-size: 25px; letter-spacing: -.04em; }
+.dkxsp-capability-list article:nth-child(2) > span { color: var(--gold); }
+.dkxsp-capability-list article:nth-child(3) > span { color: var(--purple); }
+.dkxsp-capability-list article:nth-child(4) > span { color: var(--red); }
+.dkxsp-capability-list article:nth-child(5) > span { color: var(--aqua); }
+.dkxsp-capability-list h3 { margin: 0; font-size: clamp(20px, 2.2vw, 32px); font-weight: 850; letter-spacing: -.035em; line-height: 1.2; }
+.dkxsp-capability-list article > i { color: var(--muted); font-size: 20px; font-style: normal; }
+
+.dkxsp-process { position: relative; order: 4; padding: clamp(90px, 10vw, 150px) 0; border-bottom: 1px solid var(--line); background: #02080e; }
+.dkxsp-process-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); list-style: none; }
+.dkxsp-process-list li { --step-color: var(--blue); position: relative; min-height: 265px; padding: 30px 25px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: linear-gradient(155deg, color-mix(in srgb, var(--step-color) 6%, #06131d), #02080e); }
+.dkxsp-process-list li:nth-child(2) { --step-color: var(--gold); }
+.dkxsp-process-list li:nth-child(3) { --step-color: var(--purple); }
+.dkxsp-process-list li:nth-child(4) { --step-color: var(--red); }
+.dkxsp-process-list li:nth-child(5) { --step-color: var(--aqua); }
+.dkxsp-process-list li::before { position: absolute; inset: 0 0 auto; height: 4px; background: var(--step-color); content: ""; }
+.dkxsp-process-list span { display: block; margin-bottom: 92px; color: var(--step-color); font-family: "Arial Black", Arial, sans-serif; font-size: 34px; letter-spacing: -.05em; }
+.dkxsp-process-list p { margin-bottom: 0; color: #d6e2e9; font-size: 14px; font-weight: 750; line-height: 1.5; }
+
+.dkxsp-proof { position: relative; order: 5; border-bottom: 1px solid var(--line); background: #06131d; }
+.dkxsp-proof .dkxsp-shell { display: flex; align-items: center; justify-content: center; gap: clamp(16px, 3vw, 42px); min-height: 130px; }
+.dkxsp-proof p { display: flex; align-items: baseline; gap: 10px; margin: 0; }
+.dkxsp-proof strong { color: var(--blue); font-family: "Arial Black", Arial, sans-serif; font-size: clamp(32px, 4vw, 58px); letter-spacing: -.06em; }
+.dkxsp-proof p:nth-of-type(2) strong { color: var(--gold); }
+.dkxsp-proof span { color: #d7e3ea; font-size: 10px; font-weight: 900; letter-spacing: .13em; line-height: 1.45; text-transform: uppercase; }
+.dkxsp-proof > div > i { color: var(--purple); font-style: normal; }
+.dkxsp-proof .is-stage { max-width: 540px; }
+.dkxsp-proof .is-stage strong { color: var(--purple); font-family: "Montserrat", Arial, sans-serif; font-size: 10px; letter-spacing: .13em; line-height: 1.45; text-transform: uppercase; }
+.dkxsp-proof .is-stage span { color: var(--white); }
+
+.dkxsp-final { position: relative; order: 6; padding: clamp(100px, 12vw, 180px) 0; border-bottom: 1px solid var(--line); background: linear-gradient(120deg, rgba(56, 182, 255, .12), transparent 48%), #040c13; }
+.dkxsp-final::before { position: absolute; inset: 0; background: linear-gradient(115deg, transparent 49.8%, rgba(255, 196, 77, .14) 50%, transparent 50.2%); content: ""; }
+.dkxsp-final-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(380px, .7fr); align-items: end; gap: clamp(50px, 9vw, 130px); }
+.dkxsp-actions { display: grid; gap: 10px; }
+.dkxsp-actions a { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 0 21px; border: 1px solid rgba(255, 196, 77, .55); background: rgba(2, 8, 14, .72); font-size: 10px; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
+.dkxsp-actions a.is-primary { border-color: var(--blue); background: var(--blue); color: #02080e; }
+
+.dkxsp-switcher {
+	position: fixed;
+	right: 22px;
+	bottom: 20px;
+	z-index: 99999;
+	width: min(690px, calc(100vw - 44px));
+	padding: 10px;
+	border: 1px solid rgba(56, 182, 255, .55);
+	background: rgba(2, 8, 14, .96);
+	box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
+	backdrop-filter: blur(14px);
+}
+.dkxsp-switcher > p { display: flex; justify-content: space-between; margin: 0 2px 8px; color: var(--muted); font-size: 8px; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+.dkxsp-switcher > p span { color: var(--blue); }
+.dkxsp-switcher > div { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.dkxsp-switcher a { display: flex; align-items: center; gap: 9px; min-width: 0; padding: 10px 12px; border: 1px solid rgba(145, 168, 184, .18); color: #cbd9e2; font-size: 9px; font-weight: 850; letter-spacing: .05em; text-transform: uppercase; }
+.dkxsp-switcher a span { display: grid; place-items: center; width: 21px; height: 21px; flex: 0 0 auto; border: 1px solid currentColor; color: var(--blue); }
+.dkxsp-switcher a.is-active { border-color: var(--blue); background: var(--blue); color: #02080e; }
+.dkxsp-switcher a.is-active span { color: #02080e; }
+
+/* Option A — Command Grid: commercial control panel and clear comparisons. */
+.dkxsp--command .dkxsp-core::before { position: absolute; inset: 0; opacity: .32; background-image: radial-gradient(circle, rgba(56, 182, 255, .22) 0 1px, transparent 1.4px); background-size: 50px 50px; content: ""; pointer-events: none; }
+.dkxsp--command .dkxsp-solution { box-shadow: 0 35px 80px rgba(0, 0, 0, .32); }
+
+/* Option B — Dual Portals: two dramatic service entrances. */
+.dkxsp--portals { --blue: #20ddce; }
+.dkxsp--portals .dkxsp-hero { min-height: 790px; text-align: center; }
+.dkxsp--portals .dkxsp-hero-grid { grid-template-columns: 1fr; }
+.dkxsp--portals .dkxsp-hero-index { display: none; }
+.dkxsp--portals .dkxsp-hero-copy { margin: 0 auto; }
+.dkxsp--portals .dkxsp-eyebrow { justify-content: center; }
+.dkxsp--portals .dkxsp-hero-copy > p:not(.dkxsp-eyebrow) { margin-right: auto; margin-left: auto; }
+.dkxsp--portals .dkxsp-hero h1 em { color: var(--purple); }
+.dkxsp--portals .dkxsp-core > .dkxsp-shell { width: 100%; max-width: none; }
+.dkxsp--portals .dkxsp-core .dkxsp-section-head { width: min(1400px, calc(100% - 88px)); margin-right: auto; margin-left: auto; }
+.dkxsp--portals .dkxsp-solution-grid { gap: 0; }
+.dkxsp--portals .dkxsp-solution { min-height: 880px; border-width: 1px 0; }
+.dkxsp--portals .dkxsp-solution.is-event { background: linear-gradient(150deg, rgba(32, 221, 206, .16), #02080e 64%); }
+.dkxsp--portals .dkxsp-solution.is-retainer { background: linear-gradient(210deg, rgba(154, 108, 255, .18), #02080e 64%); }
+.dkxsp--portals .dkxsp-solution > header { text-align: center; }
+.dkxsp--portals .dkxsp-solution > header > span { margin-top: 24px; }
+.dkxsp--portals .dkxsp-solution > header p { margin-right: auto; margin-left: auto; }
+.dkxsp--portals .dkxsp-tier-list { width: min(82%, 620px); margin: 0 auto; border: 1px solid color-mix(in srgb, var(--solution-color) 35%, transparent); }
+.dkxsp--portals .dkxsp-solution > footer { width: min(82%, 620px); margin: 0 auto; padding-right: 0; padding-left: 0; }
+.dkxsp--portals .dkxsp-capability-layout { grid-template-columns: 1fr; }
+.dkxsp--portals .dkxsp-capability-layout > header { position: static; max-width: 900px; }
+.dkxsp--portals .dkxsp-capability-list { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-left: 1px solid var(--line); }
+.dkxsp--portals .dkxsp-capability-list article { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; min-height: 260px; padding: 25px; border-right: 1px solid var(--line); }
+.dkxsp--portals .dkxsp-capability-list h3 { font-size: 22px; }
+
+/* Option C — Editorial Rate Card: decisive typography and horizontal rate tables. */
+.dkxsp--rate-card .dkxsp-hero { min-height: 790px; background: linear-gradient(110deg, #02080e 55%, rgba(255, 196, 77, .09)); }
+.dkxsp--rate-card .dkxsp-hero-grid { grid-template-columns: minmax(0, 1fr); }
+.dkxsp--rate-card .dkxsp-hero-index { position: absolute; right: 0; bottom: 0; width: 240px; height: 240px; padding: 25px; border: 1px solid rgba(255, 196, 77, .34); }
+.dkxsp--rate-card .dkxsp-hero-index b { font-size: 110px; }
+.dkxsp--rate-card .dkxsp-hero h1 { max-width: 1220px; }
+.dkxsp--rate-card .dkxsp-hero h1 em { color: var(--gold); }
+.dkxsp--rate-card .dkxsp-eyebrow { color: var(--gold); }
+.dkxsp--rate-card .dkxsp-section-head h2 em,
+.dkxsp--rate-card .dkxsp-capability-layout > header h2 em,
+.dkxsp--rate-card .dkxsp-final h2 em { color: var(--gold); }
+.dkxsp--rate-card .dkxsp-solution-grid { grid-template-columns: 1fr; gap: 1px; background: rgba(255, 196, 77, .26); }
+.dkxsp--rate-card .dkxsp-solution {
+	display: grid;
+	grid-template-columns: minmax(290px, .72fr) minmax(0, 1.15fr) minmax(270px, .62fr);
+	grid-template-rows: auto;
+	min-height: 480px;
+	border: 0;
+	background: #050e16;
+}
+.dkxsp--rate-card .dkxsp-solution > header { padding: 46px; border-right: 1px solid var(--line); }
+.dkxsp--rate-card .dkxsp-solution h3 { margin-top: 80px; font-size: clamp(44px, 5vw, 76px); }
+.dkxsp--rate-card .dkxsp-solution > header p { font-size: 14px; }
+.dkxsp--rate-card .dkxsp-tier-list { align-self: stretch; border-top: 0; border-right: 1px solid var(--line); }
+.dkxsp--rate-card .dkxsp-tier-list > div { min-height: 33.333%; }
+.dkxsp--rate-card .dkxsp-solution > footer { display: flex; flex-direction: column; justify-content: flex-end; padding: 42px 30px; }
+.dkxsp--rate-card .dkxsp-solution > footer p { min-height: 0; }
+.dkxsp--rate-card .dkxsp-capability-layout { grid-template-columns: minmax(0, 1.3fr) minmax(360px, .7fr); }
+.dkxsp--rate-card .dkxsp-capability-layout > header { position: static; order: 2; padding-left: 38px; border-left: 1px solid var(--gold); }
+.dkxsp--rate-card .dkxsp-capability-list { order: 1; }
+.dkxsp--rate-card .dkxsp-process-list { grid-template-columns: 1fr; }
+.dkxsp--rate-card .dkxsp-process-list li { display: grid; grid-template-columns: 130px minmax(0, 1fr); align-items: center; min-height: 115px; }
+.dkxsp--rate-card .dkxsp-process-list span { margin: 0; }
+.dkxsp--rate-card .dkxsp-process-list p { font-size: 18px; }
+
+@media (max-width: 1120px) {
+	.dkxsp-shell { width: min(calc(100% - 48px), 1400px); }
+	.dkxsp-hero-grid { grid-template-columns: 150px minmax(0, 1fr); }
+	.dkxsp-solution { min-height: 720px; }
+	.dkxsp-tier-list strong { font-size: 28px; }
+	.dkxsp-capability-layout { grid-template-columns: 1fr; }
+	.dkxsp-capability-layout > header { position: static; max-width: 850px; }
+	.dkxsp-process-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.dkxsp--portals .dkxsp-core .dkxsp-section-head { width: min(calc(100% - 48px), 1400px); }
+	.dkxsp--portals .dkxsp-capability-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	.dkxsp--rate-card .dkxsp-solution { grid-template-columns: minmax(250px, .65fr) minmax(0, 1fr); }
+	.dkxsp--rate-card .dkxsp-solution > footer { grid-column: 1 / -1; min-height: 210px; }
+	.dkxsp--rate-card .dkxsp-capability-layout { grid-template-columns: 1fr; }
+	.dkxsp--rate-card .dkxsp-capability-layout > header { order: 1; padding: 0; border: 0; }
+	.dkxsp--rate-card .dkxsp-capability-list { order: 2; }
+}
+
+@media (max-width: 820px) {
+	.dkxsp { padding-bottom: 96px; }
+	.dkxsp-shell { width: min(calc(100% - 34px), 720px); }
+	.dkxsp-hero { min-height: 0; padding: 116px 0 78px; }
+	.dkxsp-hero-grid { grid-template-columns: 1fr; }
+	.dkxsp-hero-index { display: none; }
+	.dkxsp-hero h1 { font-size: clamp(43px, 12vw, 72px); }
+	.dkxsp-solution-grid { grid-template-columns: 1fr; }
+	.dkxsp-solution { min-height: 680px; }
+	.dkxsp-capability-list article { grid-template-columns: 52px minmax(0, 1fr) 24px; min-height: 100px; }
+	.dkxsp-process-list { grid-template-columns: 1fr; }
+	.dkxsp-process-list li { display: grid; grid-template-columns: 70px minmax(0, 1fr); align-items: center; min-height: 105px; }
+	.dkxsp-process-list span { margin: 0; }
+	.dkxsp-proof .dkxsp-shell { display: grid; grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+	.dkxsp-proof > div > i { display: none; }
+	.dkxsp-proof p { justify-content: space-between; }
+	.dkxsp-proof .is-stage { display: grid; max-width: none; gap: 8px; }
+	.dkxsp-final-grid { grid-template-columns: 1fr; }
+	.dkxsp--portals .dkxsp-core .dkxsp-section-head { width: min(calc(100% - 34px), 720px); }
+	.dkxsp--portals .dkxsp-solution-grid { grid-template-columns: 1fr; }
+	.dkxsp--portals .dkxsp-solution { min-height: 760px; }
+	.dkxsp--portals .dkxsp-capability-list { grid-template-columns: 1fr; }
+	.dkxsp--portals .dkxsp-capability-list article { min-height: 150px; }
+	.dkxsp--rate-card .dkxsp-hero-index { display: none; }
+	.dkxsp--rate-card .dkxsp-solution { display: grid; grid-template-columns: 1fr; min-height: 0; }
+	.dkxsp--rate-card .dkxsp-solution > header { border-right: 0; border-bottom: 1px solid var(--line); }
+	.dkxsp--rate-card .dkxsp-solution h3 { margin-top: 48px; }
+	.dkxsp--rate-card .dkxsp-tier-list { border-right: 0; }
+	.dkxsp--rate-card .dkxsp-solution > footer { grid-column: auto; }
+	.dkxsp-switcher { right: 10px; bottom: 10px; width: calc(100vw - 20px); }
+}
+
+@media (max-width: 540px) {
+	.dkxsp-shell { width: calc(100% - 26px); }
+	.dkxsp-hero { padding-top: 104px; }
+	.dkxsp-hero h1 { font-size: clamp(39px, 13.5vw, 61px); }
+	.dkxsp-hero-copy > p:not(.dkxsp-eyebrow) { font-size: 16px; }
+	.dkxsp-section-head h2,
+	.dkxsp-capability-layout > header h2,
+	.dkxsp-final h2 { font-size: clamp(38px, 12vw, 59px); }
+	.dkxsp-solution { min-height: 0; }
+	.dkxsp-solution > header { padding: 38px 22px; }
+	.dkxsp-solution h3 { font-size: 48px; }
+	.dkxsp-tier-list > div { grid-template-columns: 1fr; gap: 8px; min-height: 112px; padding: 26px 22px; }
+	.dkxsp-tier-list strong { justify-self: start; font-size: 30px; }
+	.dkxsp-tier-list i { left: auto; right: 0; }
+	.dkxsp-solution > footer { padding: 28px 22px 32px; }
+	.dkxsp-solution > footer p { min-height: 0; }
+	.dkxsp-capability-list article { grid-template-columns: 40px minmax(0, 1fr); gap: 12px; }
+	.dkxsp-capability-list article > i { display: none; }
+	.dkxsp-process-list li { grid-template-columns: 58px minmax(0, 1fr); padding: 23px 18px; }
+	.dkxsp-proof strong { font-size: 38px; }
+	.dkxsp-actions a { min-height: 54px; padding: 0 15px; font-size: 9px; }
+	.dkxsp--portals .dkxsp-tier-list,
+	.dkxsp--portals .dkxsp-solution > footer { width: calc(100% - 32px); }
+	.dkxsp--rate-card .dkxsp-solution > header { padding: 38px 22px; }
+	.dkxsp-switcher a { justify-content: center; padding: 9px 5px; font-size: 0; }
+	.dkxsp-switcher a span { font-size: 9px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.dkxsp *,
+	.dkxsp *::before,
+	.dkxsp *::after { scroll-behavior: auto !important; transition: none !important; }
+}

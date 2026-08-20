@@ -43,8 +43,21 @@ function dkxv4_home_preview_key() {
 	return in_array( $preview_key, array( 'cinematic', 'vault', 'editorial' ), true ) ? $preview_key : '';
 }
 
+/**
+ * Return the requested non-destructive Solutions-page preview key.
+ */
+function dkxv4_solutions_preview_key() {
+	if ( ! isset( $_GET['dk-solutions-preview'] ) ) {
+		return '';
+	}
+
+	$preview_key = sanitize_key( wp_unslash( $_GET['dk-solutions-preview'] ) );
+
+	return in_array( $preview_key, array( 'command', 'portals', 'rate-card' ), true ) ? $preview_key : '';
+}
+
 /* Tell compatible page caches to leave approved comparison URLs dynamic. */
-if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
+if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() || '' !== dkxv4_solutions_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
 	define( 'DONOTCACHEPAGE', true );
 }
 
@@ -54,13 +67,16 @@ if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() ) &
 function dkxv4_disable_experience_preview_cache() {
 	$landing_preview = dkxv4_landing_preview_key();
 	$home_preview    = dkxv4_home_preview_key();
+	$solutions_preview = dkxv4_solutions_preview_key();
 
-	if ( '' === $landing_preview && '' === $home_preview ) {
+	if ( '' === $landing_preview && '' === $home_preview && '' === $solutions_preview ) {
 		return;
 	}
 
 	nocache_headers();
-	if ( '' !== $home_preview ) {
+	if ( '' !== $solutions_preview ) {
+		header( 'X-DK-Solutions-Preview: ' . $solutions_preview );
+	} elseif ( '' !== $home_preview ) {
 		header( 'X-DK-Home-Preview: ' . $home_preview );
 	} else {
 		header( 'X-DK-Landing-Preview: ' . $landing_preview );
@@ -83,7 +99,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.21.6';
+	$release = '1.21.7';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -176,6 +192,14 @@ function dkx_fixes_assets() {
 			'dkx-solutions-v1197',
 			get_stylesheet_directory_uri() . '/assets/css/solutions-v1197.css',
 			array( 'dkx-recovery-v1204' ),
+			$release
+		);
+	}
+	if ( is_page( 'solutions' ) && '' !== dkxv4_solutions_preview_key() ) {
+		wp_enqueue_style(
+			'dkx-solutions-options-v1217',
+			get_stylesheet_directory_uri() . '/assets/css/solutions-options-v1217.css',
+			array( 'dkx-solutions-v1197' ),
 			$release
 		);
 	}
