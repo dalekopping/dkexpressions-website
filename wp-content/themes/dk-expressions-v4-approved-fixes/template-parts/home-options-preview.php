@@ -275,6 +275,7 @@ foreach ( $variant_names as $key => $name ) {
 		</div>
 	</section>
 
+	<?php if ( ! empty( $dkxv4_home_is_preview ) ) : ?>
 	<nav class="dkxhp-switcher" aria-label="Homepage design options">
 		<p><span>Home Preview</span><?php echo esc_html( $variant_name ); ?></p>
 		<div>
@@ -283,4 +284,5 @@ foreach ( $variant_names as $key => $name ) {
 			<?php endforeach; ?>
 		</div>
 	</nav>
+	<?php endif; ?>
 </main>
