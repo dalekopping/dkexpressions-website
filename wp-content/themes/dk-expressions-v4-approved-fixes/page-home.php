@@ -5,12 +5,13 @@
  */
 get_header();
 
-$dkxv4_home_preview = function_exists( 'dkxv4_home_preview_key' ) ? dkxv4_home_preview_key() : '';
-if ( '' !== $dkxv4_home_preview ) {
-	require get_stylesheet_directory() . '/template-parts/home-options-preview.php';
-	get_footer();
-	return;
-}
+$dkxv4_home_preview    = function_exists( 'dkxv4_home_preview_key' ) ? dkxv4_home_preview_key() : '';
+$dkxv4_home_is_preview = '' !== $dkxv4_home_preview;
+$dkxv4_home_preview    = $dkxv4_home_is_preview ? $dkxv4_home_preview : 'editorial';
+
+require get_stylesheet_directory() . '/template-parts/home-options-preview.php';
+get_footer();
+return;
 
 $clients_post_type = dkxv4_clients_post_type();
 $clients = $clients_post_type ? get_posts( array(
