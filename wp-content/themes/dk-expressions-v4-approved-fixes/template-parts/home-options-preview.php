@@ -106,11 +106,6 @@ foreach ( $variant_names as $key => $name ) {
 					<a class="dkxhp-button is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project <span>↗</span></a>
 					<a class="dkxhp-button is-secondary" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">View the Time Vault <span>→</span></a>
 				</div>
-				<ul class="dkxhp-meta" aria-label="DK Expressions at a glance">
-					<li><strong>13+</strong><span>Years</span></li>
-					<li><strong>2,000+</strong><span>Projects</span></li>
-					<li><strong>Johannesburg</strong><span>&amp; beyond</span></li>
-				</ul>
 			</div>
 			<div class="dkxhp-hero-visual" aria-label="Selected DK Expressions work">
 				<div class="dkxhp-hero-frame">

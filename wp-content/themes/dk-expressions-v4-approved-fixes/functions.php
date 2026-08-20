@@ -83,7 +83,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.21.5';
+	$release = '1.21.6';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
