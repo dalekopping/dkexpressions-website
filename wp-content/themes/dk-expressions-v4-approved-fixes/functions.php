@@ -53,7 +53,7 @@ function dkxv4_solutions_preview_key() {
 
 	$preview_key = sanitize_key( wp_unslash( $_GET['dk-solutions-preview'] ) );
 
-	return in_array( $preview_key, array( 'command', 'portals', 'rate-card' ), true ) ? $preview_key : '';
+	return in_array( $preview_key, array( 'chapters', 'matrix', 'vault' ), true ) ? $preview_key : '';
 }
 
 /* Tell compatible page caches to leave approved comparison URLs dynamic. */
@@ -99,7 +99,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.21.7';
+	$release = '1.21.8';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -197,8 +197,8 @@ function dkx_fixes_assets() {
 	}
 	if ( is_page( 'solutions' ) && '' !== dkxv4_solutions_preview_key() ) {
 		wp_enqueue_style(
-			'dkx-solutions-options-v1217',
-			get_stylesheet_directory_uri() . '/assets/css/solutions-options-v1217.css',
+			'dkx-solutions-options-v1218',
+			get_stylesheet_directory_uri() . '/assets/css/solutions-options-v1218.css',
 			array( 'dkx-solutions-v1197' ),
 			$release
 		);
