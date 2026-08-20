@@ -50,7 +50,7 @@ foreach ( $work_variants as $variant_key => $variant_label ) {
 	$preview_urls[ $variant_key ] = add_query_arg(
 		array(
 			'dk-work-preview' => $variant_key,
-			'dk-refresh'      => '1224',
+			'dk-refresh'      => '1225',
 		),
 		home_url( '/our-work/' )
 	);
@@ -193,23 +193,23 @@ foreach ( $work_variants as $variant_key => $variant_label ) {
 			</div>
 		</section>
 
-		<section class="dkxmw-va-vault" id="vault">
-			<header><p>03 / The vault</p><h2>Eight recovered<br><em>time fragments.</em></h2><span>Hover to stabilise a memory.</span></header>
-			<div class="dkxmw-va-fragments">
-				<?php foreach ( $archive_frames as $frame_index => $frame ) : ?>
-				<figure style="--i:<?php echo esc_attr( (string) $frame_index ); ?>"><img src="<?php echo esc_url( $work_asset_url( $frame[2] ) ); ?>" alt="<?php echo esc_attr( $frame[3] ); ?>" loading="lazy"><figcaption><span>T-<?php echo esc_html( str_pad( (string) ( $frame_index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><b><?php echo esc_html( $frame[0] ); ?></b><i><?php echo esc_html( $frame[1] ); ?></i></figcaption></figure>
-				<?php endforeach; ?>
-			</div>
-		</section>
+		<div class="dkxmw-va-field-merge">
+			<section class="dkxmw-fd-prints" id="vault">
+				<header><p>03 / Recovered field prints</p><h2>A wall of<br><em>places we stood.</em></h2></header>
+				<div>
+					<?php foreach ( $archive_frames as $frame_index => $frame ) : ?>
+					<figure><img src="<?php echo esc_url( $work_asset_url( $frame[2] ) ); ?>" alt="<?php echo esc_attr( $frame[3] ); ?>" loading="lazy"><figcaption><b><?php echo esc_html( $frame[0] ); ?></b><span><?php echo esc_html( $frame[1] ); ?> / <?php echo esc_html( (string) ( 2013 + $frame_index ) ); ?></span></figcaption></figure>
+					<?php endforeach; ?>
+				</div>
+			</section>
 
-		<section class="dkxmw-va-proof" id="recommendations">
-			<div class="dkxmw-va-proof-core"><span>04</span><p>REPUTATION<br>REMAINS</p></div>
-			<blockquote class="is-one"><p>“Committed, passionate and dedicated to his craft.”</p><footer>Big Concerts / TPW</footer></blockquote>
-			<blockquote class="is-two"><p>“I highly recommend associating any brand with DK Expressions.”</p><footer>One-Eyed Jack</footer></blockquote>
-			<blockquote class="is-three"><p>“The photography and social media services had been outstanding.”</p><footer>VWV Massive</footer></blockquote>
-		</section>
+			<section class="dkxmw-fd-proof" id="recommendations">
+				<header><p>04 / Notes left by others</p><h2>The names in<br><em>the margins.</em></h2></header>
+				<div><blockquote><span>01</span><p>“Committed, passionate and dedicated to his craft.”</p><footer>Big Concerts / TPW</footer></blockquote><blockquote><span>02</span><p>“I highly recommend associating any brand with DK Expressions.”</p><footer>One-Eyed Jack</footer></blockquote><blockquote><span>03</span><p>“The photography and social media services had been outstanding.”</p><footer>VWV Massive</footer></blockquote></div>
+			</section>
 
-		<section class="dkxmw-va-final"><div aria-hidden="true"></div><p>END OF RECORD / START OF POSSIBILITY</p><h2>Your next chapter<br>belongs <em>in here.</em></h2><div class="dkxmw-actions"><a class="is-primary" href="#vault">Explore the Time Vault ↑</a><a href="https://www.instagram.com/dkexpressions/" target="_blank" rel="noopener">Follow the work ↗</a></div></section>
+			<section class="dkxmw-fd-final"><span>FIELD CLEARANCE / GRANTED</span><h2>Keep moving.<br><em>Keep looking.</em></h2><p>New stories, recovered frames and work from the field.</p><div class="dkxmw-actions"><a class="is-primary" href="#vault">Explore the Time Vault ↑</a><a href="https://www.instagram.com/dkexpressions/" target="_blank" rel="noopener">Follow the work ↗</a></div></section>
+		</div>
 	<?php endif; ?>
 
 	<nav class="dkxmw-switcher" aria-label="Our Work page design options">

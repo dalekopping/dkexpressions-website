@@ -1,4 +1,4 @@
-/* DK Expressions / Our Work worlds — v1.22.4 */
+/* DK Expressions / Our Work worlds — v1.22.5 */
 .dkxmw,
 .dkxmw * { box-sizing: border-box; }
 
@@ -446,6 +446,43 @@
 .dkxmw-va-final h2 { margin-top: 30px; font-size: clamp(58px, 9vw, 126px); line-height: .8; }
 .dkxmw-va-final .dkxmw-actions { justify-content: center; }
 
+/* Living Archive / Field Notes hybrid seam. */
+.dkxmw-va-field-merge {
+	position: relative;
+	isolation: isolate;
+	margin-top: 100px;
+	padding: 118px 0 90px;
+	background:
+		radial-gradient(circle at 18% 0, rgba(255,195,79,.12), transparent 30%),
+		linear-gradient(180deg, rgba(7,12,10,.9), #060a09 20%, #060a09);
+	border-top: 1px solid rgba(255,195,79,.34);
+}
+.dkxmw-va-field-merge::before {
+	content: "ARCHIVE SIGNAL → FIELD EVIDENCE";
+	position: absolute;
+	left: max(32px, calc((100% - 1280px) / 2));
+	top: 34px;
+	padding-left: 52px;
+	color: var(--gold);
+	font: 900 9px/1 Arial, sans-serif;
+	letter-spacing: .18em;
+}
+.dkxmw-va-field-merge::after {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	left: 0;
+	right: 0;
+	top: -1px;
+	height: 1px;
+	background: linear-gradient(90deg, transparent, var(--purple), var(--aqua), var(--gold), transparent);
+	box-shadow: 0 0 36px rgba(255,195,79,.22);
+}
+.dkxmw-va-field-merge::before { background: linear-gradient(var(--gold), var(--gold)) 0 50% / 36px 1px no-repeat; }
+.dkxmw--archive .dkxmw-va-field-merge em { color: var(--gold) !important; }
+.dkxmw--archive .dkxmw-va-field-merge .dkxmw-actions a:hover { border-color: var(--gold); }
+.dkxmw--archive .dkxmw-va-field-merge .dkxmw-actions .is-primary { color: #02070c; background: var(--gold); border-color: var(--gold); }
+
 @keyframes dkxmw-orbit { to { transform: translate(-50%,-50%) rotate(360deg); } }
 
 /* -------------------------------------------------------------------------- */
@@ -480,6 +517,8 @@
 }
 
 @media (max-width: 820px) {
+	.dkxmw-va-field-merge { margin-top: 50px; padding-top: 100px; }
+	.dkxmw-va-field-merge::before { left: 14px; right: 14px; padding-left: 0; background: none; text-align: center; }
 	.dkxmw-switcher > div { grid-template-columns: 1fr; }
 	.dkxmw-ed-cover { width: calc(100% - 26px); min-height: 0; grid-template-columns: 36px 1fr; }
 	.dkxmw-ed-spine { padding: 16px 0; }
