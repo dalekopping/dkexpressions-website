@@ -20,7 +20,7 @@ foreach ( $solution_variants as $variant_key => $variant_label ) {
 	$solution_preview_urls[ $variant_key ] = add_query_arg(
 		array(
 			'dk-solutions-preview' => $variant_key,
-			'dk-refresh'           => '1219',
+			'dk-refresh'           => '1220',
 		),
 		home_url( '/solutions/' )
 	);
@@ -85,10 +85,26 @@ $solution_families = array(
 		<div class="dkxsr-shell">
 			<p class="dkxsr-eyebrow">DK Expressions · Solutions</p>
 			<h1>Choose the level<br>of <em>attention.</em></h1>
-			<p>Four focused solution systems. Twelve clear starting points. Built to make the moment, the brand and the name impossible to ignore.</p>
+			<p class="dkxsr-hero-copy">Four focused solution systems. Twelve clear starting points. Built to make the moment, the brand and the name impossible to ignore.</p>
 			<nav class="dkxsr-family-nav" aria-label="Solution families">
 				<?php foreach ( $solution_families as $family ) : ?><a class="<?php echo esc_attr( $family['class'] ); ?>" href="#<?php echo esc_attr( $family['slug'] ); ?>"><span><?php echo esc_html( $family['number'] ); ?></span><?php echo esc_html( $family['title'] ); ?></a><?php endforeach; ?>
 			</nav>
+		</div>
+	</section>
+
+	<section class="dkxsr-analytics" aria-label="DK Expressions verified server analytics">
+		<div class="dkxsr-shell">
+			<header class="dkxsr-analytics-head">
+				<div><p class="dkxsr-eyebrow">Proof, Not Promises</p><h2>Independent<br><em>Server Analytics.</em></h2></div>
+				<p class="dkxsr-analytics-period">DK Expressions server analytics<br><strong>September 2025–August 2026</strong></p>
+			</header>
+			<div class="dkxsr-analytics-grid">
+				<article class="dkxsr-stat is-visits" data-stat="01"><span class="dkxsr-stat-index">01</span><strong class="dkxsr-stat-value">1.10M+</strong><b class="dkxsr-stat-label">Visits</b><p class="dkxsr-stat-copy">People entering the DK Expressions universe.</p></article>
+				<article class="dkxsr-stat is-pages" data-stat="02"><span class="dkxsr-stat-index">02</span><strong class="dkxsr-stat-value">2.47M+</strong><b class="dkxsr-stat-label">Pages Viewed</b></article>
+				<article class="dkxsr-stat is-hits" data-stat="03"><span class="dkxsr-stat-index">03</span><strong class="dkxsr-stat-value">6.13M+</strong><b class="dkxsr-stat-label">Hits</b></article>
+				<article class="dkxsr-stat is-live" data-stat="04"><span class="dkxsr-stat-index">Live <i aria-hidden="true"></i></span><strong class="dkxsr-stat-value">97,603</strong><b class="dkxsr-stat-label">August Visits</b></article>
+			</div>
+			<p class="dkxsr-analytics-source"><i aria-hidden="true"></i>Verified Server Analytics · Webalizer</p>
 		</div>
 	</section>
 
@@ -97,8 +113,8 @@ $solution_families = array(
 		<section class="dkxsr-family <?php echo esc_attr( $family['class'] ); ?>" id="<?php echo esc_attr( $family['slug'] ); ?>">
 			<div class="dkxsr-shell">
 				<header class="dkxsr-family-head">
-					<div><p><?php echo esc_html( $family['number'] ); ?> / <?php echo esc_html( $family['title'] ); ?></p><h2><?php echo esc_html( $family['title'] ); ?></h2></div>
-					<p><?php echo esc_html( $family['tagline'] ); ?></p>
+					<div><p class="dkxsr-family-kicker"><?php echo esc_html( $family['number'] ); ?> / <?php echo esc_html( $family['title'] ); ?></p><h2><?php echo esc_html( $family['title'] ); ?></h2></div>
+					<p class="dkxsr-family-tagline"><?php echo esc_html( $family['tagline'] ); ?></p>
 				</header>
 				<div class="dkxsr-package-grid">
 					<?php foreach ( $family['packages'] as $package_index => $package ) : ?>
@@ -120,7 +136,7 @@ $solution_families = array(
 	<section class="dkxsr-custom">
 		<div class="dkxsr-shell dkxsr-custom-grid">
 			<div><p class="dkxsr-eyebrow">Need something that does not fit in a box?</p><h2>Build a custom<br><em>campaign.</em></h2></div>
-			<div><p>Starting rates exclude VAT where applicable. Final quotations depend on scope, crew, production requirements, travel and deliverables. Project bookings require a <strong>50</strong>% deposit. Retainers carry a three-month minimum.</p><div class="dkxsr-actions"><a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project <span>↗</span></a><a href="<?php echo esc_url( $whatsapp_package_url ); ?>" target="_blank" rel="noopener">WhatsApp us <span>→</span></a></div></div>
+			<div><p class="dkxsr-custom-copy">Starting rates exclude VAT where applicable. Final quotations depend on scope, crew, production requirements, travel and deliverables. Project bookings require a <strong>50</strong>% deposit. Retainers carry a three-month minimum.</p><div class="dkxsr-actions"><a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project <span>↗</span></a><a href="<?php echo esc_url( $whatsapp_package_url ); ?>" target="_blank" rel="noopener">WhatsApp us <span>→</span></a></div></div>
 		</div>
 	</section>
 
