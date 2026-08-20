@@ -20,12 +20,13 @@ wp_enqueue_style(
 
 get_header();
 
-$dkxv4_solutions_preview = function_exists( 'dkxv4_solutions_preview_key' ) ? dkxv4_solutions_preview_key() : '';
-if ( '' !== $dkxv4_solutions_preview ) {
-	require get_stylesheet_directory() . '/template-parts/solutions-options-preview.php';
-	get_footer();
-	return;
-}
+$dkxv4_solutions_preview    = function_exists( 'dkxv4_solutions_preview_key' ) ? dkxv4_solutions_preview_key() : '';
+$dkxv4_solutions_is_preview = '' !== $dkxv4_solutions_preview;
+$dkxv4_solutions_preview    = $dkxv4_solutions_is_preview ? $dkxv4_solutions_preview : 'vault';
+
+require get_stylesheet_directory() . '/template-parts/solutions-options-preview.php';
+get_footer();
+return;
 ?>
 
 <main class="dk-solutions-page">
