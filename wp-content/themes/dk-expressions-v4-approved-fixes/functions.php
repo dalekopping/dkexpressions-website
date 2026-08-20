@@ -115,7 +115,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.22.7';
+	$release = '1.22.8';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -349,13 +349,13 @@ function dkxv4_contact_rate_assets_v1227() {
 		'dkx-contact-rates-v1227',
 		get_stylesheet_directory_uri() . '/assets/css/contact-rates-v1227.css',
 		array( 'dkx-recovery-v1204' ),
-		'1.22.7'
+		'1.22.8'
 	);
 	wp_enqueue_script(
 		'dkx-contact-rates-v1227',
 		get_stylesheet_directory_uri() . '/assets/contact-rates-v1227.js',
 		array(),
-		'1.22.7',
+		'1.22.8',
 		true
 	);
 }

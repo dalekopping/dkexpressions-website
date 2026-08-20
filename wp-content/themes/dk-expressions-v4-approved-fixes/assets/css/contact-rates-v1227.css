@@ -1,6 +1,8 @@
-/* DK Expressions Contact + 2026 Rate Card — v1.22.7 */
+/* DK Expressions Contact + 2026 Rate Card — v1.22.8 */
 .dkxcr,
 .dkxcr * { box-sizing: border-box; }
+.dkxcr,
+.dkxcr * { text-shadow: none !important; box-shadow: none !important; filter: none !important; }
 
 .dkxcr {
 	--ink: #02070c;
@@ -40,15 +42,15 @@
 .dkxcr-actions a.is-primary { color: var(--ink); background: var(--blue); border-color: var(--blue); }
 
 /* Contact / Start a Project. */
-.dkxcr-contact-hero { position: relative; width: min(1440px, calc(100% - 48px)); min-height: 850px; display: grid; grid-template-columns: 1.25fr .48fr; gap: clamp(50px, 8vw, 130px); align-items: center; margin: 28px auto 0; padding: 150px clamp(30px, 6vw, 92px) 180px; background: radial-gradient(circle at 84% 26%, rgba(32,215,200,.11), transparent 24%), linear-gradient(135deg, rgba(7,19,28,.98), rgba(2,7,12,.98)); border: 1px solid var(--line); overflow: hidden; }
+.dkxcr-contact-hero { position: relative; width: min(1440px, calc(100% - 48px)); min-height: 850px; display: grid; grid-template-columns: 1.25fr .48fr; gap: clamp(50px, 8vw, 130px); align-items: center; margin: 28px auto 0; padding: 150px clamp(30px, 6vw, 92px) 180px; background: linear-gradient(135deg, #07131c 0 72%, #082331 72% 100%); border: 1px solid var(--line); border-top: 4px solid var(--blue); overflow: hidden; }
 .dkxcr-contact-hero::before { content: "START / SOMETHING / UNMISSABLE"; position: absolute; right: -28px; top: 48px; color: rgba(64,184,255,.055); font: 900 clamp(80px, 11vw, 160px)/.7 "Arial Black", Arial, sans-serif; letter-spacing: -.09em; writing-mode: vertical-rl; }
 .dkxcr-contact-hero-copy { position: relative; z-index: 2; }
 .dkxcr-contact-hero h1 { max-width: 980px; margin-top: 28px; font-size: clamp(72px, 9.3vw, 148px); line-height: .77; }
 .dkxcr-contact-hero-copy > p:last-child { margin-top: 36px; color: #d2e0e8; font-size: clamp(18px, 2vw, 28px); font-weight: 800; }
-.dkxcr-response-card { position: relative; z-index: 2; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; padding: 34px; background: rgba(8,25,36,.82); border: 1px solid rgba(32,215,200,.34); box-shadow: 0 30px 90px rgba(0,0,0,.35); overflow: hidden; }
+.dkxcr-response-card { position: relative; z-index: 2; min-height: 420px; display: flex; flex-direction: column; justify-content: flex-end; padding: 34px; background: #081924; border: 1px solid var(--aqua); border-top: 6px solid var(--aqua); overflow: hidden; }
 .dkxcr-response-card::before { content: "01"; position: absolute; right: -12px; top: 16px; color: rgba(32,215,200,.06); font: 900 190px/.8 "Arial Black", Arial, sans-serif; letter-spacing: -.12em; }
 .dkxcr-response-card > span { position: absolute; left: 28px; top: 28px; color: var(--aqua); font: 900 8px/1 Arial, sans-serif; letter-spacing: .16em; text-transform: uppercase; }
-.dkxcr-response-card > span i { width: 7px; height: 7px; display: inline-block; margin-right: 8px; background: #40ff90; border-radius: 50%; box-shadow: 0 0 14px #40ff90; }
+.dkxcr-response-card > span i { width: 7px; height: 7px; display: inline-block; margin-right: 8px; background: var(--aqua); border-radius: 50%; }
 .dkxcr-response-card strong { position: relative; color: var(--aqua); font: 900 clamp(96px, 11vw, 160px)/.68 "Arial Black", Arial, sans-serif; letter-spacing: -.1em; }
 .dkxcr-response-card b { position: relative; margin-top: 24px; font: 900 13px/1 Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
 .dkxcr-response-card p { position: relative; margin-top: 15px; color: var(--muted); font-size: 12px; line-height: 1.6; }
@@ -76,7 +78,7 @@
 .dkxcr-brief-guide li p { margin-top: 8px; color: #8399a8; font-size: 12px; line-height: 1.55; }
 .dkxcr-guide-link { min-height: 52px; display: flex; align-items: center; justify-content: space-between; margin-top: 30px; padding: 0 18px; color: var(--blue); border: 1px solid var(--line); text-decoration: none; font: 900 9px/1 Arial, sans-serif; letter-spacing: .13em; text-transform: uppercase; }
 .dkxcr-guide-link:hover { border-color: var(--blue); }
-.dkxcr-form-shell { position: relative; min-width: 0; padding: clamp(32px, 5vw, 70px); background: linear-gradient(145deg, #0b2e47, #06141f 56%, #071a28); border: 1px solid rgba(64,184,255,.4); box-shadow: 30px 40px 100px rgba(0,0,0,.36); }
+.dkxcr-form-shell { position: relative; min-width: 0; padding: clamp(32px, 5vw, 70px); background: linear-gradient(145deg, #0b2e47, #06141f 56%, #071a28); border: 1px solid var(--blue); border-left: 6px solid var(--blue); }
 .dkxcr-form-shell::before { content: "PROJECT / INTAKE / 2026"; position: absolute; right: 22px; top: 22px; color: rgba(64,184,255,.28); font: 900 7px/1 Arial, sans-serif; letter-spacing: .16em; }
 .dkxcr-form-header { display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: end; padding-bottom: 40px; border-bottom: 3px solid var(--blue); }
 .dkxcr-form-header h2 { margin-top: 15px; font-size: clamp(48px, 6.5vw, 86px); line-height: .82; }
@@ -96,7 +98,7 @@
 .dkxcr-field > span i.is-required { color: var(--red); }
 .dkxcr-field input,
 .dkxcr-field select,
-.dkxcr-field textarea { width: 100%; min-height: 62px; padding: 17px 18px; color: #fff; background: rgba(2,8,13,.75); border: 1px solid rgba(132,194,230,.25); border-radius: 0; outline: none; font: 700 14px/1.35 Arial, sans-serif; transition: border-color .2s ease, box-shadow .2s ease; }
+.dkxcr-field textarea { width: 100%; min-height: 62px; padding: 17px 18px; color: #fff; background: rgba(2,8,13,.75); border: 1px solid rgba(132,194,230,.25); border-radius: 0; outline: none; font: 700 14px/1.35 Arial, sans-serif; transition: border-color .2s ease, outline-color .2s ease; }
 .dkxcr-field textarea { min-height: 180px; resize: vertical; }
 .dkxcr-field input::placeholder,
 .dkxcr-field textarea::placeholder { color: #718795; opacity: 1; }
@@ -104,8 +106,8 @@
 .dkxcr-field select option { color: #fff; background: #06131d; }
 .dkxcr-field input:focus,
 .dkxcr-field select:focus,
-.dkxcr-field textarea:focus { border-color: var(--aqua); box-shadow: 0 0 0 3px rgba(32,215,200,.1); }
-.dkxcr-field [aria-invalid="true"] { border-color: var(--red); box-shadow: 0 0 0 3px rgba(255,83,100,.1); }
+.dkxcr-field textarea:focus { border-color: var(--aqua); outline: 2px solid var(--aqua); outline-offset: 2px; }
+.dkxcr-field [aria-invalid="true"] { border-color: var(--red); outline: 2px solid var(--red); outline-offset: 2px; }
 .dkxcr-field small { color: #7f96a5; font-size: 9px; line-height: 1.4; }
 .dkxcr-field-error { color: #ff9aa5 !important; font-weight: 800; }
 .dkxcr-form-submit { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; margin-top: 38px; padding-top: 34px; border-top: 1px solid var(--line); }
@@ -120,7 +122,7 @@
 .dkxcr-success-signal { position: relative; width: 190px; aspect-ratio: 1; display: grid; place-items: center; margin-bottom: 54px; border: 1px solid rgba(32,215,200,.45); border-radius: 50%; }
 .dkxcr-success-signal i { position: absolute; inset: 15%; border: 1px dashed rgba(64,184,255,.45); border-radius: 50%; }
 .dkxcr-success-signal i:nth-child(2) { inset: 31%; border-style: solid; border-color: rgba(151,109,255,.45); }
-.dkxcr-success-signal span { position: relative; z-index: 2; width: 70px; aspect-ratio: 1; display: grid; place-items: center; color: var(--ink); background: var(--aqua); border-radius: 50%; font-size: 30px; font-weight: 900; box-shadow: 0 0 36px rgba(32,215,200,.3); }
+.dkxcr-success-signal span { position: relative; z-index: 2; width: 70px; aspect-ratio: 1; display: grid; place-items: center; color: var(--ink); background: var(--aqua); border: 4px solid var(--blue); border-radius: 50%; font-size: 30px; font-weight: 900; }
 .dkxcr-success h2 { margin-top: 22px; font-size: clamp(64px, 8vw, 112px); line-height: .8; }
 .dkxcr-success > p:not(.dkxcr-kicker) { max-width: 620px; margin-top: 28px; color: #c3d0d8; font-size: 17px; line-height: 1.7; }
 .dkxcr-success-next { display: grid; margin-top: 45px; border-top: 1px solid var(--line); }
@@ -129,7 +131,7 @@
 .dkxcr-success-next a b { color: var(--gold); }
 
 /* Rate Card. */
-.dkxcr-rates-hero { position: relative; width: min(1480px, calc(100% - 44px)); min-height: 900px; display: grid; place-items: center; margin: 26px auto 0; padding: 150px 7vw 120px; background: radial-gradient(circle at 76% 34%, rgba(151,109,255,.15), transparent 26%), linear-gradient(140deg, #061522, #02070c 62%); border: 1px solid var(--line); overflow: hidden; }
+.dkxcr-rates-hero { position: relative; width: min(1480px, calc(100% - 44px)); min-height: 900px; display: grid; place-items: center; margin: 26px auto 0; padding: 150px 7vw 120px; background: linear-gradient(140deg, #061522 0 62%, #140f24 62% 100%); border: 1px solid var(--line); overflow: hidden; }
 .dkxcr-rates-year { position: absolute; right: 3%; top: 14%; display: grid; color: rgba(64,184,255,.07); font: 900 clamp(180px, 27vw, 410px)/.62 "Arial Black", Arial, sans-serif; letter-spacing: -.14em; }
 .dkxcr-rates-year strong { color: rgba(151,109,255,.07); }
 .dkxcr-rates-hero::after { content: ""; position: absolute; left: 7vw; right: 7vw; top: 70px; height: 4px; background: linear-gradient(90deg, var(--blue) 0 25%, var(--gold) 25% 50%, var(--purple) 50% 75%, var(--aqua) 75%); }
