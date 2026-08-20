@@ -115,7 +115,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.22.6';
+	$release = '1.22.7';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -338,6 +338,30 @@ function dkxv4_work_preview_assets_v1223() {
 add_action( 'wp_enqueue_scripts', 'dkxv4_work_preview_assets_v1223', 1000 );
 
 /**
+ * Load the locked Start a Project and 2026 Rate Card conversion system.
+ */
+function dkxv4_contact_rate_assets_v1227() {
+	if ( ! is_page( array( 'contact', 'rates' ) ) ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'dkx-contact-rates-v1227',
+		get_stylesheet_directory_uri() . '/assets/css/contact-rates-v1227.css',
+		array( 'dkx-recovery-v1204' ),
+		'1.22.7'
+	);
+	wp_enqueue_script(
+		'dkx-contact-rates-v1227',
+		get_stylesheet_directory_uri() . '/assets/contact-rates-v1227.js',
+		array(),
+		'1.22.7',
+		true
+	);
+}
+add_action( 'wp_enqueue_scripts', 'dkxv4_contact_rate_assets_v1227', 1001 );
+
+/**
  * v1.20.4 recovery helpers.
  *
  * The v1.20.3 page templates survived the server-side Git overlay, while the
@@ -502,26 +526,38 @@ function dkxv4_save_attachment_work_field( $post, $attachment ) {
 add_filter( 'attachment_fields_to_save', 'dkxv4_save_attachment_work_field', 10, 2 );
 
 function dkxv4_project_enquiry_handler() {
-	check_admin_referer( 'dkx_project_enquiry', 'dkx_project_nonce' );
+	$redirect_url = home_url( '/contact/' );
+	if ( ! empty( $_POST['website'] ) ) {
+		wp_safe_redirect( add_query_arg( 'project', 'sent', $redirect_url ) );
+		exit;
+	}
+	if ( ! isset( $_POST['dkx_project_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dkx_project_nonce'] ) ), 'dkx_project_enquiry' ) ) {
+		wp_safe_redirect( add_query_arg( 'project', 'error', $redirect_url ) );
+		exit;
+	}
 	$name = sanitize_text_field( wp_unslash( $_POST['project_name'] ?? '' ) );
 	$email = sanitize_email( wp_unslash( $_POST['project_email'] ?? '' ) );
+	$service = sanitize_text_field( wp_unslash( $_POST['project_service'] ?? '' ) );
 	$brief = sanitize_textarea_field( wp_unslash( $_POST['project_brief'] ?? '' ) );
-	if ( ! $name || ! is_email( $email ) || ! $brief ) {
-		wp_safe_redirect( add_query_arg( 'project', 'invalid', home_url( '/contact/' ) ) );
+	if ( ! $name || ! is_email( $email ) || ! $service || ! $brief ) {
+		wp_safe_redirect( add_query_arg( 'project', 'invalid', $redirect_url ) );
 		exit;
 	}
 	$details = array(
 		'Name: ' . $name,
-		'Company: ' . sanitize_text_field( wp_unslash( $_POST['project_company'] ?? '' ) ),
 		'Email: ' . $email,
-		'Service: ' . sanitize_text_field( wp_unslash( $_POST['project_service'] ?? '' ) ),
+		'Phone: ' . sanitize_text_field( wp_unslash( $_POST['project_phone'] ?? '' ) ),
+		'Company / Brand: ' . sanitize_text_field( wp_unslash( $_POST['project_company'] ?? '' ) ),
+		'Project Type: ' . $service,
 		'Budget: ' . sanitize_text_field( wp_unslash( $_POST['project_budget'] ?? '' ) ),
 		'Timeline: ' . sanitize_text_field( wp_unslash( $_POST['project_timeline'] ?? '' ) ),
+		'How they found DK Expressions: ' . sanitize_text_field( wp_unslash( $_POST['project_referral'] ?? '' ) ),
 		'',
+		'Project Brief:',
 		$brief,
 	);
-	wp_mail( dkxv4_content( 'contact_email' ), 'New DK Expressions project enquiry — ' . $name, implode( "\n", $details ), array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
-	wp_safe_redirect( add_query_arg( 'project', 'sent', home_url( '/contact/' ) ) );
+	$mail_sent = wp_mail( dkxv4_content( 'contact_email' ), 'New DK Expressions project enquiry — ' . $name, implode( "\n", $details ), array( 'Reply-To: ' . $name . ' <' . $email . '>' ) );
+	wp_safe_redirect( add_query_arg( 'project', $mail_sent ? 'sent' : 'error', $redirect_url ) );
 	exit;
 }
 add_action( 'admin_post_nopriv_dkx_project_enquiry', 'dkxv4_project_enquiry_handler' );
