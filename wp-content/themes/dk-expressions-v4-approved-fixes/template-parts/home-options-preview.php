@@ -16,6 +16,26 @@ $variant_names = array(
 );
 $variant_name = $variant_names[ $dkxv4_home_preview ] ?? $variant_names['cinematic'];
 $work_items   = array_slice( dkxv4_get_work_media(), 0, 8 );
+$clients_post_type = dkxv4_clients_post_type();
+$home_clients = $clients_post_type ? get_posts(
+	array(
+		'post_type'      => $clients_post_type,
+		'post_status'    => 'publish',
+		'posts_per_page' => 40,
+		'orderby'        => array( 'menu_order' => 'ASC', 'title' => 'ASC' ),
+	)
+) : array();
+$site_metrics = array();
+for ( $metric_index = 1; $metric_index <= 6; $metric_index++ ) {
+	$metric_value = dkxv4_content( "metric_{$metric_index}_value" );
+	if ( 2 === $metric_index ) {
+		$metric_value = '2,000+';
+	}
+	$site_metrics[] = array(
+		$metric_value,
+		dkxv4_content( "metric_{$metric_index}_label" ),
+	);
+}
 $work_labels  = array(
 	array( 'Live Events', 'The moment before the lights change.' ),
 	array( 'Culture', 'Stories captured inside the energy.' ),
@@ -66,7 +86,7 @@ foreach ( $variant_names as $key => $name ) {
 	$preview_urls[ $key ] = add_query_arg(
 		array(
 			'dk-home-preview' => $key,
-			'dk-refresh'      => '1213',
+			'dk-refresh'      => '1214',
 		),
 		home_url( '/home/' )
 	);
@@ -86,7 +106,11 @@ foreach ( $variant_names as $key => $name ) {
 					<a class="dkxhp-button is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project <span>↗</span></a>
 					<a class="dkxhp-button is-secondary" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">View the Time Vault <span>→</span></a>
 				</div>
-				<p class="dkxhp-meta"><b>13+ years</b><i></i><b>2,000+ projects</b><i></i><b>Johannesburg &amp; beyond</b></p>
+				<ul class="dkxhp-meta" aria-label="DK Expressions at a glance">
+					<li><strong>13+</strong><span>Years</span></li>
+					<li><strong>2,000+</strong><span>Projects</span></li>
+					<li><strong>Johannesburg</strong><span>&amp; beyond</span></li>
+				</ul>
 			</div>
 			<div class="dkxhp-hero-visual" aria-label="Selected DK Expressions work">
 				<div class="dkxhp-hero-frame">
@@ -104,6 +128,48 @@ foreach ( $variant_names as $key => $name ) {
 			<p><strong class="is-gold">2.47M+</strong><span>pages viewed</span></p>
 			<p><strong class="is-purple">6.13M+</strong><span>hits</span></p>
 			<p class="dkxhp-proof-trust"><strong>Trusted by</strong><span>promoters, brands and artists since 2013</span></p>
+		</div>
+	</section>
+
+	<section class="dkxhp-editorial-proof" aria-label="DK Expressions verified audience and site statistics">
+		<?php if ( $home_clients ) : ?>
+		<div class="dkxhp-client-strip" aria-label="Selected clients and partners">
+			<div class="dkxhp-client-label"><i aria-hidden="true"></i><span>Trusted by</span></div>
+			<div class="dkxhp-client-window">
+				<div class="dkxhp-client-track">
+					<?php for ( $client_loop = 0; $client_loop < 2; $client_loop++ ) : ?>
+						<?php foreach ( $home_clients as $client ) : ?>
+							<?php if ( has_post_thumbnail( $client ) ) : ?>
+							<span title="<?php echo esc_attr( get_the_title( $client ) ); ?>"><?php echo get_the_post_thumbnail( $client, 'medium', array( 'loading' => 'lazy', 'alt' => get_the_title( $client ) ) ); ?></span>
+							<?php endif; ?>
+						<?php endforeach; ?>
+					<?php endfor; ?>
+				</div>
+			</div>
+		</div>
+		<?php endif; ?>
+
+		<div class="dkxhp-shell dkxhp-analytics-shell">
+			<header class="dkxhp-analytics-head">
+				<div><p class="dkxhp-eyebrow">Proof, Not Promises</p><h2>Independent<br><em>Server Analytics.</em></h2></div>
+				<p>DK Expressions server analytics<br><strong>September 2025–August 2026</strong></p>
+			</header>
+			<div class="dkxhp-analytics-grid">
+				<article class="is-visits" data-stat="01"><span>01</span><strong>1.10M+</strong><b>Visits</b><p>People entering the DK Expressions universe.</p></article>
+				<article class="is-pages" data-stat="02"><span>02</span><strong>2.47M+</strong><b>Pages Viewed</b></article>
+				<article class="is-hits" data-stat="03"><span>03</span><strong>6.13M+</strong><b>Hits</b></article>
+				<article class="is-live" data-stat="04"><span>Live <i aria-hidden="true"></i></span><strong>97,603</strong><b>August Visits</b></article>
+			</div>
+			<p class="dkxhp-analytics-source"><i></i>Verified Server Analytics · Webalizer</p>
+
+			<div class="dkxhp-site-stats">
+				<header><p class="dkxhp-eyebrow">Site Stats</p><h3>Thirteen years<br>in motion.</h3></header>
+				<div>
+					<?php foreach ( $site_metrics as $site_metric ) : ?>
+					<article><strong><?php echo esc_html( $site_metric[0] ); ?></strong><span><?php echo esc_html( $site_metric[1] ); ?></span></article>
+					<?php endforeach; ?>
+				</div>
+			</div>
 		</div>
 	</section>
 
