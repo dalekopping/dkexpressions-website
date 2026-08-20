@@ -61,7 +61,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.20.9';
+	$release = '1.21.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -117,7 +117,7 @@ function dkx_fixes_assets() {
 		'dkxHighlightConfig',
 		array( 'additionalLocations' => preg_split( '/\R/', dkxv4_content( 'highlight_locations' ), -1, PREG_SPLIT_NO_EMPTY ) )
 	);
-	if ( is_page( 'home' ) || dkxv4_is_three_doors_landing_preview() || dkxv4_is_conversion_landing_preview() ) {
+	if ( is_front_page() || is_page( 'home' ) || dkxv4_is_three_doors_landing_preview() || dkxv4_is_conversion_landing_preview() ) {
 		wp_enqueue_style(
 			'dkx-home-v1200',
 			get_stylesheet_directory_uri() . '/assets/css/home-v1200.css',
@@ -125,7 +125,7 @@ function dkx_fixes_assets() {
 			$release
 		);
 	}
-	if ( is_page( 'home' ) || dkxv4_is_conversion_landing_preview() ) {
+	if ( is_front_page() || is_page( 'home' ) || dkxv4_is_conversion_landing_preview() ) {
 		wp_enqueue_style(
 			'dkx-landing-conversion-v1209',
 			get_stylesheet_directory_uri() . '/assets/css/landing-conversion-v1209.css',

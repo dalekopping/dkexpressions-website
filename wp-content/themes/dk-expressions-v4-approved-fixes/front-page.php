@@ -6,9 +6,6 @@
  */
 get_header();
 
-$three_doors_preview = function_exists( 'dkxv4_is_three_doors_landing_preview' ) && dkxv4_is_three_doors_landing_preview();
-$conversion_preview  = function_exists( 'dkxv4_is_conversion_landing_preview' ) && dkxv4_is_conversion_landing_preview();
-
 $server_metrics = array(
 	array( '01', '1.10M+', 'Visits', 'People entering the DK Expressions universe.', 'is-visits' ),
 	array( '02', '2.47M+', 'Pages viewed', '', 'is-pages' ),
@@ -25,17 +22,9 @@ $server_metrics = array(
 		<p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'home_hero_kicker' ) ); ?></p>
 		<h1><?php echo esc_html( dkxv4_content( 'home_hero_title_1' ) ); ?> <span><?php echo esc_html( dkxv4_content( 'home_hero_title_2' ) ); ?></span></h1>
 		<p class="dk-tagline"><?php echo esc_html( dkxv4_registered_phrase( dkxv4_content( 'home_hero_tagline' ) ) ); ?></p>
-		<?php if ( ! $three_doors_preview ) : ?>
-		<div class="dk-landing-actions" aria-label="<?php esc_attr_e( 'Choose your DK Expressions experience', 'dk-expressions-v4-fixes' ); ?>">
-			<a class="dk-landing-cta is-enter" href="<?php echo esc_url( home_url( '/home/' ) ); ?>"><?php echo esc_html( dkxv4_content( 'home_enter_label' ) ); ?> <span>→</span></a>
-			<a class="dk-landing-cta is-work" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>"><?php esc_html_e( 'View our work', 'dk-expressions-v4-fixes' ); ?> <span>↗</span></a>
-			<a class="dk-landing-cta is-project" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project', 'dk-expressions-v4-fixes' ); ?> <span>↗</span></a>
-		</div>
-		<?php endif; ?>
 	</div>
 </section>
 
-<?php if ( $three_doors_preview ) : ?>
 <section class="dkx1200-section dkx1200-pathways" id="three-doors">
 	<header class="dkx1200-section-head">
 		<div>
@@ -50,7 +39,7 @@ $server_metrics = array(
 		<a class="archive" href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>"><span>03 / TIME VAULT</span><h3>See where we have travelled.</h3><p>Photography, motion, recommendations and moments frozen across more than a decade.</p><b>Open Our Work →</b></a>
 	</div>
 </section>
-<?php elseif ( $conversion_preview ) : ?>
+
 <main class="dkxv4-conversion-landing dk-no-semantic-highlight" id="analytics-preview" data-dkx-preview="conversion">
 	<section class="dkxv4-proof" aria-labelledby="dkxv4-proof-title">
 		<header class="dkxv4-proof-head">
@@ -74,6 +63,5 @@ $server_metrics = array(
 		<p class="dkxv4-proof-verified"><i aria-hidden="true"></i>Verified server analytics · Webalizer</p>
 	</section>
 </main>
-<?php endif; ?>
 
 <?php get_footer(); ?>
