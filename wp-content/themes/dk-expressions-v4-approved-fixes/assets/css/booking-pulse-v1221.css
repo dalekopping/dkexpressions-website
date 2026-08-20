@@ -86,11 +86,11 @@
 	color: rgba(255, 255, 255, .78);
 }
 
-.dkx-booking-pulse__booking strong {
+.dkx-booking-pulse .dkx-booking-pulse__booking strong {
 	font: 900 clamp(24px, 2vw, 32px)/.9 "Arial Black", Arial, Helvetica, sans-serif;
 	letter-spacing: -.045em;
 	text-transform: uppercase;
-	color: var(--dk-purple);
+	color: var(--dk-purple) !important;
 }
 
 .dkx-booking-pulse__divider {
@@ -100,17 +100,17 @@
 	background: linear-gradient(180deg, transparent, rgba(64, 184, 255, .68), transparent);
 }
 
-.dkx-booking-pulse__slots strong {
+.dkx-booking-pulse .dkx-booking-pulse__slots strong {
 	font: 900 clamp(36px, 3.2vw, 52px)/.75 "Arial Black", Arial, Helvetica, sans-serif;
 	letter-spacing: -.06em;
-	color: var(--dk-red);
+	color: var(--dk-red) !important;
 }
 
-.dkx-booking-pulse__slots b {
+.dkx-booking-pulse .dkx-booking-pulse__slots b {
 	font: 900 clamp(18px, 1.55vw, 24px)/1 "Arial Black", Arial, Helvetica, sans-serif;
 	letter-spacing: -.025em;
 	text-transform: uppercase;
-	color: var(--dk-gold);
+	color: var(--dk-gold) !important;
 }
 
 @media (max-width: 820px) {
@@ -141,15 +141,15 @@
 		letter-spacing: .12em;
 	}
 
-	.dkx-booking-pulse__booking strong {
+	.dkx-booking-pulse .dkx-booking-pulse__booking strong {
 		font-size: 24px;
 	}
 
-	.dkx-booking-pulse__slots strong {
+	.dkx-booking-pulse .dkx-booking-pulse__slots strong {
 		font-size: 40px;
 	}
 
-	.dkx-booking-pulse__slots b {
+	.dkx-booking-pulse .dkx-booking-pulse__slots b {
 		font-size: 17px;
 	}
 }
