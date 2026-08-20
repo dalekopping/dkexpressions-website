@@ -92,6 +92,8 @@ $solution_families = array(
 		</div>
 	</section>
 
+	<?php require get_stylesheet_directory() . '/template-parts/booking-pulse.php'; ?>
+
 	<section class="dkxsr-analytics" aria-label="DK Expressions verified server analytics">
 		<div class="dkxsr-shell">
 			<header class="dkxsr-analytics-head">
@@ -140,8 +142,10 @@ $solution_families = array(
 		</div>
 	</section>
 
+	<?php if ( ! empty( $dkxv4_solutions_is_preview ) ) : ?>
 	<nav class="dkxsr-switcher" aria-label="Solutions page design options">
 		<p><span>Solutions Preview</span><?php echo esc_html( $solution_variant_name ); ?></p>
 		<div><?php foreach ( $solution_variants as $variant_key => $variant_label ) : ?><a class="<?php echo $variant_key === $dkxv4_solutions_preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( $solution_preview_urls[ $variant_key ] ); ?>"><span><?php echo esc_html( chr( 65 + array_search( $variant_key, array_keys( $solution_variants ), true ) ) ); ?></span><?php echo esc_html( $variant_label ); ?></a><?php endforeach; ?></div>
 	</nav>
+	<?php endif; ?>
 </main>

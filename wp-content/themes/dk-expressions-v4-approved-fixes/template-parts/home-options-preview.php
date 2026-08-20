@@ -126,6 +126,8 @@ foreach ( $variant_names as $key => $name ) {
 		</div>
 	</section>
 
+	<?php require get_stylesheet_directory() . '/template-parts/booking-pulse.php'; ?>
+
 	<section class="dkxhp-editorial-proof" aria-label="DK Expressions verified audience and site statistics">
 		<?php if ( $home_clients ) : ?>
 		<div class="dkxhp-client-strip" aria-label="Selected clients and partners">
