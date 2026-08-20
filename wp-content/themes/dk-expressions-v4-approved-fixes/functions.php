@@ -99,7 +99,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.22.0';
+	$release = '1.22.1';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -187,6 +187,14 @@ function dkx_fixes_assets() {
 			$release
 		);
 	}
+	if ( is_front_page() || is_page( array( 'home', 'solutions' ) ) ) {
+		wp_enqueue_style(
+			'dkx-booking-pulse-v1221',
+			get_stylesheet_directory_uri() . '/assets/css/booking-pulse-v1221.css',
+			array( 'dkx-branding-v1200' ),
+			$release
+		);
+	}
 	if ( is_page( 'solutions' ) ) {
 		wp_enqueue_style(
 			'dkx-solutions-v1197',
@@ -195,7 +203,7 @@ function dkx_fixes_assets() {
 			$release
 		);
 	}
-	if ( is_page( 'solutions' ) && '' !== dkxv4_solutions_preview_key() ) {
+	if ( is_page( 'solutions' ) ) {
 		wp_enqueue_style(
 			'dkx-solutions-options-v1220',
 			get_stylesheet_directory_uri() . '/assets/css/solutions-options-v1220.css',
