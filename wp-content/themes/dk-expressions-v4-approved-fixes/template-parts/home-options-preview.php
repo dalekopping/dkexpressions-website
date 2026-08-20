@@ -114,19 +114,19 @@ foreach ( $variant_names as $key => $name ) {
 				<h2>Choose <em>your path.</em></h2>
 			</header>
 			<div class="dkxhp-door-grid">
-				<article class="dkxhp-door is-agency">
+				<article class="dkxhp-door is-agency" data-door="01">
 					<p class="dkxhp-door-number">01 <span>/ Agency</span></p>
 					<h3>For brands and events that need more than content.</h3>
 					<p>Strategy, photography, motion and ongoing partnership.</p>
 					<a href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>">Enter Agency <span>→</span></a>
 				</article>
-				<article class="dkxhp-door is-media">
+				<article class="dkxhp-door is-media" data-door="02">
 					<p class="dkxhp-door-number">02 <span>/ Media</span></p>
 					<h3>Stories, culture and the work we publish.</h3>
 					<p>Entertainment, people, experiences and the stories shaping South Africa.</p>
 					<a href="<?php echo esc_url( home_url( '/insights/' ) ); ?>">Enter Media <span>→</span></a>
 				</article>
-				<article class="dkxhp-door is-vault">
+				<article class="dkxhp-door is-vault" data-door="03">
 					<p class="dkxhp-door-number">03 <span>/ Time Vault</span></p>
 					<h3>See where we have travelled.</h3>
 					<p>Photography, motion and moments frozen across more than a decade.</p>
