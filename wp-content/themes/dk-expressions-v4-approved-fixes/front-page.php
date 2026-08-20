@@ -21,17 +21,14 @@ get_header();
 </section>
 
 <main class="dkx1211-landing dk-no-semantic-highlight">
-	<section class="dkx1211-proof-strip" aria-label="Audience proof and current availability">
+	<section class="dkx1211-proof-strip" aria-label="DK Expressions audience proof">
 		<div class="dkx1211-proof-audience">
 			<span class="is-visits"><strong>1.10M+</strong> visits</span><i aria-hidden="true">·</i>
 			<span class="is-pages"><strong>2.47M+</strong> pages viewed</span><i aria-hidden="true">·</i>
 			<span class="is-trusted">Trusted by <strong>Big Concerts, Comic Con Africa, Showtime Management, TPW</strong></span>
 		</div>
-		<div class="dkx1211-proof-availability">
-			<span>Currently booking <strong>Q3 &amp; Q4</strong></span><i aria-hidden="true">·</i>
-			<span>Only <strong>5</strong> retainer slots left for September–October</span>
-		</div>
 	</section>
+	<?php require get_stylesheet_directory() . '/template-parts/booking-pulse.php'; ?>
 
 	<section class="dkx1200-section dkx1200-pathways dkx1211-pathways" id="three-doors">
 		<header class="dkx1200-section-head">
