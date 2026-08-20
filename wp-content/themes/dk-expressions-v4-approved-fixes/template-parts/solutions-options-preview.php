@@ -20,7 +20,7 @@ foreach ( $solution_variants as $variant_key => $variant_label ) {
 	$solution_preview_urls[ $variant_key ] = add_query_arg(
 		array(
 			'dk-solutions-preview' => $variant_key,
-			'dk-refresh'           => '1218',
+			'dk-refresh'           => '1219',
 		),
 		home_url( '/solutions/' )
 	);
