@@ -83,7 +83,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.21.4';
+	$release = '1.21.5';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -155,7 +155,7 @@ function dkx_fixes_assets() {
 			$release
 		);
 	}
-	if ( is_page( 'home' ) && '' !== dkxv4_home_preview_key() ) {
+	if ( is_page( 'home' ) ) {
 		wp_enqueue_style(
 			'dkx-home-options-v1213',
 			get_stylesheet_directory_uri() . '/assets/css/home-options-v1213.css',
