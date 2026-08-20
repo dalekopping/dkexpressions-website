@@ -131,7 +131,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.22.9';
+	$release = '1.23.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -365,7 +365,7 @@ function dkxv4_industries_preview_assets_v1229() {
 		'dkx-industries-options-v1229',
 		get_stylesheet_directory_uri() . '/assets/css/industries-options-v1229.css',
 		array( 'dkxv4-commercial-v1173' ),
-		'1.22.9'
+		'1.23.0'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_industries_preview_assets_v1229', 1001 );
