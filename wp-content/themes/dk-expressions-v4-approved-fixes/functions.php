@@ -28,23 +28,45 @@ function dkxv4_landing_preview_key() {
 	return in_array( $preview_key, array( 'three-doors', 'conversion' ), true ) ? $preview_key : '';
 }
 
+/**
+ * Return the requested non-destructive home-page preview key.
+ *
+ * The published home page is never changed by these comparison routes.
+ */
+function dkxv4_home_preview_key() {
+	if ( ! isset( $_GET['dk-home-preview'] ) ) {
+		return '';
+	}
+
+	$preview_key = sanitize_key( wp_unslash( $_GET['dk-home-preview'] ) );
+
+	return in_array( $preview_key, array( 'cinematic', 'vault', 'editorial' ), true ) ? $preview_key : '';
+}
+
 /* Tell compatible page caches to leave approved comparison URLs dynamic. */
-if ( '' !== dkxv4_landing_preview_key() && ! defined( 'DONOTCACHEPAGE' ) ) {
+if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
 	define( 'DONOTCACHEPAGE', true );
 }
 
 /**
  * Prevent browser, proxy and WordPress page caches from masking a preview.
  */
-function dkxv4_disable_landing_preview_cache() {
-	if ( '' === dkxv4_landing_preview_key() ) {
+function dkxv4_disable_experience_preview_cache() {
+	$landing_preview = dkxv4_landing_preview_key();
+	$home_preview    = dkxv4_home_preview_key();
+
+	if ( '' === $landing_preview && '' === $home_preview ) {
 		return;
 	}
 
 	nocache_headers();
-	header( 'X-DK-Landing-Preview: ' . dkxv4_landing_preview_key() );
+	if ( '' !== $home_preview ) {
+		header( 'X-DK-Home-Preview: ' . $home_preview );
+	} else {
+		header( 'X-DK-Landing-Preview: ' . $landing_preview );
+	}
 }
-add_action( 'template_redirect', 'dkxv4_disable_landing_preview_cache', 0 );
+add_action( 'template_redirect', 'dkxv4_disable_experience_preview_cache', 0 );
 
 /**
  * Whether the Three Doors comparison is active.
@@ -61,7 +83,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.21.2';
+	$release = '1.21.3';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -129,6 +151,14 @@ function dkx_fixes_assets() {
 		wp_enqueue_style(
 			'dkx-landing-conversion-v1209',
 			get_stylesheet_directory_uri() . '/assets/css/landing-conversion-v1209.css',
+			array( 'dkx-home-v1200' ),
+			$release
+		);
+	}
+	if ( is_page( 'home' ) && '' !== dkxv4_home_preview_key() ) {
+		wp_enqueue_style(
+			'dkx-home-options-v1213',
+			get_stylesheet_directory_uri() . '/assets/css/home-options-v1213.css',
 			array( 'dkx-home-v1200' ),
 			$release
 		);
