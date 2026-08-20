@@ -50,7 +50,7 @@ foreach ( $work_variants as $variant_key => $variant_label ) {
 	$preview_urls[ $variant_key ] = add_query_arg(
 		array(
 			'dk-work-preview' => $variant_key,
-			'dk-refresh'      => '1225',
+			'dk-refresh'      => '1226',
 		),
 		home_url( '/our-work/' )
 	);
@@ -212,8 +212,10 @@ foreach ( $work_variants as $variant_key => $variant_label ) {
 		</div>
 	<?php endif; ?>
 
-	<nav class="dkxmw-switcher" aria-label="Our Work page design options">
-		<p><span>Three worlds / one DK universe</span><?php echo esc_html( $work_variant_name ); ?></p>
-		<div><?php foreach ( $work_variants as $variant_key => $variant_label ) : ?><a class="<?php echo $variant_key === $dkxv4_work_preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( $preview_urls[ $variant_key ] ); ?>"><span><?php echo esc_html( chr( 65 + array_search( $variant_key, array_keys( $work_variants ), true ) ) ); ?></span><?php echo esc_html( $variant_label ); ?></a><?php endforeach; ?></div>
-	</nav>
+	<?php if ( ! empty( $dkxv4_show_work_switcher ) ) : ?>
+		<nav class="dkxmw-switcher" aria-label="Our Work page design options">
+			<p><span>Three worlds / one DK universe</span><?php echo esc_html( $work_variant_name ); ?></p>
+			<div><?php foreach ( $work_variants as $variant_key => $variant_label ) : ?><a class="<?php echo $variant_key === $dkxv4_work_preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( $preview_urls[ $variant_key ] ); ?>"><span><?php echo esc_html( chr( 65 + array_search( $variant_key, array_keys( $work_variants ), true ) ) ); ?></span><?php echo esc_html( $variant_label ); ?></a><?php endforeach; ?></div>
+		</nav>
+	<?php endif; ?>
 </main>

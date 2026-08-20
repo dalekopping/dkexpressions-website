@@ -5,11 +5,11 @@
  */
 get_header();
 $dkxv4_work_preview = function_exists( 'dkxv4_work_preview_key' ) ? dkxv4_work_preview_key() : '';
-if ( '' !== $dkxv4_work_preview ) {
-	require get_stylesheet_directory() . '/template-parts/our-work-options-preview.php';
-	get_footer();
-	return;
-}
+$dkxv4_show_work_switcher = '' !== $dkxv4_work_preview;
+$dkxv4_work_preview = $dkxv4_show_work_switcher ? $dkxv4_work_preview : 'archive';
+require get_stylesheet_directory() . '/template-parts/our-work-options-preview.php';
+get_footer();
+return;
 
 $items = dkxv4_get_work_media();
 $videos = array();
