@@ -56,21 +56,8 @@ function dkxv4_solutions_preview_key() {
 	return in_array( $preview_key, array( 'chapters', 'matrix', 'vault' ), true ) ? $preview_key : '';
 }
 
-/**
- * Return the requested non-destructive Our Work / Media Door preview key.
- */
-function dkxv4_work_preview_key() {
-	if ( ! isset( $_GET['dk-work-preview'] ) ) {
-		return '';
-	}
-
-	$preview_key = sanitize_key( wp_unslash( $_GET['dk-work-preview'] ) );
-
-	return in_array( $preview_key, array( 'editorial', 'field', 'archive' ), true ) ? $preview_key : '';
-}
-
 /* Tell compatible page caches to leave approved comparison URLs dynamic. */
-if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() || '' !== dkxv4_solutions_preview_key() || '' !== dkxv4_work_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
+if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() || '' !== dkxv4_solutions_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
 	define( 'DONOTCACHEPAGE', true );
 }
 
@@ -81,16 +68,13 @@ function dkxv4_disable_experience_preview_cache() {
 	$landing_preview = dkxv4_landing_preview_key();
 	$home_preview    = dkxv4_home_preview_key();
 	$solutions_preview = dkxv4_solutions_preview_key();
-	$work_preview    = dkxv4_work_preview_key();
 
-	if ( '' === $landing_preview && '' === $home_preview && '' === $solutions_preview && '' === $work_preview ) {
+	if ( '' === $landing_preview && '' === $home_preview && '' === $solutions_preview ) {
 		return;
 	}
 
 	nocache_headers();
-	if ( '' !== $work_preview ) {
-		header( 'X-DK-Work-Preview: ' . $work_preview );
-	} elseif ( '' !== $solutions_preview ) {
+	if ( '' !== $solutions_preview ) {
 		header( 'X-DK-Solutions-Preview: ' . $solutions_preview );
 	} elseif ( '' !== $home_preview ) {
 		header( 'X-DK-Home-Preview: ' . $home_preview );
@@ -115,7 +99,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.22.3';
+	$release = '1.22.2';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -321,21 +305,6 @@ function dkxv4_commercial_experience_assets_v118() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_commercial_experience_assets_v118', 999 );
-
-/**
- * Load the Media Door design options after the existing Our Work styles.
- */
-function dkxv4_work_preview_assets_v1223() {
-	if ( is_page( 'our-work' ) && '' !== dkxv4_work_preview_key() ) {
-		wp_enqueue_style(
-			'dkx-our-work-options-v1223',
-			get_stylesheet_directory_uri() . '/assets/css/our-work-options-v1223.css',
-			array( 'dkxv4-commercial-v1173' ),
-			'1.22.3'
-		);
-	}
-}
-add_action( 'wp_enqueue_scripts', 'dkxv4_work_preview_assets_v1223', 1000 );
 
 /**
  * v1.20.4 recovery helpers.
