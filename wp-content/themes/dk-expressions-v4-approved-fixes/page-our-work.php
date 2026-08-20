@@ -4,13 +4,6 @@
  * v1.18.7 cinematic media-first portfolio.
  */
 get_header();
-$dkxv4_work_preview = function_exists( 'dkxv4_work_preview_key' ) ? dkxv4_work_preview_key() : '';
-if ( '' !== $dkxv4_work_preview ) {
-	require get_stylesheet_directory() . '/template-parts/our-work-options-preview.php';
-	get_footer();
-	return;
-}
-
 $items = dkxv4_get_work_media();
 $videos = array();
 $images = array();
