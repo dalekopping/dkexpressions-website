@@ -131,7 +131,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.0';
+	$release = '1.23.1';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -235,11 +235,11 @@ function dkx_fixes_assets() {
 			$release
 		);
 	}
-	if ( is_page( 'solutions' ) ) {
+	if ( is_page( 'solutions' ) || ( is_page( 'industries' ) && '' !== dkxv4_industries_preview_key() ) ) {
 		wp_enqueue_style(
 			'dkx-solutions-options-v1220',
 			get_stylesheet_directory_uri() . '/assets/css/solutions-options-v1220.css',
-			array( 'dkx-solutions-v1197' ),
+			array( is_page( 'solutions' ) ? 'dkx-solutions-v1197' : 'dkx-recovery-v1204' ),
 			$release
 		);
 	}
@@ -365,7 +365,7 @@ function dkxv4_industries_preview_assets_v1229() {
 		'dkx-industries-options-v1229',
 		get_stylesheet_directory_uri() . '/assets/css/industries-options-v1229.css',
 		array( 'dkxv4-commercial-v1173' ),
-		'1.23.0'
+		'1.23.1'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_industries_preview_assets_v1229', 1001 );
