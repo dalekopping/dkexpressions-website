@@ -1,6 +1,6 @@
 <?php
 /**
- * Three non-destructive Industries page design previews — v1.23.1.
+ * Industries Infinity Switchboard and archived design previews — v1.23.2.
  *
  * @package DK_Expressions_V4_Fixes
  */
@@ -296,9 +296,12 @@ $render_solution_vault = static function ( $families, $whatsapp_url, $rate_url, 
 	</main>
 <?php endif; ?>
 
+
+<?php if ( empty( $args['locked'] ) ) : ?>
 <nav class="dkxip-switcher" aria-label="Industries design previews">
 	<span>Industries options</span>
 	<a class="<?php echo 'atlas' === $preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( array( 'dk-industries-preview' => 'atlas', 'dk-refresh' => '1231' ), $page_url ) ); ?>">01 Signal Atlas</a>
 	<a class="<?php echo 'broadcast' === $preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( array( 'dk-industries-preview' => 'broadcast', 'dk-refresh' => '1231' ), $page_url ) ); ?>">02 Spectrum Broadcast</a>
 	<a class="<?php echo 'switchboard' === $preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( array( 'dk-industries-preview' => 'switchboard', 'dk-refresh' => '1231' ), $page_url ) ); ?>">03 Infinity Switchboard</a>
 </nav>
+<?php endif; ?>
