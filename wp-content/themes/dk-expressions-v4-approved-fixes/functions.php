@@ -147,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.7';
+	$release = '1.23.8';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -475,6 +475,23 @@ function dkxv4_final_spacing_lock_assets_v1237() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_final_spacing_lock_assets_v1237', 1200 );
+
+/**
+ * Load the final combined About Page copy and its DK presentation layer.
+ */
+function dkxv4_about_final_assets_v1238() {
+	if ( ! is_page( 'about' ) ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'dkx-about-final-v1238',
+		get_stylesheet_directory_uri() . '/assets/css/about-final-v1238.css',
+		array( 'dkx-recovery-v1204' ),
+		'1.23.8'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'dkxv4_about_final_assets_v1238', 1201 );
 
 /**
  * v1.20.4 recovery helpers.
