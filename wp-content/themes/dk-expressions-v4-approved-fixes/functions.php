@@ -147,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.4';
+	$release = '1.23.5';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -387,10 +387,10 @@ function dkxv4_industries_preview_assets_v1229() {
 add_action( 'wp_enqueue_scripts', 'dkxv4_industries_preview_assets_v1229', 1001 );
 
 /**
- * Load the three original-copy Insights design previews.
+ * Load the locked Insights editorial archive.
  */
 function dkxv4_insights_preview_assets_v1233() {
-	if ( ! is_page( 'insights' ) || '' === dkxv4_insights_preview_key() ) {
+	if ( ! is_page( 'insights' ) ) {
 		return;
 	}
 
@@ -398,7 +398,15 @@ function dkxv4_insights_preview_assets_v1233() {
 		'dkx-insights-options-v1233',
 		get_stylesheet_directory_uri() . '/assets/css/insights-options-v1233.css',
 		array( 'dkx-insights-v1168' ),
-		'1.23.4'
+		'1.23.5'
+	);
+
+	wp_enqueue_script(
+		'dkx-insights-v1235',
+		get_stylesheet_directory_uri() . '/assets/insights-v1235.js',
+		array(),
+		'1.23.5',
+		true
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_insights_preview_assets_v1233', 1002 );
