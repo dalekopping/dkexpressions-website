@@ -79,7 +79,7 @@ function dkxv4_insights_preview_key() {
 
 	$preview_key = sanitize_key( wp_unslash( $_GET['dk-insights-preview'] ) );
 
-	return in_array( $preview_key, array( 'signal-desk', 'deadline-wire', 'story-constellation' ), true ) ? $preview_key : '';
+	return in_array( $preview_key, array( 'cinematic-grid', 'editorial-spectrum', 'timecode-stream' ), true ) ? $preview_key : '';
 }
 
 /**
@@ -147,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.3';
+	$release = '1.23.4';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -387,7 +387,7 @@ function dkxv4_industries_preview_assets_v1229() {
 add_action( 'wp_enqueue_scripts', 'dkxv4_industries_preview_assets_v1229', 1001 );
 
 /**
- * Load the three non-destructive Insights design previews.
+ * Load the three original-copy Insights design previews.
  */
 function dkxv4_insights_preview_assets_v1233() {
 	if ( ! is_page( 'insights' ) || '' === dkxv4_insights_preview_key() ) {
@@ -398,7 +398,7 @@ function dkxv4_insights_preview_assets_v1233() {
 		'dkx-insights-options-v1233',
 		get_stylesheet_directory_uri() . '/assets/css/insights-options-v1233.css',
 		array( 'dkx-insights-v1168' ),
-		'1.23.3'
+		'1.23.4'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_insights_preview_assets_v1233', 1002 );
