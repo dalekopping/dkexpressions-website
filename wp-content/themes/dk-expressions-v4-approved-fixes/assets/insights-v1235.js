@@ -25,7 +25,9 @@
 			index = (nextIndex + slides.length) % slides.length;
 			track.style.transform = 'translate3d(-' + (index * 100) + '%,0,0)';
 			slides.forEach(function (slide, slideIndex) {
-				slide.setAttribute('aria-hidden', slideIndex === index ? 'false' : 'true');
+				var isCurrent = slideIndex === index;
+				slide.setAttribute('aria-hidden', isCurrent ? 'false' : 'true');
+				slide.inert = !isCurrent;
 			});
 			if (status) {
 				status.textContent = pad(index + 1) + ' / ' + pad(slides.length);

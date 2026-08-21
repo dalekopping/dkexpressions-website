@@ -30,13 +30,26 @@ foreach ( $categories as $category_index => $category ) {
 		: sprintf( 'hsl(%d 86%% 64%%)', ( $category_index * 137 ) % 360 );
 }
 
-$primary_category_for = static function ( $post_id ) {
+$wpdb               = $GLOBALS['wpdb'];
+$yoast_primary_rows = $wpdb->get_results(
+	$wpdb->prepare(
+		"SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s",
+		'_yoast_wpseo_primary_category'
+	),
+	ARRAY_A
+);
+$yoast_primary_categories = array();
+foreach ( $yoast_primary_rows as $yoast_primary_row ) {
+	$yoast_primary_categories[ (int) $yoast_primary_row['post_id'] ] = (int) $yoast_primary_row['meta_value'];
+}
+
+$primary_category_for = static function ( $post_id ) use ( $yoast_primary_categories ) {
 	$post_categories = get_the_category( $post_id );
 	if ( empty( $post_categories ) ) {
 		return null;
 	}
 
-	$yoast_primary = absint( get_post_meta( $post_id, '_yoast_wpseo_primary_category', true ) );
+	$yoast_primary = isset( $yoast_primary_categories[ (int) $post_id ] ) ? $yoast_primary_categories[ (int) $post_id ] : 0;
 	if ( $yoast_primary ) {
 		foreach ( $post_categories as $post_category ) {
 			if ( $yoast_primary === (int) $post_category->term_id ) {
