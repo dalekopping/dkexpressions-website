@@ -70,6 +70,19 @@ function dkxv4_industries_preview_key() {
 }
 
 /**
+ * Return the requested non-destructive Insights-page preview key.
+ */
+function dkxv4_insights_preview_key() {
+	if ( ! isset( $_GET['dk-insights-preview'] ) ) {
+		return '';
+	}
+
+	$preview_key = sanitize_key( wp_unslash( $_GET['dk-insights-preview'] ) );
+
+	return in_array( $preview_key, array( 'signal-desk', 'deadline-wire', 'story-constellation' ), true ) ? $preview_key : '';
+}
+
+/**
  * Return the requested non-destructive Our Work / Media Door preview key.
  */
 function dkxv4_work_preview_key() {
@@ -83,7 +96,7 @@ function dkxv4_work_preview_key() {
 }
 
 /* Tell compatible page caches to leave approved comparison URLs dynamic. */
-if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() || '' !== dkxv4_solutions_preview_key() || '' !== dkxv4_industries_preview_key() || '' !== dkxv4_work_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
+if ( ( '' !== dkxv4_landing_preview_key() || '' !== dkxv4_home_preview_key() || '' !== dkxv4_solutions_preview_key() || '' !== dkxv4_industries_preview_key() || '' !== dkxv4_insights_preview_key() || '' !== dkxv4_work_preview_key() ) && ! defined( 'DONOTCACHEPAGE' ) ) {
 	define( 'DONOTCACHEPAGE', true );
 }
 
@@ -95,15 +108,18 @@ function dkxv4_disable_experience_preview_cache() {
 	$home_preview    = dkxv4_home_preview_key();
 	$solutions_preview = dkxv4_solutions_preview_key();
 	$industries_preview = dkxv4_industries_preview_key();
+	$insights_preview = dkxv4_insights_preview_key();
 	$work_preview    = dkxv4_work_preview_key();
 
-	if ( '' === $landing_preview && '' === $home_preview && '' === $solutions_preview && '' === $industries_preview && '' === $work_preview ) {
+	if ( '' === $landing_preview && '' === $home_preview && '' === $solutions_preview && '' === $industries_preview && '' === $insights_preview && '' === $work_preview ) {
 		return;
 	}
 
 	nocache_headers();
 	if ( '' !== $work_preview ) {
 		header( 'X-DK-Work-Preview: ' . $work_preview );
+	} elseif ( '' !== $insights_preview ) {
+		header( 'X-DK-Insights-Preview: ' . $insights_preview );
 	} elseif ( '' !== $industries_preview ) {
 		header( 'X-DK-Industries-Preview: ' . $industries_preview );
 	} elseif ( '' !== $solutions_preview ) {
@@ -131,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.2';
+	$release = '1.23.3';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -369,6 +385,23 @@ function dkxv4_industries_preview_assets_v1229() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_industries_preview_assets_v1229', 1001 );
+
+/**
+ * Load the three non-destructive Insights design previews.
+ */
+function dkxv4_insights_preview_assets_v1233() {
+	if ( ! is_page( 'insights' ) || '' === dkxv4_insights_preview_key() ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'dkx-insights-options-v1233',
+		get_stylesheet_directory_uri() . '/assets/css/insights-options-v1233.css',
+		array( 'dkx-insights-v1168' ),
+		'1.23.3'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'dkxv4_insights_preview_assets_v1233', 1002 );
 
 /**
  * Load the locked Start a Project and 2026 Rate Card conversion system.
