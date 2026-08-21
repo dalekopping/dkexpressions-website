@@ -1,6 +1,6 @@
 /**
  * DK Expressions — final combined About Page.
- * Release 1.23.9.
+ * Release 1.24.0.
  */
 
 .dk-about-v1238 {
@@ -170,8 +170,10 @@
 .dk-about-v1238 .dk-about-hero-opening span { color: var(--dk-muted); }
 
 .dk-about-v1238 .dk-about-shot-origin {
-	background: #f4f7fa;
-	color: #020910;
+	background:
+		radial-gradient(circle at 84% 18%, rgba(64, 183, 255, 0.12), transparent 30rem),
+		linear-gradient(145deg, #020911, #061522 62%, #030a11);
+	color: #f7fbff;
 }
 
 .dk-about-v1238 .dk-about-shot-lead {
@@ -183,7 +185,7 @@
 }
 
 .dk-about-v1238 .dk-about-shot-origin h2 {
-	color: #020910;
+	color: #f7fbff;
 	font-size: clamp(3.4rem, 8.6vw, 9rem);
 	font-weight: 950;
 	letter-spacing: -0.075em;
@@ -197,12 +199,12 @@
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 0;
-	border-top: 1px solid rgba(2, 9, 16, 0.18);
+	border-top: 1px solid var(--dk-line);
 }
 
 .dk-about-v1238 .dk-about-shot-copygrid p {
-	border-bottom: 1px solid rgba(2, 9, 16, 0.18);
-	color: #425365;
+	border-bottom: 1px solid var(--dk-line);
+	color: var(--dk-muted);
 	font-size: clamp(1.08rem, 1.55vw, 1.32rem);
 	line-height: 1.75;
 	margin: 0;
@@ -210,7 +212,7 @@
 }
 
 .dk-about-v1238 .dk-about-shot-copygrid p:nth-child(odd) {
-	border-right: 1px solid rgba(2, 9, 16, 0.18);
+	border-right: 1px solid var(--dk-line);
 }
 
 .dk-about-v1238 .dk-about-beliefs {
@@ -306,12 +308,14 @@
 }
 
 .dk-about-v1238 .dk-about-method {
-	background: #f4f7fa;
-	color: #020910;
+	background:
+		radial-gradient(circle at 12% 15%, rgba(152, 104, 255, 0.12), transparent 28rem),
+		#020911;
+	color: #f7fbff;
 }
 
-.dk-about-v1238 .dk-about-method .dk-section-head > p { color: #425365; }
-.dk-about-v1238 .dk-about-method .dk-section-head h2 { color: #020910; }
+.dk-about-v1238 .dk-about-method .dk-section-head > p { color: var(--dk-muted); }
+.dk-about-v1238 .dk-about-method .dk-section-head h2 { color: #f7fbff; }
 
 .dk-about-v1238 .dk-about-method-grid {
 	display: grid;
@@ -320,8 +324,8 @@
 }
 
 .dk-about-v1238 .dk-about-method-grid article {
-	background: #fff;
-	border: 1px solid rgba(2, 9, 16, 0.15);
+	background: linear-gradient(145deg, rgba(7, 29, 46, 0.94), rgba(3, 12, 20, 0.96));
+	border: 1px solid var(--dk-line);
 	border-top: 6px solid var(--dk-blue);
 	min-height: 27rem;
 	padding: clamp(2rem, 4vw, 4rem);
@@ -337,6 +341,7 @@
 }
 
 .dk-about-v1238 .dk-about-method-grid h3 {
+	color: #f7fbff;
 	font-size: clamp(2.4rem, 4vw, 4.4rem);
 	letter-spacing: -0.055em;
 	line-height: 0.95;
@@ -345,7 +350,7 @@
 }
 
 .dk-about-v1238 .dk-about-method-grid p {
-	color: #425365;
+	color: var(--dk-muted);
 	font-size: clamp(1rem, 1.4vw, 1.2rem);
 	line-height: 1.75;
 	margin: 0;
@@ -447,12 +452,14 @@
 }
 
 .dk-about-v1238 .dk-join-team {
-	background: #f4f7fa;
-	color: #020910;
+	background:
+		radial-gradient(circle at 82% 22%, rgba(36, 213, 196, 0.12), transparent 25rem),
+		linear-gradient(135deg, #04121e, #082c49 58%, #111029);
+	color: #f7fbff;
 }
 
 .dk-about-v1238 .dk-join-team-copy h2 {
-	color: #020910;
+	color: #f7fbff;
 	font-size: clamp(3rem, 6.7vw, 7rem);
 	letter-spacing: -0.07em;
 	line-height: 0.9;
@@ -461,7 +468,7 @@
 }
 
 .dk-about-v1238 .dk-join-team-copy > p:not(.dk-kicker) {
-	color: #425365;
+	color: #c0d0dc;
 	font-size: clamp(1rem, 1.4vw, 1.2rem);
 	line-height: 1.75;
 	margin-block: 0 1.2rem;
@@ -543,7 +550,7 @@
 	.dk-about-v1238 .dk-about-shot-copy h1 { font-size: clamp(3.75rem, 18vw, 6.3rem); line-height: 0.91; }
 	.dk-about-v1238 .dk-about-hero-opening { grid-template-columns: 1fr; gap: 1.25rem; }
 	.dk-about-v1238 .dk-about-shot-origin h2 {
-		color: #020910 !important;
+		color: #f7fbff !important;
 		font-size: clamp(2.5rem, 11vw, 4.5rem);
 		letter-spacing: -0.075em;
 		line-height: 0.94;
@@ -553,7 +560,7 @@
 	}
 	.dk-about-v1238 .dk-about-shot-copygrid { grid-template-columns: 1fr; }
 	.dk-about-v1238 .dk-about-shot-copygrid p {
-		color: #425365 !important;
+		color: var(--dk-muted) !important;
 		font-size: clamp(1rem, 5vw, 1.18rem);
 		line-height: 1.75;
 		overflow-wrap: break-word;
@@ -577,7 +584,7 @@
 	.dk-about-v1238 .dk-join-team-copy h2,
 	.dk-about-v1238 .dk-about-final h2 { font-size: clamp(3rem, 15vw, 5.7rem); line-height: 0.92; }
 	.dk-about-v1238 .dk-about-method .dk-section-head h2,
-	.dk-about-v1238 .dk-join-team-copy h2 { color: #020910 !important; }
+	.dk-about-v1238 .dk-join-team-copy h2 { color: #f7fbff !important; }
 	.dk-about-v1238 .dk-about-method .dk-section-head h2,
 	.dk-about-v1238 .dk-join-team-copy h2,
 	.dk-about-v1238 .dk-about-vault-copy h2,
