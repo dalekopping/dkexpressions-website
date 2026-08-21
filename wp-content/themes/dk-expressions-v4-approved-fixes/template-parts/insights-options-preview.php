@@ -1,278 +1,200 @@
 <?php
 /**
- * Three non-destructive Insights page previews — v1.23.3.
+ * Three original-copy Insights page previews — v1.23.4.
  *
  * @package DK_Expressions_V4_Fixes
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+defined( 'ABSPATH' ) || exit;
+
+$preview = isset( $args['preview'] ) ? sanitize_key( $args['preview'] ) : 'cinematic-grid';
+$preview = in_array( $preview, array( 'cinematic-grid', 'editorial-spectrum', 'timecode-stream' ), true ) ? $preview : 'cinematic-grid';
+$paged   = max( 1, absint( get_query_var( 'paged' ) ), absint( get_query_var( 'page' ) ) );
+
+$preview_names = array(
+	'cinematic-grid'     => 'Cinematic Grid',
+	'editorial-spectrum' => 'Editorial Spectrum',
+	'timecode-stream'    => 'Timecode Stream',
+);
+
+$categories = get_categories(
+	array(
+		'hide_empty' => true,
+		'orderby'    => 'count',
+		'order'      => 'DESC',
+	)
+);
+
+/* Every category receives its own signal colour; no two visible categories repeat. */
+$signal_palette = array(
+	'#43baff', '#ff536d', '#9b7cff', '#2ad6c9', '#ffc857', '#ff914d',
+	'#7ee787', '#f472b6', '#60a5fa', '#c084fc', '#fb7185', '#22d3ee',
+	'#a3e635', '#facc15', '#38bdf8', '#e879f9', '#34d399', '#f97316',
+);
+$category_signals = array();
+foreach ( $categories as $category_index => $category ) {
+	if ( isset( $signal_palette[ $category_index ] ) ) {
+		$signal = $signal_palette[ $category_index ];
+	} else {
+		$signal = sprintf( 'hsl(%d 86%% 64%%)', ( $category_index * 137 ) % 360 );
+	}
+	$category_signals[ (int) $category->term_id ] = $signal;
 }
 
-$preview = isset( $args['preview'] ) ? sanitize_key( $args['preview'] ) : 'signal-desk';
-$preview = in_array( $preview, array( 'signal-desk', 'deadline-wire', 'story-constellation' ), true ) ? $preview : 'signal-desk';
+$configured_sticky_ids = array_filter( array_map( 'absint', (array) get_option( 'sticky_posts', array() ) ) );
+$published_sticky_ids  = array();
+if ( $configured_sticky_ids ) {
+	$published_sticky_ids = get_posts(
+		array(
+			'post_type'      => 'post',
+			'post_status'    => 'publish',
+			'post__in'       => $configured_sticky_ids,
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		)
+	);
+}
 
-$variants = array(
-	'signal-desk'        => 'Signal Desk',
-	'deadline-wire'      => 'Deadline Wire',
-	'story-constellation'=> 'Story Constellation',
+$regular_stories = new WP_Query(
+	array(
+		'post_type'           => 'post',
+		'post_status'         => 'publish',
+		'posts_per_page'      => 18,
+		'paged'               => $paged,
+		'orderby'             => 'date',
+		'order'               => 'DESC',
+		'post__not_in'        => $published_sticky_ids,
+		'ignore_sticky_posts' => true,
+	)
 );
 
-$groups = array(
-	'news' => array(
-		'number'      => '01',
-		'label'       => 'News',
-		'accent'      => '#ff536d',
-		'deep'        => '#35111b',
-		'aliases'     => array( 'news', 'press', 'announcement', 'breaking-news' ),
-		'placeholder' => array(
-			'title'   => 'What we’re covering next',
-			'excerpt' => 'Upcoming events, productions and projects already on the schedule.',
-			'date'    => 'Ongoing',
-		),
-	),
-	'reviews' => array(
-		'number'      => '02',
-		'label'       => 'Reviews',
-		'accent'      => '#9b7cff',
-		'deep'        => '#241a47',
-		'aliases'     => array( 'reviews', 'review' ),
-		'placeholder' => array(
-			'title'   => 'When the production matches the ambition',
-			'excerpt' => 'A look at recent live shows where the visual and technical standard actually rose to the material.',
-			'date'    => 'July 2026',
-		),
-	),
-	'interviews' => array(
-		'number'      => '03',
-		'label'       => 'Interviews',
-		'accent'      => '#2ad6c9',
-		'deep'        => '#0b3937',
-		'aliases'     => array( 'interviews', 'interview', 'people-blogs', 'profiles' ),
-		'placeholder' => array(
-			'title'   => 'Backstage with the ones who still move the room',
-			'excerpt' => 'Conversations and frames from the artists and performers who understand presence.',
-			'date'    => 'July 2026',
-		),
-	),
-	'events' => array(
-		'number'      => '04',
-		'label'       => 'Events',
-		'accent'      => '#43baff',
-		'deep'        => '#0a3150',
-		'aliases'     => array( 'events', 'event', 'entertainment', 'music', 'theatre', 'film-animation', 'movies-videos', 'sport' ),
-		'placeholder' => array(
-			'title'   => 'The next room worth being in',
-			'excerpt' => 'Concerts, festivals, productions and cultural experiences moving onto the DK radar.',
-			'date'    => 'August 2026',
-		),
-	),
-	'photo-essays' => array(
-		'number'      => '05',
-		'label'       => 'Photo Essays',
-		'accent'      => '#ffc857',
-		'deep'        => '#49370b',
-		'aliases'     => array( 'photo-essays', 'photo-essay', 'photography', 'time-vault', 'gallery' ),
-		'placeholder' => array(
-			'title'   => 'From the Time Vault – Festival dust and stadium light',
-			'excerpt' => 'Selected frames that still hold the feeling of the night.',
-			'date'    => 'June 2026',
-		),
-	),
-	'industry-notes' => array(
-		'number'      => '06',
-		'label'       => 'Industry Notes',
-		'accent'      => '#ff914d',
-		'deep'        => '#46230d',
-		'aliases'     => array( 'industry-notes', 'industry', 'technology', 'tech', 'lifestyle', 'hospitality', 'motoring', 'business' ),
-		'placeholder' => array(
-			'title'   => 'Most event photography is forgettable',
-			'excerpt' => 'Why the standard on the ground is still so low — and what separates work that disappears from work that still gets used years later.',
-			'date'    => 'August 2026',
-		),
-	),
-);
+$story_ids = array();
+if ( 1 === $paged ) {
+	$story_ids = $published_sticky_ids;
+}
+$story_ids   = array_values( array_unique( array_merge( $story_ids, wp_list_pluck( $regular_stories->posts, 'ID' ) ) ) );
+$total_posts = count( $published_sticky_ids ) + (int) $regular_stories->found_posts;
+$total_pages = max( 1, (int) $regular_stories->max_num_pages );
 
-$resolve_group = static function ( $post_id ) use ( $groups ) {
+$primary_category_for = static function ( $post_id ) {
 	$post_categories = get_the_category( $post_id );
-	$primary_id       = absint( get_post_meta( $post_id, '_yoast_wpseo_primary_category', true ) );
-
-	if ( $primary_id && $post_categories ) {
-		usort(
-			$post_categories,
-			static function ( $first, $second ) use ( $primary_id ) {
-				return (int) ( $second->term_id === $primary_id ) - (int) ( $first->term_id === $primary_id );
-			}
-		);
+	if ( empty( $post_categories ) ) {
+		return null;
 	}
 
-	foreach ( $post_categories as $category ) {
-		$category_slug = sanitize_title( $category->slug );
-		foreach ( $groups as $group_slug => $group ) {
-			foreach ( $group['aliases'] as $alias ) {
-				if ( $category_slug === $alias || str_contains( $category_slug, $alias ) || str_contains( $alias, $category_slug ) ) {
-					return $group_slug;
-				}
+	$yoast_primary = absint( get_post_meta( $post_id, '_yoast_wpseo_primary_category', true ) );
+	if ( $yoast_primary ) {
+		foreach ( $post_categories as $post_category ) {
+			if ( $yoast_primary === (int) $post_category->term_id ) {
+				return $post_category;
 			}
 		}
 	}
 
-	return 'industry-notes';
+	return $post_categories[0];
 };
 
-$sticky_ids = array_values( array_filter( array_map( 'absint', (array) get_option( 'sticky_posts', array() ) ) ) );
-$sticky_posts = $sticky_ids ? get_posts(
-	array(
-		'post_type'           => 'post',
-		'post_status'         => 'publish',
-		'posts_per_page'      => -1,
-		'post__in'            => $sticky_ids,
-		'orderby'             => 'date',
-		'order'               => 'DESC',
-		'ignore_sticky_posts' => true,
-	)
-) : array();
-
-$latest_posts = get_posts(
-	array(
-		'post_type'           => 'post',
-		'post_status'         => 'publish',
-		'posts_per_page'      => 96,
-		'post__not_in'        => $sticky_ids,
-		'orderby'             => 'date',
-		'order'               => 'DESC',
-		'ignore_sticky_posts' => true,
-	)
-);
-
-$featured_posts = $sticky_posts ? $sticky_posts : array_slice( $latest_posts, 0, 3 );
-$featured_ids   = array_map( static fn( $post ) => (int) $post->ID, $featured_posts );
-$grouped_posts  = array_fill_keys( array_keys( $groups ), array() );
-
-foreach ( $latest_posts as $post ) {
-	if ( in_array( (int) $post->ID, $featured_ids, true ) ) {
-		continue;
-	}
-	$grouped_posts[ $resolve_group( $post->ID ) ][] = $post;
-}
-
-$archive_pool  = array();
-foreach ( $grouped_posts as $group_slug => $posts ) {
-	$visible_posts = array_slice( $posts, 0, 6 );
-	$grouped_posts[ $group_slug ] = $visible_posts;
-	$archive_pool  = array_merge( $archive_pool, array_slice( $posts, 6 ) );
-}
-
-usort(
-	$archive_pool,
-	static fn( $first, $second ) => strcmp( $second->post_date, $first->post_date )
-);
-$archive_posts = array_slice( $archive_pool, 0, 6 );
-
-$render_card = static function ( $item, $group_slug, $card_class = '' ) use ( $groups ) {
-	$group          = $groups[ $group_slug ];
-	$is_placeholder = is_array( $item );
-	$post_id        = $is_placeholder ? 0 : (int) $item->ID;
-	$title          = $is_placeholder ? $item['title'] : get_the_title( $post_id );
-	$excerpt        = $is_placeholder ? $item['excerpt'] : wp_trim_words( wp_strip_all_tags( get_the_excerpt( $post_id ) ), 24, '…' );
-	$date           = $is_placeholder ? $item['date'] : get_the_date( 'F Y', $post_id );
-	$permalink      = $is_placeholder ? '' : get_permalink( $post_id );
-	$classes        = trim( 'dkxi-card ' . $card_class . ( $is_placeholder ? ' is-placeholder' : '' ) );
-	?>
-	<article class="<?php echo esc_attr( $classes ); ?>" style="--channel:<?php echo esc_attr( $group['accent'] ); ?>;--channel-deep:<?php echo esc_attr( $group['deep'] ); ?>">
-		<?php if ( $permalink ) : ?><a href="<?php echo esc_url( $permalink ); ?>"><?php endif; ?>
-		<div class="dkxi-card-media">
-			<?php if ( $post_id && has_post_thumbnail( $post_id ) ) : ?>
-				<?php echo get_the_post_thumbnail( $post_id, 'large', array( 'loading' => 'lazy', 'alt' => $title ) ); ?>
-			<?php else : ?>
-				<span aria-hidden="true"><?php echo esc_html( $group['number'] ); ?></span>
-			<?php endif; ?>
-		</div>
-		<div class="dkxi-card-copy">
-			<div class="dkxi-card-meta"><strong><?php echo esc_html( $group['label'] ); ?></strong><time><?php echo esc_html( $date ); ?></time></div>
-			<?php if ( $post_id && is_sticky( $post_id ) ) : ?><b class="dkxi-sticky-label">Sticky / Featured</b><?php endif; ?>
-			<h3><?php echo esc_html( $title ); ?></h3>
-			<p><?php echo esc_html( $excerpt ); ?></p>
-			<span class="dkxi-read"><?php echo $is_placeholder ? 'Editorial preview' : 'Read the story ↗'; ?></span>
-		</div>
-		<?php if ( $permalink ) : ?></a><?php endif; ?>
-	</article>
-	<?php
-};
-
-$page_url = home_url( '/insights/' );
 ?>
-
-<main class="dkxi dkxi--<?php echo esc_attr( $preview ); ?> dk-no-semantic-highlight" id="top">
-	<div class="dkxi-grid" aria-hidden="true"></div>
-	<section class="dkxi-hero">
-		<div class="dkxi-shell dkxi-hero-grid">
-			<div class="dkxi-hero-copy">
-				<p class="dkxi-eyebrow">DK Expressions / Insights</p>
-				<h1>News. Reviews.<br>Interviews.<br><em>Stories from the rooms we are in.</em></h1>
-				<p>The publishing side of DK Expressions. Fresh coverage, cultural notes, artist features and the work that sits outside pure client commissions.</p>
-			</div>
-			<div class="dkxi-hero-index" aria-hidden="true"><span>INSIGHTS</span><b>2013—∞</b><i>LIVE EDITORIAL SIGNAL</i></div>
+<main class="dkxoi dkxoi--<?php echo esc_attr( $preview ); ?>">
+	<section class="dkxoi-hero dk-page-hero dk-insights-hero">
+		<div class="dk-stars" aria-hidden="true"></div>
+		<div class="dkxoi-orbit" aria-hidden="true"><i></i><i></i><i></i></div>
+		<div class="dkxoi-hero-index" aria-hidden="true">DK / INSIGHTS</div>
+		<div class="dkxoi-hero-copy dk-page-copy">
+			<p class="dk-kicker"><?php echo esc_html( dkxv4_content( 'insights_hero_kicker' ) ); ?></p>
+			<h1><?php echo esc_html( dkxv4_content( 'insights_hero_title_1' ) ); ?><em><?php echo esc_html( dkxv4_content( 'insights_hero_title_2' ) ); ?></em></h1>
+			<p><?php echo esc_html( dkxv4_content( 'insights_hero_text' ) ); ?></p>
 		</div>
 	</section>
 
-	<section class="dkxi-featured" id="latest">
-		<div class="dkxi-shell">
-			<header class="dkxi-section-head"><div><p class="dkxi-eyebrow">Featured / Latest</p><h2>Sticky stories<br><em>stay first.</em></h2></div><p>The stories selected as sticky remain permanently above every category and are removed from the feeds below, so nothing appears twice.</p></header>
-			<div class="dkxi-featured-grid">
-				<?php foreach ( $featured_posts as $index => $post ) : ?>
-					<?php $render_card( $post, $resolve_group( $post->ID ), 0 === $index ? 'is-featured-lead' : 'is-featured-side' ); ?>
-				<?php endforeach; ?>
+	<section class="dkxoi-archive">
+		<header class="dkxoi-heading">
+			<div>
+				<p class="dk-kicker">The DK Expressions editorial universe</p>
+				<h2>All Insights</h2>
 			</div>
-		</div>
-	</section>
+			<p><strong><?php echo esc_html( number_format_i18n( $total_posts ) ); ?></strong> published stories spanning entertainment, culture, technology, events and the moments shaping our world.</p>
+		</header>
 
-	<nav class="dkxi-filters" aria-label="Browse Insights sections">
-		<div class="dkxi-shell">
-			<a class="is-all" href="#latest"><span>00</span>All</a>
-			<?php foreach ( $groups as $group_slug => $group ) : ?>
-				<a href="#<?php echo esc_attr( $group_slug ); ?>" style="--channel:<?php echo esc_attr( $group['accent'] ); ?>"><span><?php echo esc_html( $group['number'] ); ?></span><?php echo esc_html( $group['label'] ); ?></a>
+		<nav class="dkxoi-categories" aria-label="<?php esc_attr_e( 'Browse insight categories', 'dk-expressions-v4-fixes' ); ?>">
+			<a class="is-active" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>" style="--cat-accent:#ffffff">All stories</a>
+			<?php foreach ( $categories as $category ) : ?>
+				<a href="<?php echo esc_url( get_category_link( $category->term_id ) ); ?>" style="--cat-accent:<?php echo esc_attr( $category_signals[ (int) $category->term_id ] ); ?>">
+					<?php echo esc_html( $category->name ); ?><span><?php echo esc_html( number_format_i18n( $category->count ) ); ?></span>
+				</a>
 			<?php endforeach; ?>
-		</div>
-	</nav>
+		</nav>
 
-	<div class="dkxi-channels">
-		<?php foreach ( $groups as $group_slug => $group ) : ?>
-		<section class="dkxi-channel" id="<?php echo esc_attr( $group_slug ); ?>" style="--channel:<?php echo esc_attr( $group['accent'] ); ?>;--channel-deep:<?php echo esc_attr( $group['deep'] ); ?>">
-			<div class="dkxi-shell dkxi-channel-layout">
-				<header><span><?php echo esc_html( $group['number'] ); ?></span><p>Editorial channel</p><h2><?php echo esc_html( $group['label'] ); ?></h2><i><?php echo esc_html( count( $grouped_posts[ $group_slug ] ) ); ?> recent signals</i></header>
-				<div class="dkxi-channel-cards">
-					<?php if ( $grouped_posts[ $group_slug ] ) : ?>
-						<?php foreach ( $grouped_posts[ $group_slug ] as $index => $post ) : ?><?php $render_card( $post, $group_slug, 0 === $index ? 'is-channel-lead' : '' ); ?><?php endforeach; ?>
-					<?php else : ?>
-						<?php $render_card( $group['placeholder'], $group_slug, 'is-channel-lead' ); ?>
-					<?php endif; ?>
-				</div>
-			</div>
-		</section>
-		<?php endforeach; ?>
-	</div>
-
-	<section class="dkxi-archive">
-		<div class="dkxi-shell">
-			<header class="dkxi-section-head"><div><p class="dkxi-eyebrow">From the Archive</p><h2>Older pieces that<br><em>still earn their place.</em></h2></div><p>The archive holds the work that remains useful, relevant or worth returning to long after publication day.</p></header>
-			<?php if ( $archive_posts ) : ?>
-			<div class="dkxi-archive-grid"><?php foreach ( $archive_posts as $post ) : ?><?php $render_card( $post, $resolve_group( $post->ID ), 'is-archive-card' ); ?><?php endforeach; ?></div>
+		<div class="dkxoi-stories">
+			<?php if ( $story_ids ) : ?>
+				<?php foreach ( $story_ids as $card_index => $story_id ) :
+					$story          = get_post( $story_id );
+					$primary        = $primary_category_for( $story_id );
+					$category_id    = $primary ? (int) $primary->term_id : 0;
+					$category_slug  = $primary ? $primary->slug : 'story';
+					$category_name  = $primary ? $primary->name : 'Story';
+					$signal         = isset( $category_signals[ $category_id ] ) ? $category_signals[ $category_id ] : '#43baff';
+					$is_lead        = 1 === $paged && 0 === $card_index;
+					$is_featured    = in_array( $story_id, $published_sticky_ids, true );
+					$article_class  = 'dkxoi-card category-' . sanitize_html_class( $category_slug );
+					$article_class .= $is_lead ? ' is-lead' : '';
+					$article_class .= $is_featured ? ' is-sticky' : '';
+					?>
+					<article <?php post_class( $article_class, $story_id ); ?> style="--cat-accent:<?php echo esc_attr( $signal ); ?>;--story-index:'<?php echo esc_attr( str_pad( (string) ( $card_index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?>'">
+						<a href="<?php echo esc_url( get_permalink( $story_id ) ); ?>">
+							<div class="dkxoi-media">
+								<?php if ( has_post_thumbnail( $story_id ) ) : ?>
+									<?php echo get_the_post_thumbnail( $story_id, $is_lead ? 'large' : 'medium_large', array( 'loading' => $is_lead ? 'eager' : 'lazy', 'alt' => get_the_title( $story_id ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php else : ?>
+									<span aria-hidden="true">DK</span>
+								<?php endif; ?>
+							</div>
+							<div class="dkxoi-copy">
+								<div class="dkxoi-meta">
+									<span class="dkxoi-category"><?php echo esc_html( $category_name ); ?></span>
+									<time datetime="<?php echo esc_attr( get_the_date( 'c', $story_id ) ); ?>"><?php echo esc_html( get_the_date( 'd.m.y', $story_id ) ); ?></time>
+								</div>
+								<?php if ( $is_featured ) : ?><strong class="dkxoi-featured">Featured story</strong><?php endif; ?>
+								<h3><?php echo esc_html( get_the_title( $story_id ) ); ?></h3>
+								<p><?php echo esc_html( wp_trim_words( get_the_excerpt( $story ), $is_lead ? 32 : 20, '…' ) ); ?></p>
+								<span class="dkxoi-read">Read the story ↗</span>
+							</div>
+						</a>
+					</article>
+				<?php endforeach; ?>
 			<?php else : ?>
-			<p class="dkxi-archive-empty">The current editorial selection is already represented above. More recovered stories will appear here as the archive grows.</p>
+				<p class="dkxoi-empty"><?php esc_html_e( 'No published stories were found in this section.', 'dk-expressions-v4-fixes' ); ?></p>
 			<?php endif; ?>
-			<div class="dkxi-quick-links"><a href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">Open the Time Vault <span>→</span></a><a href="<?php echo esc_url( home_url( '/rates/' ) ); ?>">View current Rate Card <span>→</span></a><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project <span>↗</span></a></div>
 		</div>
+
+		<?php if ( $total_pages > 1 ) : ?>
+			<nav class="dkxoi-pagination" aria-label="<?php esc_attr_e( 'Insights pages', 'dk-expressions-v4-fixes' ); ?>">
+				<?php
+				echo wp_kses_post(
+					paginate_links(
+						array(
+							'total'     => $total_pages,
+							'current'   => $paged,
+							'type'      => 'list',
+							'prev_text' => '← Newer',
+							'next_text' => 'Older →',
+						)
+					)
+				);
+				?>
+			</nav>
+		<?php endif; ?>
 	</section>
 
-	<section class="dkxi-conversion">
-		<div class="dkxi-shell"><p class="dkxi-eyebrow">Coverage / Feature / Collaboration</p><h2>Want to enter<br><em>the story?</em></h2><p>We are selective with what we take on, but always open to the right work.</p><div><a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project <span>↗</span></a><a href="<?php echo esc_url( home_url( '/rates/' ) ); ?>">View Rate Card <span>→</span></a></div></div>
-	</section>
+	<nav class="dkxoi-switcher" aria-label="Insights design options">
+		<?php foreach ( $preview_names as $preview_key => $preview_name ) : ?>
+			<a class="<?php echo $preview === $preview_key ? 'is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( array( 'dk-insights-preview' => $preview_key, 'dk-refresh' => '1234' ), home_url( '/insights/' ) ) ); ?>">
+				<span><?php echo esc_html( str_pad( (string) ( array_search( $preview_key, array_keys( $preview_names ), true ) + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><?php echo esc_html( $preview_name ); ?>
+			</a>
+		<?php endforeach; ?>
+	</nav>
 </main>
-
-<nav class="dkxi-switcher" aria-label="Insights design previews">
-	<span>Insights options</span>
-	<?php foreach ( $variants as $variant_key => $variant_label ) : ?>
-		<a class="<?php echo $variant_key === $preview ? 'is-active' : ''; ?>" href="<?php echo esc_url( add_query_arg( array( 'dk-insights-preview' => $variant_key, 'dk-refresh' => '1233' ), $page_url ) ); ?>"><?php echo esc_html( $variant_label ); ?></a>
-	<?php endforeach; ?>
-</nav>
+<?php
+wp_reset_postdata();
