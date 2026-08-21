@@ -1,0 +1,332 @@
+/* DK Expressions final colour + responsive spacing lock — v1.23.7. */
+
+/* The shared availability pulse must stay readable above every page system. */
+body .dkx-booking-pulse {
+	color: #fff !important;
+	-webkit-text-fill-color: #fff !important;
+}
+
+body .dkx-booking-pulse__inner {
+	gap: clamp(30px, 4vw, 64px);
+	padding-top: 27px;
+	padding-bottom: 24px;
+}
+
+body .dkx-booking-pulse__booking,
+body .dkx-booking-pulse__slots {
+	gap: 12px 16px;
+	line-height: 1.35;
+}
+
+body .dkx-booking-pulse__booking span,
+body .dkx-booking-pulse__slots span {
+	color: #f6f9fc !important;
+	-webkit-text-fill-color: #f6f9fc !important;
+	opacity: 1 !important;
+}
+
+body .dkx-booking-pulse .dkx-booking-pulse__booking strong {
+	color: #43baff !important;
+	-webkit-text-fill-color: #43baff !important;
+	opacity: 1 !important;
+}
+
+body .dkx-booking-pulse .dkx-booking-pulse__slots strong {
+	color: #ff536d !important;
+	-webkit-text-fill-color: #ff536d !important;
+}
+
+body .dkx-booking-pulse .dkx-booking-pulse__slots b {
+	color: #ffc857 !important;
+	-webkit-text-fill-color: #ffc857 !important;
+}
+
+body .dkx-booking-pulse__booking i {
+	background: #2ad6c9 !important;
+	box-shadow: 0 0 0 5px rgba(42, 214, 201, .12) !important;
+}
+
+/* Keep the Infinity Switchboard instrument labels visible. */
+body .dkxip-switch-topline,
+body .dkxip-switch-topline span {
+	color: #43baff !important;
+	-webkit-text-fill-color: #43baff !important;
+	opacity: 1 !important;
+}
+
+body .dkxip-switch-topline b {
+	color: #2ad6c9 !important;
+	-webkit-text-fill-color: #2ad6c9 !important;
+	opacity: 1 !important;
+}
+
+@media (max-width: 820px) {
+	body .dkx-booking-pulse__inner {
+		width: min(calc(100% - 36px), 680px);
+		gap: 22px;
+		padding-top: 31px;
+		padding-bottom: 30px;
+	}
+
+	body .dkx-booking-pulse__booking,
+	body .dkx-booking-pulse__slots {
+		align-items: center;
+		gap: 12px 14px;
+		line-height: 1.45;
+	}
+
+	/* Home — preserve Editorial Command while preventing headline collisions. */
+	body .dkxhp-hero {
+		padding-top: 120px;
+		padding-bottom: 86px;
+	}
+
+	body .dkxhp-hero h1 {
+		line-height: .98 !important;
+		letter-spacing: -.06em !important;
+	}
+
+	body .dkxhp-lead {
+		margin-bottom: 40px;
+		line-height: 1.65 !important;
+	}
+
+	body .dkxhp-section-head h2,
+	body .dkxhp-final h2,
+	body .dkxhp-analytics-head h2,
+	body .dkxhp-site-stats h3,
+	body .dkxhp-offer h3 {
+		line-height: .96 !important;
+	}
+
+	body .dkxhp-section-head,
+	body .dkxhp-analytics-head {
+		gap: 28px;
+	}
+
+	/* Industries — keep the Switchboard rhythm but give each line room. */
+	body .dkxip-switch-hero {
+		gap: 56px;
+		padding-top: 58px;
+		padding-bottom: 82px;
+	}
+
+	body .dkxip-switch-copy h1,
+	body .dkxip-switch-stage > header h2,
+	body .dkxip-switch-publishing > header h2,
+	body .dkxip-rates-intro h2,
+	body .dkxip-final h2 {
+		line-height: .92 !important;
+		letter-spacing: -.055em !important;
+	}
+
+	body .dkxip-switch-copy > p:last-child,
+	body .dkxip-switch-publishing > header > p:last-child,
+	body .dkxip-rates-intro > p:last-child,
+	body .dkxip-final p {
+		line-height: 1.68 !important;
+	}
+
+	body .dkxip-switch-stage > header,
+	body .dkxip-switch-publishing > header,
+	body .dkxip-rates-intro {
+		gap: 32px;
+	}
+
+	/* Start a Project + Rate Card — clear, separated mobile display type. */
+	body .dkxcr-contact-hero h1,
+	body .dkxcr-rates-hero h1,
+	body .dkxcr-brief-guide h2,
+	body .dkxcr-form-header h2,
+	body .dkxcr-section-title h2,
+	body .dkxcr-rate-world h3,
+	body .dkxcr-other-services h2,
+	body .dkxcr-commercial-notes h2,
+	body .dkxcr-rate-final h2 {
+		line-height: .96 !important;
+		letter-spacing: -.055em !important;
+	}
+
+	body .dkxcr-rates-hero-copy > p:not(.dkxcr-kicker):not(.dkxcr-download-status),
+	body .dkxcr-section-title > p:last-child,
+	body .dkxcr-brief-guide > p:not(.dkxcr-kicker),
+	body .dkxcr-rate-final > div:first-child > p:last-child {
+		line-height: 1.65 !important;
+	}
+
+	/* Locked Insights — retain Timecode Stream with more breathing room. */
+	body .dkxoi-hero-copy h1,
+	body .dkxoi-heading h2,
+	body .dkxoi-section-head h2,
+	body .dkxoi-channel-head h2 {
+		line-height: .92 !important;
+		letter-spacing: -.06em !important;
+	}
+
+	body .dkxoi-slide-copy h3 {
+		line-height: 1.02 !important;
+	}
+
+	body .dkxoi-card-copy h3 {
+		line-height: 1.1 !important;
+	}
+
+	body .dkxoi-section-head,
+	body .dkxoi-channel-head {
+		gap: 30px;
+	}
+}
+
+@media (max-width: 560px) {
+	body .dkx-booking-pulse__inner {
+		width: calc(100% - 32px);
+		gap: 24px;
+		padding-top: 28px;
+		padding-bottom: 28px;
+	}
+
+	body .dkx-booking-pulse__booking,
+	body .dkx-booking-pulse__slots {
+		gap: 13px 12px;
+	}
+
+	body .dkx-booking-pulse__booking span,
+	body .dkx-booking-pulse__slots span {
+		font-size: 11px;
+		line-height: 1.45;
+	}
+
+	body .dkx-booking-pulse .dkx-booking-pulse__booking strong {
+		font-size: clamp(30px, 9.5vw, 42px);
+		line-height: 1 !important;
+	}
+
+	body .dkx-booking-pulse .dkx-booking-pulse__slots strong {
+		font-size: clamp(42px, 14vw, 58px);
+		line-height: .9 !important;
+	}
+
+	body .dkx-booking-pulse .dkx-booking-pulse__slots b {
+		width: 100%;
+		margin-top: 3px;
+		font-size: clamp(19px, 6.2vw, 27px);
+		line-height: 1.08 !important;
+	}
+
+	body .dkxhp-hero {
+		padding-top: 112px;
+		padding-bottom: 82px;
+	}
+
+	body .dkxhp--editorial .dkxhp-hero h1 {
+		font-size: clamp(42px, 12.5vw, 60px) !important;
+		line-height: 1 !important;
+		letter-spacing: -.055em !important;
+	}
+
+	body .dkxhp-kicker,
+	body .dkxhp-eyebrow {
+		margin-bottom: 24px;
+		line-height: 1.55 !important;
+	}
+
+	body .dkxhp-section {
+		padding-top: 92px;
+		padding-bottom: 92px;
+	}
+
+	body .dkxhp-door h3,
+	body .dkxhp-quote-grid blockquote p {
+		line-height: 1.16 !important;
+	}
+
+	body .dkxip-switch-topline {
+		flex-wrap: wrap;
+		gap: 14px 22px;
+		font-size: 9px;
+		line-height: 1.5;
+	}
+
+	body .dkxip-switch-copy h1 {
+		font-size: clamp(50px, 13.2vw, 64px) !important;
+		line-height: .97 !important;
+	}
+
+	body .dkxip-switch-copy > p:last-child {
+		margin-top: 38px;
+		font-size: 16px;
+	}
+
+	body .dkxip-switch-stage,
+	body .dkxip-switch-publishing {
+		padding-top: 104px;
+		padding-bottom: 104px;
+	}
+
+	body .dkxip-switch-panel h2,
+	body .dkxip-switch-publishing h3,
+	body .dkxip-rate-card h3 {
+		line-height: 1 !important;
+	}
+
+	body .dkxcr-rates-hero {
+		min-height: 0;
+		padding-top: 126px;
+		padding-bottom: 104px;
+	}
+
+	body .dkxcr-rates-hero h1,
+	body .dkxcr-contact-hero h1 {
+		font-size: clamp(46px, 12.8vw, 64px) !important;
+		line-height: .98 !important;
+	}
+
+	body .dkxcr-rates-hero-copy > p:not(.dkxcr-kicker):not(.dkxcr-download-status) {
+		margin-top: 38px;
+		font-size: 16px;
+	}
+
+	body .dkxcr-rate-summary,
+	body .dkxcr-commercial-notes {
+		padding-top: 110px;
+		padding-bottom: 110px;
+	}
+
+	body .dkxoi-spectrum-hero {
+		padding-bottom: 90px;
+	}
+
+	body .dkxoi-hero-copy h1 {
+		font-size: clamp(3.2rem, 16vw, 5rem) !important;
+		line-height: .93 !important;
+	}
+
+	body .dkxoi-hero-copy > p:last-child {
+		margin-top: 38px;
+		line-height: 1.68 !important;
+	}
+
+	body .dkxoi-heading {
+		margin-bottom: 56px;
+	}
+
+	body .dkxoi-heading h2,
+	body .dkxoi-section-head h2,
+	body .dkxoi-channel-head h2 {
+		line-height: .94 !important;
+	}
+
+	body .dkxoi-streams-intro {
+		margin-bottom: 76px;
+	}
+
+	body .dkxoi-channel {
+		padding-bottom: 118px;
+	}
+
+	body .dkxoi-card-copy > p {
+		margin-top: 22px;
+		margin-bottom: 30px;
+		line-height: 1.68 !important;
+	}
+}
