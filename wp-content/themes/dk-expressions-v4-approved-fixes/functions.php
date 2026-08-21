@@ -147,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.6';
+	$release = '1.23.7';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -454,6 +454,27 @@ function dkxv4_contact_rate_assets_v1227() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_contact_rate_assets_v1227', 1001 );
+
+/**
+ * Final locked colour and spacing pass for the approved conversion pages.
+ *
+ * This deliberately loads after every page-specific design system so that
+ * mobile browser and legacy theme rules cannot hide the booking pulse or
+ * collapse the approved display typography.
+ */
+function dkxv4_final_spacing_lock_assets_v1237() {
+	if ( ! is_front_page() && ! is_page( array( 'home', 'solutions', 'industries', 'insights', 'contact', 'rates' ) ) ) {
+		return;
+	}
+
+	wp_enqueue_style(
+		'dkx-final-spacing-v1237',
+		get_stylesheet_directory_uri() . '/assets/css/final-spacing-v1237.css',
+		array(),
+		'1.23.7'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'dkxv4_final_spacing_lock_assets_v1237', 1200 );
 
 /**
  * v1.20.4 recovery helpers.
