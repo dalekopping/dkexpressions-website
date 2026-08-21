@@ -1,6 +1,6 @@
 /**
  * DK Expressions — final combined About Page.
- * Release 1.23.8.
+ * Release 1.23.9.
  */
 
 .dk-about-v1238 {
@@ -183,6 +183,7 @@
 }
 
 .dk-about-v1238 .dk-about-shot-origin h2 {
+	color: #020910;
 	font-size: clamp(3.4rem, 8.6vw, 9rem);
 	font-weight: 950;
 	letter-spacing: -0.075em;
@@ -201,6 +202,7 @@
 
 .dk-about-v1238 .dk-about-shot-copygrid p {
 	border-bottom: 1px solid rgba(2, 9, 16, 0.18);
+	color: #425365;
 	font-size: clamp(1.08rem, 1.55vw, 1.32rem);
 	line-height: 1.75;
 	margin: 0;
@@ -309,6 +311,7 @@
 }
 
 .dk-about-v1238 .dk-about-method .dk-section-head > p { color: #425365; }
+.dk-about-v1238 .dk-about-method .dk-section-head h2 { color: #020910; }
 
 .dk-about-v1238 .dk-about-method-grid {
 	display: grid;
@@ -449,6 +452,7 @@
 }
 
 .dk-about-v1238 .dk-join-team-copy h2 {
+	color: #020910;
 	font-size: clamp(3rem, 6.7vw, 7rem);
 	letter-spacing: -0.07em;
 	line-height: 0.9;
@@ -526,15 +530,36 @@
 }
 
 @media (max-width: 760px) {
+	.dk-about-v1238,
+	.dk-about-v1238 :where(section, header, div, article, form) {
+		box-sizing: border-box;
+		max-width: 100%;
+		min-width: 0;
+	}
 	.dk-about-v1238 .dk-section { padding-block: clamp(4.5rem, 18vw, 7rem); }
 	.dk-about-v1238 .dk-section-head { grid-template-columns: 1fr; gap: 1.8rem; }
 	.dk-about-v1238 .dk-section-head h2 { font-size: clamp(3rem, 15vw, 5.5rem); line-height: 0.92; }
 	.dk-about-v1238 .dk-about-shot-hero { min-height: auto; padding-block: 8.5rem 6rem; }
 	.dk-about-v1238 .dk-about-shot-copy h1 { font-size: clamp(3.75rem, 18vw, 6.3rem); line-height: 0.91; }
 	.dk-about-v1238 .dk-about-hero-opening { grid-template-columns: 1fr; gap: 1.25rem; }
-	.dk-about-v1238 .dk-about-shot-origin h2 { font-size: clamp(3.2rem, 16vw, 5.8rem); line-height: 0.92; }
+	.dk-about-v1238 .dk-about-shot-origin h2 {
+		color: #020910 !important;
+		font-size: clamp(2.5rem, 11vw, 4.5rem);
+		letter-spacing: -0.075em;
+		line-height: 0.94;
+		max-width: 100%;
+		overflow-wrap: anywhere;
+		word-break: normal;
+	}
 	.dk-about-v1238 .dk-about-shot-copygrid { grid-template-columns: 1fr; }
-	.dk-about-v1238 .dk-about-shot-copygrid p { padding-inline: 0; }
+	.dk-about-v1238 .dk-about-shot-copygrid p {
+		color: #425365 !important;
+		font-size: clamp(1rem, 5vw, 1.18rem);
+		line-height: 1.75;
+		overflow-wrap: break-word;
+		padding-inline: 0;
+		width: 100%;
+	}
 	.dk-about-v1238 .dk-about-shot-copygrid p:nth-child(odd) { border-right: 0; }
 	.dk-about-v1238 .dk-about-belief-grid,
 	.dk-about-v1238 .dk-about-shot-values,
@@ -551,6 +576,14 @@
 	.dk-about-v1238 .dk-about-vault-copy h2,
 	.dk-about-v1238 .dk-join-team-copy h2,
 	.dk-about-v1238 .dk-about-final h2 { font-size: clamp(3rem, 15vw, 5.7rem); line-height: 0.92; }
+	.dk-about-v1238 .dk-about-method .dk-section-head h2,
+	.dk-about-v1238 .dk-join-team-copy h2 { color: #020910 !important; }
+	.dk-about-v1238 .dk-about-method .dk-section-head h2,
+	.dk-about-v1238 .dk-join-team-copy h2,
+	.dk-about-v1238 .dk-about-vault-copy h2,
+	.dk-about-v1238 .dk-about-final h2 {
+		overflow-wrap: anywhere;
+	}
 	.dk-about-v1238 .dk-about-final-actions { flex-direction: column; }
 	.dk-about-v1238 .dk-about-final-actions a { width: 100%; }
 }
