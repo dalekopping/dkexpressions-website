@@ -1,0 +1,25 @@
+/* DK Expressions — unmistakable editorial links v1.23.6 */
+.single-post .dk-article-body a,
+.single-post .dk-content.dk-article-body a:visited {
+	color: #ffc857 !important;
+	font-weight: 750;
+	text-decoration-line: underline;
+	text-decoration-color: rgba(255, 200, 87, .78);
+	text-decoration-thickness: .09em;
+	text-underline-offset: .16em;
+	overflow-wrap: anywhere;
+	word-break: break-word;
+	transition: color .22s ease, text-decoration-color .22s ease, background-color .22s ease;
+}
+
+.single-post .dk-article-body a:hover,
+.single-post .dk-article-body a:focus-visible {
+	color: #43baff !important;
+	text-decoration-color: #43baff;
+}
+
+.single-post .dk-article-body a:focus-visible {
+	border-radius: 2px;
+	outline: 2px solid #ffc857;
+	outline-offset: 4px;
+}

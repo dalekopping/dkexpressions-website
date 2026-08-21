@@ -33,13 +33,21 @@ $stories      = new WP_Query( $args );
 $total_posts  = (int) $stories->found_posts;
 $total_pages  = max( 1, (int) $stories->max_num_pages );
 $archive_name = is_home() || is_page( 'insights' ) ? 'All Insights' : wp_strip_all_tags( get_the_archive_title() );
-$categories   = get_categories(
-	array(
-		'hide_empty' => true,
-		'orderby'    => 'count',
-		'order'      => 'DESC',
+$press_parent = get_category_by_slug( 'press' );
+if ( ! $press_parent ) {
+	$press_parent = get_term_by( 'name', 'Press', 'category' );
+}
+$press_parent_id = $press_parent && ! is_wp_error( $press_parent ) ? (int) $press_parent->term_id : 0;
+$categories      = $press_parent_id
+	? get_categories(
+		array(
+			'hide_empty' => true,
+			'parent'     => $press_parent_id,
+			'orderby'    => 'count',
+			'order'      => 'DESC',
+		)
 	)
-);
+	: array();
 
 $category_tones = array(
 	'entertainment'     => array( '#ff2d78', '#48102b' ),
@@ -163,4 +171,3 @@ function dkxv4_insight_tone( $slug, $tones ) {
 	<?php endif; ?>
 </section>
 <?php get_footer(); ?>
-
