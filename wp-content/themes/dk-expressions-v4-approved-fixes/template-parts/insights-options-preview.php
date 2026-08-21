@@ -9,13 +9,22 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$categories = get_categories(
-	array(
-		'hide_empty' => true,
-		'orderby'    => 'count',
-		'order'      => 'DESC',
+$press_parent = get_category_by_slug( 'press' );
+if ( ! $press_parent ) {
+	$press_parent = get_term_by( 'name', 'Press', 'category' );
+}
+$press_parent_id = $press_parent && ! is_wp_error( $press_parent ) ? (int) $press_parent->term_id : 0;
+$categories      = $press_parent_id
+	? get_categories(
+		array(
+			'hide_empty' => true,
+			'parent'     => $press_parent_id,
+			'orderby'    => 'count',
+			'order'      => 'DESC',
+		)
 	)
-);
+	: array();
+$allowed_category_ids = array_fill_keys( array_map( 'intval', wp_list_pluck( $categories, 'term_id' ) ), true );
 
 /* Each live category owns one distinct signal colour. */
 $signal_palette = array(
@@ -43,9 +52,17 @@ foreach ( $yoast_primary_rows as $yoast_primary_row ) {
 	$yoast_primary_categories[ (int) $yoast_primary_row['post_id'] ] = (int) $yoast_primary_row['meta_value'];
 }
 
-$primary_category_for = static function ( $post_id ) use ( $yoast_primary_categories ) {
+$primary_category_for = static function ( $post_id ) use ( $yoast_primary_categories, $allowed_category_ids ) {
 	$post_categories = get_the_category( $post_id );
-	if ( empty( $post_categories ) ) {
+	$post_categories = array_values(
+		array_filter(
+			$post_categories,
+			static function ( $post_category ) use ( $allowed_category_ids ) {
+				return isset( $allowed_category_ids[ (int) $post_category->term_id ] );
+			}
+		)
+	);
+	if ( ! $post_categories ) {
 		return null;
 	}
 
@@ -65,7 +82,7 @@ $primary_category_for = static function ( $post_id ) use ( $yoast_primary_catego
 $configured_sticky_ids = array_filter( array_map( 'absint', (array) get_option( 'sticky_posts', array() ) ) );
 $sticky_story_ids       = array();
 if ( $configured_sticky_ids ) {
-	$sticky_story_ids = get_posts(
+$candidate_sticky_ids = get_posts(
 		array(
 			'post_type'           => 'post',
 			'post_status'         => 'publish',
@@ -77,6 +94,14 @@ if ( $configured_sticky_ids ) {
 			'ignore_sticky_posts' => true,
 		)
 	);
+	if ( $candidate_sticky_ids ) {
+		update_object_term_cache( $candidate_sticky_ids, 'post' );
+	}
+	foreach ( $candidate_sticky_ids as $candidate_sticky_id ) {
+		if ( $primary_category_for( $candidate_sticky_id ) ) {
+			$sticky_story_ids[] = (int) $candidate_sticky_id;
+		}
+	}
 }
 
 /*

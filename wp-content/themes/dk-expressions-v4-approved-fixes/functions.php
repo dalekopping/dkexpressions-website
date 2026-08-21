@@ -147,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.23.5';
+	$release = '1.23.6';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -179,6 +179,14 @@ function dkx_fixes_assets() {
 		wp_enqueue_style(
 			'dkx-insights-v1168',
 			get_stylesheet_directory_uri() . '/assets/insights-v1168.css',
+			array( 'dkx-enterprise-v115' ),
+			$release
+		);
+	}
+	if ( is_singular( 'post' ) ) {
+		wp_enqueue_style(
+			'dkx-post-links-v1236',
+			get_stylesheet_directory_uri() . '/assets/css/post-links-v1236.css',
 			array( 'dkx-enterprise-v115' ),
 			$release
 		);
@@ -398,18 +406,30 @@ function dkxv4_insights_preview_assets_v1233() {
 		'dkx-insights-options-v1233',
 		get_stylesheet_directory_uri() . '/assets/css/insights-options-v1233.css',
 		array( 'dkx-insights-v1168' ),
-		'1.23.5'
+		'1.23.6'
 	);
 
 	wp_enqueue_script(
 		'dkx-insights-v1235',
 		get_stylesheet_directory_uri() . '/assets/insights-v1235.js',
 		array(),
-		'1.23.5',
+		'1.23.6',
 		true
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_insights_preview_assets_v1233', 1002 );
+
+/**
+ * Convert plain web addresses in editorial posts into safe clickable links.
+ */
+function dkxv4_linkify_editorial_urls( $content ) {
+	if ( is_admin() || ! is_singular( 'post' ) || ! in_the_loop() || ! is_main_query() ) {
+		return $content;
+	}
+
+	return make_clickable( $content );
+}
+add_filter( 'the_content', 'dkxv4_linkify_editorial_urls', 20 );
 
 /**
  * Load the locked Start a Project and 2026 Rate Card conversion system.
