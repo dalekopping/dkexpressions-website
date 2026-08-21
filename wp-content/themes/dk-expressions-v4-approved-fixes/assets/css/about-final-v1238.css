@@ -1,0 +1,556 @@
+/**
+ * DK Expressions — final combined About Page.
+ * Release 1.23.8.
+ */
+
+.dk-about-v1238 {
+	--dk-blue: #40b7ff;
+	--dk-gold: #ffc044;
+	--dk-purple: #9868ff;
+	--dk-teal: #24d5c4;
+	--dk-red: #ff3b45;
+	--dk-ink: #020910;
+	--dk-panel: #061522;
+	--dk-line: rgba(64, 183, 255, 0.24);
+	--dk-muted: #9fb1c1;
+	background: var(--dk-ink);
+	color: #f7fbff;
+	overflow: hidden;
+}
+
+.dk-about-v1238 :where(h1, h2, h3, p, strong, span, a) {
+	text-shadow: none !important;
+}
+
+.dk-about-v1238 .dk-section {
+	position: relative;
+	padding-block: clamp(5.5rem, 9vw, 10rem);
+}
+
+.dk-about-v1238 .dk-kicker {
+	color: var(--dk-blue);
+	font-size: clamp(0.72rem, 1vw, 0.88rem);
+	font-weight: 900;
+	letter-spacing: 0.24em;
+	line-height: 1.5;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-section-head {
+	display: grid;
+	grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.65fr);
+	gap: clamp(2rem, 6vw, 7rem);
+	align-items: end;
+	margin-bottom: clamp(3rem, 6vw, 6rem);
+}
+
+.dk-about-v1238 .dk-section-head h2 {
+	font-size: clamp(3.25rem, 7.8vw, 8rem);
+	font-weight: 950;
+	letter-spacing: -0.072em;
+	line-height: 0.87;
+	margin: 1.25rem 0 0;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-section-head > p {
+	color: var(--dk-muted);
+	font-size: clamp(1.05rem, 1.55vw, 1.35rem);
+	line-height: 1.75;
+	margin: 0;
+}
+
+.dk-about-v1238 .dk-about-shot-hero {
+	display: grid;
+	min-height: clamp(54rem, 93vh, 67rem);
+	place-items: center;
+	position: relative;
+	isolation: isolate;
+	padding: clamp(8rem, 13vw, 13rem) max(6vw, calc((100vw - 1320px) / 2));
+	background:
+		radial-gradient(circle at 76% 38%, rgba(152, 104, 255, 0.15), transparent 26rem),
+		radial-gradient(circle at 22% 76%, rgba(64, 183, 255, 0.11), transparent 32rem),
+		linear-gradient(135deg, #020911, #06131f 58%, #03070d);
+	border-bottom: 1px solid var(--dk-line);
+}
+
+.dk-about-v1238 .dk-about-shot-hero::after {
+	background: linear-gradient(90deg, var(--dk-blue), var(--dk-gold), var(--dk-purple), var(--dk-teal));
+	bottom: 0;
+	content: "";
+	height: 4px;
+	left: max(6vw, calc((100vw - 1320px) / 2));
+	position: absolute;
+	width: min(33rem, 60vw);
+}
+
+.dk-about-v1238 .dk-about-shot-stars {
+	background-image: radial-gradient(circle, rgba(64, 183, 255, 0.65) 1px, transparent 1.5px);
+	background-size: 96px 96px;
+	inset: 0;
+	opacity: 0.42;
+	position: absolute;
+	z-index: -2;
+}
+
+.dk-about-v1238 .dk-about-shot-orbit {
+	border: 1px solid rgba(64, 183, 255, 0.18);
+	border-radius: 50%;
+	height: min(58vw, 49rem);
+	position: absolute;
+	right: -11vw;
+	top: 13%;
+	transform: rotate(-18deg);
+	width: min(58vw, 49rem);
+	z-index: -1;
+}
+
+.dk-about-v1238 .dk-about-shot-orbit::before,
+.dk-about-v1238 .dk-about-shot-orbit::after {
+	border: 1px dashed rgba(152, 104, 255, 0.25);
+	border-radius: inherit;
+	content: "";
+	inset: 12%;
+	position: absolute;
+}
+
+.dk-about-v1238 .dk-about-shot-orbit::after {
+	border-color: rgba(36, 213, 196, 0.25);
+	inset: 30%;
+}
+
+.dk-about-v1238 .dk-about-shot-copy {
+	max-width: 1320px;
+	position: relative;
+	width: 100%;
+}
+
+.dk-about-v1238 .dk-about-shot-copy h1 {
+	font-size: clamp(4rem, 10.3vw, 10.8rem);
+	font-weight: 950;
+	letter-spacing: -0.075em;
+	line-height: 0.84;
+	margin: clamp(1.5rem, 3vw, 2.5rem) 0;
+	max-width: 11ch;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-shot-copy h1::first-line {
+	color: #fff;
+}
+
+.dk-about-v1238 .dk-about-hero-sub {
+	color: var(--dk-gold);
+	font-size: clamp(1.2rem, 2.3vw, 2rem);
+	font-weight: 800;
+	line-height: 1.45;
+	max-width: 46rem;
+}
+
+.dk-about-v1238 .dk-about-hero-opening {
+	align-items: start;
+	border-top: 1px solid var(--dk-line);
+	display: grid;
+	grid-template-columns: 1.1fr 0.8fr 0.8fr;
+	gap: clamp(1.5rem, 4vw, 4rem);
+	margin-top: clamp(3rem, 6vw, 6rem);
+	max-width: 74rem;
+	padding-top: clamp(1.75rem, 3vw, 2.8rem);
+}
+
+.dk-about-v1238 .dk-about-hero-opening :where(p, strong, span) {
+	display: block;
+	font-size: clamp(0.98rem, 1.35vw, 1.2rem);
+	line-height: 1.65;
+	margin: 0;
+}
+
+.dk-about-v1238 .dk-about-hero-opening p { color: #fff; }
+.dk-about-v1238 .dk-about-hero-opening strong { color: var(--dk-blue); }
+.dk-about-v1238 .dk-about-hero-opening span { color: var(--dk-muted); }
+
+.dk-about-v1238 .dk-about-shot-origin {
+	background: #f4f7fa;
+	color: #020910;
+}
+
+.dk-about-v1238 .dk-about-shot-lead {
+	color: #087fc5;
+	font-size: 0.82rem;
+	font-weight: 900;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-shot-origin h2 {
+	font-size: clamp(3.4rem, 8.6vw, 9rem);
+	font-weight: 950;
+	letter-spacing: -0.075em;
+	line-height: 0.87;
+	margin: 2rem 0 clamp(3.5rem, 7vw, 7rem);
+	max-width: 11ch;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-shot-copygrid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0;
+	border-top: 1px solid rgba(2, 9, 16, 0.18);
+}
+
+.dk-about-v1238 .dk-about-shot-copygrid p {
+	border-bottom: 1px solid rgba(2, 9, 16, 0.18);
+	font-size: clamp(1.08rem, 1.55vw, 1.32rem);
+	line-height: 1.75;
+	margin: 0;
+	padding: clamp(2rem, 4vw, 4rem);
+}
+
+.dk-about-v1238 .dk-about-shot-copygrid p:nth-child(odd) {
+	border-right: 1px solid rgba(2, 9, 16, 0.18);
+}
+
+.dk-about-v1238 .dk-about-beliefs {
+	background: #030b13;
+}
+
+.dk-about-v1238 .dk-about-belief-grid {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	border: 1px solid var(--dk-line);
+}
+
+.dk-about-v1238 .dk-about-belief-grid article {
+	border-right: 1px solid var(--dk-line);
+	min-height: 22rem;
+	overflow: hidden;
+	padding: clamp(1.5rem, 2.5vw, 2.5rem);
+	position: relative;
+}
+
+.dk-about-v1238 .dk-about-belief-grid article:last-child { border-right: 0; }
+
+.dk-about-v1238 .dk-about-belief-grid article::after {
+	color: rgba(255, 255, 255, 0.035);
+	content: attr(data-index);
+	font-size: 12rem;
+	font-weight: 950;
+	line-height: 1;
+	position: absolute;
+	right: -1.2rem;
+	top: 3.5rem;
+}
+
+.dk-about-v1238 .dk-about-belief-grid article:nth-child(1) { border-top: 4px solid var(--dk-blue); }
+.dk-about-v1238 .dk-about-belief-grid article:nth-child(2) { border-top: 4px solid var(--dk-gold); }
+.dk-about-v1238 .dk-about-belief-grid article:nth-child(3) { border-top: 4px solid var(--dk-purple); }
+.dk-about-v1238 .dk-about-belief-grid article:nth-child(4) { border-top: 4px solid var(--dk-teal); }
+.dk-about-v1238 .dk-about-belief-grid article:nth-child(5) { border-top: 4px solid var(--dk-red); }
+
+.dk-about-v1238 .dk-about-belief-grid span {
+	color: var(--dk-blue);
+	font-size: 0.75rem;
+	font-weight: 900;
+	letter-spacing: 0.18em;
+}
+
+.dk-about-v1238 .dk-about-belief-grid h3 {
+	font-size: clamp(1.35rem, 1.8vw, 1.85rem);
+	font-weight: 850;
+	line-height: 1.18;
+	margin: 8rem 0 0;
+	position: relative;
+	z-index: 1;
+}
+
+.dk-about-v1238 .dk-about-idea {
+	background: linear-gradient(135deg, #071827 0 68%, #161027 68%);
+}
+
+.dk-about-v1238 .dk-about-shot-values {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	border: 1px solid var(--dk-line);
+}
+
+.dk-about-v1238 .dk-about-shot-values article {
+	border-right: 1px solid var(--dk-line);
+	min-height: 20rem;
+	padding: clamp(1.8rem, 3vw, 3.2rem);
+}
+
+.dk-about-v1238 .dk-about-shot-values article:last-child { border-right: 0; }
+
+.dk-about-v1238 .dk-about-shot-values span {
+	color: var(--dk-gold);
+	font-size: 0.76rem;
+	font-weight: 900;
+	letter-spacing: 0.2em;
+}
+
+.dk-about-v1238 .dk-about-shot-values h3 {
+	font-size: clamp(1.75rem, 2.5vw, 2.6rem);
+	line-height: 1;
+	margin: 5.5rem 0 1.4rem;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-shot-values p {
+	color: var(--dk-muted);
+	font-size: 1rem;
+	line-height: 1.65;
+	margin: 0;
+}
+
+.dk-about-v1238 .dk-about-method {
+	background: #f4f7fa;
+	color: #020910;
+}
+
+.dk-about-v1238 .dk-about-method .dk-section-head > p { color: #425365; }
+
+.dk-about-v1238 .dk-about-method-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.dk-about-v1238 .dk-about-method-grid article {
+	background: #fff;
+	border: 1px solid rgba(2, 9, 16, 0.15);
+	border-top: 6px solid var(--dk-blue);
+	min-height: 27rem;
+	padding: clamp(2rem, 4vw, 4rem);
+}
+
+.dk-about-v1238 .dk-about-method-grid article:nth-child(2) { border-top-color: var(--dk-purple); }
+
+.dk-about-v1238 .dk-about-method-grid span {
+	color: #087fc5;
+	font-size: 0.78rem;
+	font-weight: 900;
+	letter-spacing: 0.16em;
+}
+
+.dk-about-v1238 .dk-about-method-grid h3 {
+	font-size: clamp(2.4rem, 4vw, 4.4rem);
+	letter-spacing: -0.055em;
+	line-height: 0.95;
+	margin: 7rem 0 2rem;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-method-grid p {
+	color: #425365;
+	font-size: clamp(1rem, 1.4vw, 1.2rem);
+	line-height: 1.75;
+	margin: 0;
+}
+
+.dk-about-v1238 .dk-team {
+	background: #020911;
+}
+
+.dk-about-v1238 .dk-team-copy h3 { line-height: 0.98; }
+.dk-about-v1238 .dk-team-copy p { line-height: 1.7; }
+
+.dk-about-v1238 .dk-about-vault {
+	align-items: center;
+	background: #071827;
+	display: grid;
+	grid-template-columns: minmax(20rem, 0.8fr) minmax(0, 1.2fr);
+	gap: clamp(3rem, 7vw, 8rem);
+}
+
+.dk-about-v1238 .dk-about-vault-orbit {
+	aspect-ratio: 1;
+	border: 3px solid var(--dk-blue);
+	border-radius: 50%;
+	display: grid;
+	max-width: 32rem;
+	place-items: center;
+	position: relative;
+	width: 100%;
+}
+
+.dk-about-v1238 .dk-about-vault-orbit::before,
+.dk-about-v1238 .dk-about-vault-orbit::after {
+	border: 1px dashed var(--dk-purple);
+	border-radius: 50%;
+	content: "";
+	inset: 12%;
+	position: absolute;
+}
+
+.dk-about-v1238 .dk-about-vault-orbit::after {
+	border: 1px solid rgba(36, 213, 196, 0.55);
+	inset: 28%;
+}
+
+.dk-about-v1238 .dk-about-vault-orbit i {
+	background: var(--dk-gold);
+	border-radius: 50%;
+	height: 0.8rem;
+	left: 9%;
+	position: absolute;
+	top: 26%;
+	width: 0.8rem;
+}
+
+.dk-about-v1238 .dk-about-vault-orbit i:nth-child(2) {
+	background: var(--dk-teal);
+	left: auto;
+	right: 0;
+	top: 57%;
+}
+
+.dk-about-v1238 .dk-about-vault-orbit span {
+	color: var(--dk-blue);
+	font-size: clamp(5rem, 11vw, 9rem);
+	font-weight: 950;
+	letter-spacing: -0.08em;
+	z-index: 1;
+}
+
+.dk-about-v1238 .dk-about-vault-copy h2 {
+	font-size: clamp(3rem, 6.8vw, 7.2rem);
+	font-weight: 950;
+	letter-spacing: -0.07em;
+	line-height: 0.88;
+	margin: 1.5rem 0 2.5rem;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-vault-copy > p:not(.dk-kicker) {
+	color: var(--dk-muted);
+	font-size: clamp(1.05rem, 1.55vw, 1.3rem);
+	line-height: 1.75;
+	max-width: 42rem;
+}
+
+.dk-about-v1238 .dk-about-inline-link {
+	border-bottom: 2px solid var(--dk-gold);
+	color: var(--dk-gold);
+	display: inline-flex;
+	font-size: 0.83rem;
+	font-weight: 900;
+	gap: 1rem;
+	letter-spacing: 0.14em;
+	margin-top: 2rem;
+	padding-bottom: 0.75rem;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-join-team {
+	background: #f4f7fa;
+	color: #020910;
+}
+
+.dk-about-v1238 .dk-join-team-copy h2 {
+	font-size: clamp(3rem, 6.7vw, 7rem);
+	letter-spacing: -0.07em;
+	line-height: 0.9;
+	margin: 1.5rem 0 2.5rem;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-join-team-copy > p:not(.dk-kicker) {
+	color: #425365;
+	font-size: clamp(1rem, 1.4vw, 1.2rem);
+	line-height: 1.75;
+	margin-block: 0 1.2rem;
+}
+
+.dk-about-v1238 .dk-about-final {
+	background:
+		linear-gradient(120deg, rgba(64, 183, 255, 0.1), transparent 42%),
+		linear-gradient(300deg, rgba(152, 104, 255, 0.13), transparent 45%),
+		#02070d;
+	text-align: center;
+}
+
+.dk-about-v1238 .dk-about-final h2 {
+	font-size: clamp(3.4rem, 8vw, 8.5rem);
+	font-weight: 950;
+	letter-spacing: -0.075em;
+	line-height: 0.87;
+	margin: 2rem auto clamp(3rem, 5vw, 5rem);
+	max-width: 13ch;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-final h2 em {
+	color: var(--dk-blue);
+	font-style: normal;
+}
+
+.dk-about-v1238 .dk-about-final-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	justify-content: center;
+}
+
+.dk-about-v1238 .dk-about-final-actions a {
+	align-items: center;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	color: #fff;
+	display: inline-flex;
+	font-size: 0.8rem;
+	font-weight: 900;
+	gap: 2.2rem;
+	justify-content: space-between;
+	letter-spacing: 0.14em;
+	min-width: 14.5rem;
+	padding: 1.4rem 1.6rem;
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+.dk-about-v1238 .dk-about-final-actions a:nth-child(2) { border-color: var(--dk-purple); }
+.dk-about-v1238 .dk-about-final-actions a:nth-child(3) { border-color: var(--dk-gold); }
+.dk-about-v1238 .dk-about-final-actions .is-primary {
+	background: var(--dk-blue);
+	border-color: var(--dk-blue);
+	color: #020910;
+}
+
+@media (max-width: 1120px) {
+	.dk-about-v1238 .dk-about-belief-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.dk-about-v1238 .dk-about-belief-grid article { border-bottom: 1px solid var(--dk-line); }
+	.dk-about-v1238 .dk-about-belief-grid article:last-child { grid-column: 1 / -1; }
+	.dk-about-v1238 .dk-about-shot-values { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	.dk-about-v1238 .dk-about-shot-values article { border-bottom: 1px solid var(--dk-line); }
+}
+
+@media (max-width: 760px) {
+	.dk-about-v1238 .dk-section { padding-block: clamp(4.5rem, 18vw, 7rem); }
+	.dk-about-v1238 .dk-section-head { grid-template-columns: 1fr; gap: 1.8rem; }
+	.dk-about-v1238 .dk-section-head h2 { font-size: clamp(3rem, 15vw, 5.5rem); line-height: 0.92; }
+	.dk-about-v1238 .dk-about-shot-hero { min-height: auto; padding-block: 8.5rem 6rem; }
+	.dk-about-v1238 .dk-about-shot-copy h1 { font-size: clamp(3.75rem, 18vw, 6.3rem); line-height: 0.91; }
+	.dk-about-v1238 .dk-about-hero-opening { grid-template-columns: 1fr; gap: 1.25rem; }
+	.dk-about-v1238 .dk-about-shot-origin h2 { font-size: clamp(3.2rem, 16vw, 5.8rem); line-height: 0.92; }
+	.dk-about-v1238 .dk-about-shot-copygrid { grid-template-columns: 1fr; }
+	.dk-about-v1238 .dk-about-shot-copygrid p { padding-inline: 0; }
+	.dk-about-v1238 .dk-about-shot-copygrid p:nth-child(odd) { border-right: 0; }
+	.dk-about-v1238 .dk-about-belief-grid,
+	.dk-about-v1238 .dk-about-shot-values,
+	.dk-about-v1238 .dk-about-method-grid,
+	.dk-about-v1238 .dk-about-vault { grid-template-columns: 1fr; }
+	.dk-about-v1238 .dk-about-belief-grid article,
+	.dk-about-v1238 .dk-about-shot-values article { border-right: 0; min-height: 17rem; }
+	.dk-about-v1238 .dk-about-belief-grid article:last-child { grid-column: auto; }
+	.dk-about-v1238 .dk-about-belief-grid h3 { margin-top: 5rem; }
+	.dk-about-v1238 .dk-about-method-grid article { min-height: 22rem; }
+	.dk-about-v1238 .dk-about-method-grid h3 { margin-top: 4.5rem; }
+	.dk-about-v1238 .dk-about-vault { gap: 4rem; }
+	.dk-about-v1238 .dk-about-vault-orbit { max-width: 22rem; }
+	.dk-about-v1238 .dk-about-vault-copy h2,
+	.dk-about-v1238 .dk-join-team-copy h2,
+	.dk-about-v1238 .dk-about-final h2 { font-size: clamp(3rem, 15vw, 5.7rem); line-height: 0.92; }
+	.dk-about-v1238 .dk-about-final-actions { flex-direction: column; }
+	.dk-about-v1238 .dk-about-final-actions a { width: 100%; }
+}
