@@ -147,7 +147,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.24.0';
+	$release = '1.25.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -508,100 +508,14 @@ function dkxv4_page_meta( $key, $default = '', $post_id = 0 ) {
 	$post_id = $post_id ?: get_queried_object_id();
 	$keys    = array( '_dkx_page_' . $key, '_dkx_' . $key, 'dkx_' . $key );
 	foreach ( $keys as $meta_key ) {
-		$value = get_post_meta( $post_id, $meta_key, true );
-		if ( '' !== $value && null !== $value ) {
-			return $value;
+		if ( metadata_exists( 'post', $post_id, $meta_key ) ) {
+			return get_post_meta( $post_id, $meta_key, true );
 		}
 	}
 	return $default;
 }
 
-function dkxv4_page_field_groups() {
-	return array(
-		'home' => array(
-			'home_kicker' => array( 'Hero kicker', 'Premium culture, content & brand storytelling' ),
-			'home_heading' => array( 'Hero heading', "We help brands\ndominate attention." ),
-			'home_intro' => array( 'Hero introduction', 'DK Expressions combines editorial authority, world-class visual storytelling and digital growth strategy to create experiences people remember—and results businesses can measure.' ),
-			'home_final_heading' => array( 'Final CTA heading', "Make something\npeople cannot ignore." ),
-			'home_final_copy' => array( 'Final CTA copy', 'Tell us what you are launching, promoting or transforming. We will build the right combination of story, strategy and execution.' ),
-		),
-		'about' => array(
-			'about_tm_kicker' => array( 'Hero kicker', 'Since February 2013' ),
-			'about_tm_heading' => array( 'Hero heading', "Not a media company.\nA time machine." ),
-			'about_tm_intro' => array( 'Hero introduction', 'DK Expressions began in Johannesburg with one camera, determination, imagination and the belief that moments matter.' ),
-			'about_origin_heading' => array( 'Origin heading', "Born in Johannesburg.\nBuilt for everywhere." ),
-			'about_team_section_heading' => array( 'Team heading', "The minds behind\nthe moments." ),
-			'about_join_heading' => array( 'Recruitment heading', "Think you belong\nin the timeline?" ),
-		),
-		'solutions' => array(
-			'solutions_kicker' => array( 'Hero kicker', 'What we do' ),
-			'solutions_heading' => array( 'Hero heading', "We don’t just create content.\nWe create impact." ),
-			'solutions_intro' => array( 'Hero introduction', 'DK Expressions connects brands, experiences and audiences through powerful storytelling, strategic digital amplification and content designed to be remembered.' ),
-		),
-		'our-work' => array(
-			'work_kicker' => array( 'Hero kicker', 'The DK Expressions Time Vault' ),
-			'work_heading' => array( 'Hero heading', "WE\nWERE\nTHERE." ),
-			'work_intro' => array( 'Hero introduction', 'Not stock. Not mock-ups. Not promises. This is work captured, filmed and produced by DK Expressions.' ),
-		),
-		'industries' => array(
-			'industries_kicker' => array( 'Hero kicker', 'Where we work' ),
-			'industries_heading' => array( 'Hero heading', "Different industries.\nOne obsession:\nattention." ),
-			'industries_intro' => array( 'Hero introduction', 'We start with the audience and the objective—not a generic marketing template.' ),
-		),
-		'contact' => array(
-			'contact_kicker' => array( 'Hero kicker', 'Start a Project · DK Expressions 2026' ),
-			'contact_heading' => array( 'Hero heading', "Tell us what\nneeds attention." ),
-			'contact_intro' => array( 'Hero introduction', 'Give us the objective, the timeline and enough context to understand what success should look like. We’ll take it from there.' ),
-		),
-	);
-}
-
-function dkxv4_page_content_meta_box() {
-	global $post;
-	if ( ! $post || 'page' !== $post->post_type ) {
-		return;
-	}
-	$groups = dkxv4_page_field_groups();
-	if ( isset( $groups[ $post->post_name ] ) ) {
-		add_meta_box( 'dkx-page-content', 'DK Expressions Page Content', 'dkxv4_render_page_content_meta_box', 'page', 'normal', 'high' );
-	}
-}
-add_action( 'add_meta_boxes_page', 'dkxv4_page_content_meta_box' );
-
-function dkxv4_render_page_content_meta_box( $post ) {
-	$groups = dkxv4_page_field_groups();
-	$fields = $groups[ $post->post_name ] ?? array();
-	wp_nonce_field( 'dkxv4_page_content', 'dkxv4_page_content_nonce' );
-	echo '<p>These fields control the live DK Expressions template. Leave a field empty to use the approved default.</p><div style="display:grid;gap:18px">';
-	foreach ( $fields as $key => $definition ) {
-		$value = get_post_meta( $post->ID, '_dkx_page_' . $key, true );
-		echo '<label style="display:grid;gap:7px"><strong>' . esc_html( $definition[0] ) . '</strong><textarea rows="3" name="dkx_page_fields[' . esc_attr( $key ) . ']" placeholder="' . esc_attr( $definition[1] ) . '" style="width:100%">' . esc_textarea( $value ) . '</textarea></label>';
-	}
-	echo '</div>';
-}
-
-function dkxv4_save_page_content_meta( $post_id ) {
-	if ( ! isset( $_POST['dkxv4_page_content_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['dkxv4_page_content_nonce'] ) ), 'dkxv4_page_content' ) ) {
-		return;
-	}
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-	if ( ! current_user_can( 'edit_post', $post_id ) ) {
-		return;
-	}
-	$fields = isset( $_POST['dkx_page_fields'] ) ? (array) wp_unslash( $_POST['dkx_page_fields'] ) : array();
-	foreach ( $fields as $key => $value ) {
-		$key = sanitize_key( $key );
-		$value = sanitize_textarea_field( $value );
-		if ( '' === $value ) {
-			delete_post_meta( $post_id, '_dkx_page_' . $key );
-		} else {
-			update_post_meta( $post_id, '_dkx_page_' . $key, $value );
-		}
-	}
-}
-add_action( 'save_post_page', 'dkxv4_save_page_content_meta' );
+require_once get_stylesheet_directory() . '/inc/dk-page-content-editor.php';
 
 function dkxv4_get_team_media( $key, $aliases = array() ) {
 	$selected = absint( dkxv4_page_meta( 'about_' . $key . '_media_id', 0 ) );
