@@ -12,6 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once get_stylesheet_directory() . '/inc/dk-experience-settings.php';
 require_once get_stylesheet_directory() . '/inc/giveaways.php';
 
+/* The signed wp-admin visual canvas must always render the current Page. */
+if ( isset( $_GET['dkx_visual_canvas'] ) && ! defined( 'DONOTCACHEPAGE' ) ) {
+	define( 'DONOTCACHEPAGE', true );
+}
+
 /**
  * Return the requested non-destructive landing-page preview key.
  *
@@ -147,7 +152,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.25.0';
+	$release = '1.26.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -516,6 +521,7 @@ function dkxv4_page_meta( $key, $default = '', $post_id = 0 ) {
 }
 
 require_once get_stylesheet_directory() . '/inc/dk-page-content-editor.php';
+require_once get_stylesheet_directory() . '/inc/dk-visual-page-studio.php';
 
 function dkxv4_get_team_media( $key, $aliases = array() ) {
 	$selected = absint( dkxv4_page_meta( 'about_' . $key . '_media_id', 0 ) );
