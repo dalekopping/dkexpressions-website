@@ -180,7 +180,7 @@ function dkxv4_render_visual_editor_page() {
 			<div>
 				<span>DK / VISUAL PAGE STUDIO</span>
 				<h1><?php echo esc_html( $page_label ); ?></h1>
-				<p>The canvas is the real saved frontend. Click visible text to edit it. Click an image or video to replace it from the Media Library.</p>
+				<p>The canvas is the real saved frontend. Click or tap visible text, images and videos to edit them on desktop, tablet or mobile.</p>
 			</div>
 			<div class="dkx-vps__header-actions">
 				<a class="button" href="<?php echo esc_url( get_edit_post_link( $post_id, 'raw' ) ); ?>">Standard page settings</a>
@@ -209,21 +209,30 @@ function dkxv4_render_visual_editor_page() {
 				</section>
 
 				<section class="dkx-vps__selection" data-dkx-selection hidden>
-					<span>SELECTED ELEMENT</span>
+					<div class="dkx-vps__selection-heading">
+						<span>SELECTED ELEMENT</span>
+						<button type="button" data-dkx-close-selection aria-label="Close element editor">Close</button>
+					</div>
 					<h2 data-dkx-selection-label>Page element</h2>
 					<p data-dkx-selection-help>Edit text directly on the canvas.</p>
+					<div class="dkx-vps__text-editor" data-dkx-text-editor hidden>
+						<label for="dkx-vps-text-value">Edit selected text</label>
+						<textarea id="dkx-vps-text-value" data-dkx-text-value rows="5" autocapitalize="sentences" enterkeyhint="done"></textarea>
+						<button type="button" class="button button-primary" data-dkx-apply-text>Apply text to canvas</button>
+					</div>
 					<div class="dkx-vps__selection-actions">
 						<button type="button" class="button button-primary" data-dkx-replace-media hidden>Choose replacement media</button>
 						<button type="button" class="button" data-dkx-reset-selection>Restore this element</button>
+						<button type="button" class="button button-primary dkx-vps__mobile-save" data-dkx-save>Save page changes</button>
 					</div>
 				</section>
 
 				<section class="dkx-vps__instructions">
 					<h2>How this editor works</h2>
 					<ol>
-						<li>Click a headline, paragraph, button label or other visible text.</li>
-						<li>Type directly where it appears on the page.</li>
-						<li>Click photography or video to replace it through WordPress Media.</li>
+						<li>Click or tap a headline, paragraph, button label or other visible text.</li>
+						<li>Edit in the selected-text panel. Desktop also supports typing directly on the canvas.</li>
+						<li>Click or tap photography or video to replace it through WordPress Media.</li>
 						<li>Check desktop, tablet and mobile, then save.</li>
 					</ol>
 					<p>The DK colour system, typography, spacing, animation and responsive structure remain locked.</p>
@@ -255,8 +264,8 @@ function dkxv4_visual_studio_admin_assets( $hook ) {
 		return;
 	}
 	wp_enqueue_media();
-	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.26.0' );
-	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.26.0', true );
+	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.27.0' );
+	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.27.0', true );
 	wp_localize_script(
 		'dkx-visual-page-studio',
 		'DKXVisualStudio',
@@ -289,7 +298,7 @@ function dkxv4_visual_canvas_assets() {
 	if ( ! $is_editor && ! $overrides ) {
 		return;
 	}
-	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.26.0', true );
+	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.27.0', true );
 	wp_add_inline_script(
 		'dkx-visual-canvas',
 		'window.DKXVisualCanvas=' . wp_json_encode(
@@ -302,7 +311,7 @@ function dkxv4_visual_canvas_assets() {
 		'before'
 	);
 	if ( $is_editor ) {
-		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.26.0' );
+		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.27.0' );
 		nocache_headers();
 	}
 }
