@@ -5,6 +5,8 @@
 	var overrides = Array.isArray(config.overrides) ? config.overrides : [];
 	var originals = {};
 	var selected = null;
+	var selectedTextNodeIndex = -1;
+	var directCanvasEditing = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
 
 	function cssEscape(value) {
 		if (window.CSS && typeof window.CSS.escape === 'function') {
@@ -60,7 +62,7 @@
 			};
 			return;
 		}
-		originals[path] = { type: 'text', value: element.innerHTML };
+		originals[path] = { type: 'text', value: element.innerHTML, plainValue: element.innerText };
 	}
 
 	function applyMedia(element, item) {
@@ -140,12 +142,48 @@
 		if (!start || !start.closest) {
 			return null;
 		}
+		var field = start.closest('[data-dkx-field]');
+		if (field && field.closest('main')) {
+			return field;
+		}
+		var inline = start.closest('strong,b,em,span,small');
+		if (inline && inline.closest('main') && inline.textContent.trim()) {
+			return inline;
+		}
 		var block = start.closest('h1,h2,h3,h4,h5,h6,p,li,blockquote,figcaption,a,button,label');
 		if (block && block.closest('main')) {
 			return block;
 		}
-		var inline = start.closest('strong,b,em,span,small');
-		return inline && inline.closest('main') ? inline : null;
+		return null;
+	}
+
+	function textNodes(element) {
+		var nodes = [];
+		var walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null);
+		var node;
+		while ((node = walker.nextNode())) {
+			nodes.push(node);
+		}
+		return nodes;
+	}
+
+	function pointedTextNode(element, event) {
+		var node = null;
+		if (event && document.caretRangeFromPoint) {
+			var range = document.caretRangeFromPoint(event.clientX, event.clientY);
+			node = range ? range.startContainer : null;
+		} else if (event && document.caretPositionFromPoint) {
+			var position = document.caretPositionFromPoint(event.clientX, event.clientY);
+			node = position ? position.offsetNode : null;
+		}
+		if (node && node.nodeType !== Node.TEXT_NODE) {
+			node = node.firstChild;
+		}
+		if (!node || node.nodeType !== Node.TEXT_NODE || !element.contains(node)) {
+			var available = textNodes(element).filter(function (item) { return item.nodeValue.trim(); });
+			node = available.length === 1 ? available[0] : null;
+		}
+		return node;
 	}
 
 	function mediaTarget(start) {
@@ -164,15 +202,23 @@
 		selected.removeAttribute('contenteditable');
 		selected.removeAttribute('spellcheck');
 		selected = null;
+		selectedTextNodeIndex = -1;
 	}
 
-	function selectElement(element, type) {
+	function selectElement(element, type, event) {
 		clearSelection();
 		selected = element;
 		selected.classList.add('dkx-visual-selected');
 		var path = elementPath(element);
 		captureOriginal(element, path, type);
+		var editValue = '';
 		if (type === 'text') {
+			var nodes = textNodes(element);
+			var pointed = pointedTextNode(element, event);
+			selectedTextNodeIndex = pointed ? nodes.indexOf(pointed) : -1;
+			editValue = selectedTextNodeIndex >= 0 ? pointed.nodeValue : element.innerText;
+		}
+		if (type === 'text' && directCanvasEditing) {
 			selected.setAttribute('contenteditable', 'true');
 			selected.setAttribute('spellcheck', 'true');
 			selected.focus({ preventScroll: true });
@@ -186,7 +232,10 @@
 			fieldKey: element.getAttribute('data-dkx-field') || '',
 			fieldPostId: parseInt(element.getAttribute('data-dkx-field-post') || config.postId || 0, 10),
 			globalMedia: element.getAttribute('data-dkx-global-media') || '',
-			current: type === 'text' ? element.innerText : originals[path]
+			current: type === 'text' ? element.innerText : originals[path],
+			originalCurrent: type === 'text' && originals[path] ? originals[path].plainValue : '',
+			editValue: editValue,
+			textNodeIndex: selectedTextNodeIndex
 		});
 	}
 
@@ -205,7 +254,7 @@
 			}
 			event.preventDefault();
 			event.stopPropagation();
-			selectElement(media || text, media ? 'media' : 'text');
+			selectElement(media || text, media ? 'media' : 'text', event);
 		}, true);
 
 		document.addEventListener('submit', function (event) {
@@ -245,6 +294,36 @@
 				applyMedia(target, event.data.media);
 				selectElement(target, 'media');
 				post({ type: 'dkx-change', elementType: 'media', path: event.data.path, media: event.data.media, globalMedia: target.getAttribute('data-dkx-global-media') || '' });
+			}
+			if (event.data.type === 'dkx-set-text') {
+				var textElement;
+				try {
+					textElement = document.querySelector(event.data.path);
+				} catch (error) {
+					return;
+				}
+				if (!textElement) {
+					return;
+				}
+				captureOriginal(textElement, event.data.path, 'text');
+				var nodes = textNodes(textElement);
+				var nodeIndex = parseInt(event.data.textNodeIndex, 10);
+				if (nodeIndex >= 0 && nodes[nodeIndex]) {
+					nodes[nodeIndex].nodeValue = event.data.value || '';
+				} else {
+					textElement.textContent = event.data.value || '';
+				}
+				selected = textElement;
+				selectedTextNodeIndex = nodeIndex;
+				post({
+					type: 'dkx-change',
+					elementType: 'text',
+					path: event.data.path,
+					value: textElement.innerHTML,
+					plainValue: textElement.innerText,
+					fieldKey: textElement.getAttribute('data-dkx-field') || '',
+					fieldPostId: parseInt(textElement.getAttribute('data-dkx-field-post') || config.postId || 0, 10)
+				});
 			}
 			if (event.data.type === 'dkx-reset-element') {
 				var element;
