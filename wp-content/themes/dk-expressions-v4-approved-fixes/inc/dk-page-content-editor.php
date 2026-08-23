@@ -526,10 +526,7 @@ function dkxv4_page_content_meta_box() {
 	if ( ! $post || 'page' !== $post->post_type ) {
 		return;
 	}
-	$manifest = dkxv4_page_content_manifest();
-	if ( isset( $manifest[ dkxv4_page_content_key( $post->ID ) ] ) ) {
-		add_meta_box( 'dkx-page-content', 'DK Page Content — Live Frontend Copy', 'dkxv4_render_page_content_meta_box', 'page', 'normal', 'high' );
-	}
+	add_meta_box( 'dkx-page-content', 'DK Visual Page Editor — Exact Frontend', 'dkxv4_render_page_content_meta_box', 'page', 'normal', 'high' );
 }
 add_action( 'add_meta_boxes_page', 'dkxv4_page_content_meta_box' );
 
@@ -541,19 +538,33 @@ function dkxv4_render_page_content_meta_box( $post ) {
 	$page_key = dkxv4_page_content_key( $post->ID );
 	$page = $manifest[ $page_key ] ?? array();
 	wp_nonce_field( 'dkxv4_page_content', 'dkxv4_page_content_nonce' );
+	$visual_editor_url = function_exists( 'dkxv4_visual_editor_url' ) ? dkxv4_visual_editor_url( $post->ID ) : '';
+	$snapshot_url      = 'publish' === get_post_status( $post->ID ) ? add_query_arg( 'dkx_editor_snapshot', time(), get_permalink( $post->ID ) ) : get_preview_post_link( $post->ID, array( 'dkx_editor_snapshot' => time() ) );
 	?>
 	<div class="dkx-pce" data-dkx-page-content-editor>
 		<header class="dkx-pce__hero">
-			<div><span>DK / BACKEND EDITOR</span><h2><?php echo esc_html( $page['label'] ?? 'Page Content' ); ?></h2></div>
-			<p>Everything below controls the words on the live custom frontend. The approved DK layout, typography, colour and motion system stay locked.</p>
+			<div><span>DK / VISUAL BACKEND</span><h2><?php echo esc_html( $page['label'] ?? 'Page Content' ); ?></h2></div>
+			<p>This is the real saved frontend—not a blank WordPress canvas. Use the Visual Page Studio to edit visible text directly and replace images or videos through the Media Library.</p>
 		</header>
+		<section class="dkx-pce__visual">
+			<div class="dkx-pce__visual-head">
+				<div><strong>Exact frontend canvas</strong><span>Desktop, tablet and mobile editing · DK design system locked</span></div>
+				<?php if ( $visual_editor_url ) : ?><a class="button button-primary button-hero" href="<?php echo esc_url( $visual_editor_url ); ?>">Open DK Visual Page Studio ↗</a><?php endif; ?>
+			</div>
+			<div class="dkx-pce__snapshot"><iframe src="<?php echo esc_url( $snapshot_url ); ?>" title="<?php echo esc_attr( ( $page['label'] ?? 'Page' ) . ' saved frontend preview' ); ?>" loading="lazy" sandbox="allow-same-origin allow-scripts allow-forms allow-popups"></iframe></div>
+			<p><strong>Important:</strong> use the blue Visual Page Studio button for page changes. It replaces the standard WordPress draft-preview workflow and prevents the expired preview-link error.</p>
+		</section>
 		<?php if ( ! empty( $page['managed'] ) ) : ?>
 		<section class="dkx-pce__managed">
 			<h3>Dynamic content managed elsewhere</h3>
 			<div><?php foreach ( $page['managed'] as $label => $instruction ) : ?><p><strong><?php echo esc_html( $label ); ?></strong><span><?php echo esc_html( $instruction ); ?></span></p><?php endforeach; ?></div>
 		</section>
 		<?php endif; ?>
-		<div class="dkx-pce__tools"><button type="button" class="button" data-dkx-expand>Expand all sections</button><button type="button" class="button" data-dkx-collapse>Collapse all</button><span>Save with the normal <strong>Update</strong> button.</span></div>
+		<?php if ( ! empty( $page['sections'] ) ) : ?>
+		<details class="dkx-pce__structured">
+			<summary><strong>Structured content fields</strong><span>Optional precision editor for copy values</span><i>+</i></summary>
+		<div class="dkx-pce__structured-body">
+		<div class="dkx-pce__tools"><button type="button" class="button" data-dkx-expand>Expand all sections</button><button type="button" class="button" data-dkx-collapse>Collapse all</button><span>These fields save with the normal <strong>Update</strong> button.</span></div>
 		<div class="dkx-pce__sections">
 		<?php $section_index = 0; foreach ( $page['sections'] ?? array() as $section ) : $section_index++; ?>
 			<details class="dkx-pce__section" <?php echo 1 === $section_index ? 'open' : ''; ?>>
@@ -578,6 +589,9 @@ function dkxv4_render_page_content_meta_box( $post ) {
 			</details>
 		<?php endforeach; ?>
 		</div>
+		</div>
+		</details>
+		<?php endif; ?>
 	</div>
 	<?php
 }
@@ -700,6 +714,28 @@ function dkxv4_pce_replace_element_text( $content, $default, $value ) {
 }
 
 /**
+ * Connect an element on the signed visual canvas to its native page-meta key.
+ * Attributes are never added to the public page outside the editor canvas.
+ */
+function dkxv4_pce_tag_visual_field( $content, $value, $field_key, $source_page_id ) {
+	$tags = 'h1|h2|h3|h4|h5|h6|p|blockquote|a|span|strong|b|small|li|footer|button|label';
+	return preg_replace_callback(
+		'#<(' . $tags . ')(\s[^>]*)?>(.*?)</\1>#is',
+		static function ( $match ) use ( $value, $field_key, $source_page_id ) {
+			if ( dkxv4_pce_normalize_text( $match[3] ) !== dkxv4_pce_normalize_text( $value ) ) {
+				return $match[0];
+			}
+			$attributes = $match[2] ?? '';
+			if ( false === strpos( $attributes, 'data-dkx-field=' ) ) {
+				$attributes .= ' data-dkx-field="' . esc_attr( $field_key ) . '" data-dkx-field-post="' . absint( $source_page_id ) . '"';
+			}
+			return '<' . $match[1] . $attributes . '>' . $match[3] . '</' . $match[1] . '>';
+		},
+		$content
+	);
+}
+
+/**
  * Replace approved defaults only inside the page's main content element.
  */
 function dkxv4_apply_page_content_overrides( $html ) {
@@ -730,48 +766,47 @@ function dkxv4_apply_page_content_overrides( $html ) {
 			$sources[] = array( $solutions_page->ID, dkxv4_page_content_fields( 'solutions' ) );
 		}
 	}
+	$is_visual_canvas = function_exists( 'dkxv4_is_visual_canvas_request' ) && dkxv4_is_visual_canvas_request( $page_id );
 	foreach ( $sources as $source ) {
 	$source_page_id = absint( $source[0] );
 	foreach ( $source[1] as $key => $field ) {
 		$meta_key = '_dkx_page_' . $key;
-		if ( ! metadata_exists( 'post', $source_page_id, $meta_key ) ) {
-			continue;
-		}
-		$value = (string) get_post_meta( $source_page_id, $meta_key, true );
-		$default = (string) $field['default'];
-		if ( $value === $default ) {
-			continue;
-		}
+		$default  = (string) $field['default'];
+		$value    = metadata_exists( 'post', $source_page_id, $meta_key ) ? (string) get_post_meta( $source_page_id, $meta_key, true ) : $default;
+		$changed  = $value !== $default;
 
-		if ( 'list' === $field['type'] ) {
+		if ( $changed && 'list' === $field['type'] ) {
 			$target = dkxv4_pce_list_markup( $default );
 			$replacement = dkxv4_pce_list_markup( $value );
 			$content = str_replace( $target, $replacement, $content );
 			continue;
 		}
 
-		if ( ! empty( $field['numeric_markup'] ) ) {
+		if ( $changed && ! empty( $field['numeric_markup'] ) ) {
 			$target = dkxv4_pce_numeric_markup( $default );
 			$replacement = dkxv4_pce_numeric_markup( $value );
 			$content = str_replace( $target, $replacement, $content );
-			continue;
+		} elseif ( $changed ) {
+			$content = dkxv4_pce_replace_element_text( $content, $default, $value );
+
+			$replacement = esc_html( $value );
+			$targets = array_unique(
+				array(
+					$default,
+					esc_html( $default ),
+					str_replace( "\n", '<br>', esc_html( $default ) ),
+					str_replace( "\n", "<br>\n", esc_html( $default ) ),
+				)
+			);
+			foreach ( $targets as $target ) {
+				if ( '' !== $target && false !== strpos( $content, $target ) ) {
+					$content = str_replace( $target, $replacement, $content );
+				}
+			}
 		}
 
-		$content = dkxv4_pce_replace_element_text( $content, $default, $value );
-
-		$replacement = esc_html( $value );
-		$targets = array_unique(
-			array(
-				$default,
-				esc_html( $default ),
-				str_replace( "\n", '<br>', esc_html( $default ) ),
-				str_replace( "\n", "<br>\n", esc_html( $default ) ),
-			)
-		);
-		foreach ( $targets as $target ) {
-			if ( '' !== $target && false !== strpos( $content, $target ) ) {
-				$content = str_replace( $target, $replacement, $content );
-			}
+		if ( $is_visual_canvas && 'list' !== $field['type'] ) {
+			$content = dkxv4_pce_tag_visual_field( $content, $value, $key, $source_page_id );
 		}
 	}
 	}
@@ -802,10 +837,16 @@ function dkxv4_page_content_admin_assets( $hook ) {
 	if ( ! $screen || 'page' !== $screen->post_type ) {
 		return;
 	}
+	$admin_post_id = isset( $_GET['post'] ) ? absint( wp_unslash( $_GET['post'] ) ) : 0;
 	$css = '.dkx-pce{--blue:#32b5ff;--gold:#ffc044;--purple:#9b70ff;--red:#ff4454;background:#06121c;color:#eaf5ff;margin:-6px -12px -12px;padding:24px;font-family:Inter,Arial,sans-serif}.dkx-pce__hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.7fr);gap:32px;padding:26px;border:1px solid #1d4d6b;background:linear-gradient(135deg,#081b2a,#070c13)}.dkx-pce__hero span{color:var(--blue);font-size:11px;font-weight:900;letter-spacing:.2em}.dkx-pce__hero h2{color:#fff;font-size:28px;line-height:1;margin:10px 0 0;text-transform:uppercase}.dkx-pce__hero p{color:#a9bdca;font-size:14px;line-height:1.7;margin:0}.dkx-pce__managed{border:1px solid #715a23;background:#171307;padding:20px 24px;margin-top:18px}.dkx-pce__managed h3{color:var(--gold);font-size:13px;letter-spacing:.12em;text-transform:uppercase}.dkx-pce__managed div{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.dkx-pce__managed p{margin:0;padding:12px;background:#0b1118}.dkx-pce__managed strong,.dkx-pce__managed span{display:block}.dkx-pce__managed strong{color:#fff}.dkx-pce__managed span{color:#9eb2c0;margin-top:5px;line-height:1.5}.dkx-pce__tools{display:flex;align-items:center;gap:10px;margin:20px 0}.dkx-pce__tools span{color:#9eb2c0;margin-left:auto}.dkx-pce__section{border:1px solid #183d54;margin:0 0 12px;background:#071018}.dkx-pce__section summary{align-items:center;cursor:pointer;display:grid;grid-template-columns:44px 1fr 30px;gap:12px;padding:18px 20px;list-style:none}.dkx-pce__section summary::-webkit-details-marker{display:none}.dkx-pce__section summary>span{color:var(--blue);font-weight:900}.dkx-pce__section summary>strong{color:#fff;font-size:14px;letter-spacing:.08em;text-transform:uppercase}.dkx-pce__section summary>i{color:var(--gold);font-size:24px;font-style:normal}.dkx-pce__section[open] summary>i{transform:rotate(45deg)}.dkx-pce__fields{border-top:1px solid #183d54;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding:22px}.dkx-pce__field{display:flex;flex-direction:column;gap:7px}.dkx-pce__field>span{color:#dceaf4;font-size:12px;font-weight:800;letter-spacing:.04em}.dkx-pce__field input,.dkx-pce__field textarea{background:#03090e!important;border:1px solid #31576e!important;border-radius:0!important;color:#fff!important;font-family:inherit!important;font-size:14px!important;line-height:1.55!important;padding:12px!important;width:100%}.dkx-pce__field input:focus,.dkx-pce__field textarea:focus{border-color:var(--blue)!important;box-shadow:0 0 0 1px var(--blue)!important}.dkx-pce__field small{text-align:right}.dkx-pce__field .button-link{color:var(--gold)}@media(max-width:782px){.dkx-pce{padding:14px}.dkx-pce__hero{grid-template-columns:1fr;padding:20px}.dkx-pce__fields{grid-template-columns:1fr;padding:16px}.dkx-pce__tools{align-items:flex-start;flex-wrap:wrap}.dkx-pce__tools span{margin-left:0;width:100%}}';
-	wp_register_style( 'dkx-page-content-editor', false, array(), '1.25.0' );
+	wp_register_style( 'dkx-page-content-editor', false, array(), '1.26.0' );
 	wp_enqueue_style( 'dkx-page-content-editor' );
 	wp_add_inline_style( 'dkx-page-content-editor', $css );
+	$visual_css = '.dkx-pce__visual{background:#02080d;border:1px solid #1d4d6b;margin-top:18px;padding:18px}.dkx-pce__visual-head{align-items:center;display:flex;gap:20px;justify-content:space-between;margin-bottom:14px}.dkx-pce__visual-head strong,.dkx-pce__visual-head span{display:block}.dkx-pce__visual-head strong{color:#fff;font-size:16px}.dkx-pce__visual-head span{color:#9eb2c0;font-size:12px;margin-top:4px}.dkx-pce__visual .button-primary{background:#32b5ff!important;border-color:#32b5ff!important;border-radius:0!important;color:#00111c!important;font-weight:900!important}.dkx-pce__snapshot{background:#071018;border:1px solid #214d68;height:680px;overflow:hidden}.dkx-pce__snapshot iframe{border:0;display:block;height:100%;width:100%}.dkx-pce__visual>p{color:#9eb2c0;font-size:12px;line-height:1.6;margin:12px 0 0}.dkx-pce__visual>p strong{color:#ffc044}.dkx-pce__structured{border:1px solid #31576e;margin-top:18px}.dkx-pce__structured>summary{align-items:center;background:#071018;cursor:pointer;display:grid;grid-template-columns:1fr auto 30px;gap:12px;list-style:none;padding:18px 20px}.dkx-pce__structured>summary::-webkit-details-marker{display:none}.dkx-pce__structured>summary strong{color:#fff;text-transform:uppercase}.dkx-pce__structured>summary span{color:#9eb2c0;font-size:12px}.dkx-pce__structured>summary i{color:#ffc044;font-size:24px;font-style:normal}.dkx-pce__structured[open]>summary i{transform:rotate(45deg)}.dkx-pce__structured-body{padding:0 18px 18px}@media(max-width:782px){.dkx-pce__visual{padding:12px}.dkx-pce__visual-head{align-items:stretch;flex-direction:column}.dkx-pce__snapshot{height:640px}.dkx-pce__structured>summary{grid-template-columns:1fr 30px}.dkx-pce__structured>summary span{display:none}}';
+	wp_add_inline_style( 'dkx-page-content-editor', $visual_css );
+	if ( $admin_post_id && function_exists( 'dkxv4_page_uses_locked_layout' ) && dkxv4_page_uses_locked_layout( $admin_post_id ) ) {
+		wp_add_inline_style( 'dkx-page-content-editor', '#postdivrich{display:none!important}#dkx-page-content{margin-top:18px}' );
+	}
 	$js = "document.addEventListener('click',function(e){var root=e.target.closest('[data-dkx-page-content-editor]');if(!root)return;if(e.target.matches('[data-dkx-expand]'))root.querySelectorAll('details').forEach(function(d){d.open=true});if(e.target.matches('[data-dkx-collapse]'))root.querySelectorAll('details').forEach(function(d){d.open=false});if(e.target.matches('[data-dkx-reset]')){var field=e.target.closest('label').querySelector('[data-default]');field.value=field.dataset.default;field.dispatchEvent(new Event('change',{bubbles:true}));}});";
 	wp_add_inline_script( 'jquery-core', $js, 'after' );
 }

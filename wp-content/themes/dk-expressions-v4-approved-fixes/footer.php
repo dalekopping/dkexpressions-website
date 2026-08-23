@@ -16,7 +16,7 @@
 
 		<section class="dk-footer-brand-block">
 			<a class="dk-footer-logo" href="<?php echo esc_url( home_url( '/home/' ) ); ?>">
-				<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+				<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" data-dkx-global-media="logo">
 			</a>
 			<p><?php echo esc_html( dkxv4_registered_slogan( dkxv4_content( 'footer_tagline' ) ) ); ?></p>
 			<a class="dk-footer-project-btn" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start Your Project ↗</a>

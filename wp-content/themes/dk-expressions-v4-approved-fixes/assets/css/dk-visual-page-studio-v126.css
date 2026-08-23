@@ -1,0 +1,333 @@
+.dkx-vps {
+	--dk-blue: #35b8ff;
+	--dk-gold: #ffc247;
+	--dk-purple: #9c72ff;
+	--dk-red: #ff4052;
+	--dk-aqua: #25d7c5;
+	--dk-ink: #02080d;
+	--dk-panel: #07131d;
+	--dk-line: #163e57;
+	box-sizing: border-box;
+	color: #eaf5fc;
+	font-family: Inter, Arial, sans-serif;
+	margin: 18px 18px 0 0;
+}
+
+.dkx-vps *,
+.dkx-vps *::before,
+.dkx-vps *::after {
+	box-sizing: border-box;
+}
+
+.dkx-vps__header {
+	align-items: center;
+	background: linear-gradient(120deg, #071a29 0%, #040a10 58%, #170f24 100%);
+	border: 1px solid var(--dk-line);
+	display: flex;
+	gap: 32px;
+	justify-content: space-between;
+	min-height: 132px;
+	padding: 26px 30px;
+}
+
+.dkx-vps__header span {
+	color: var(--dk-blue);
+	display: block;
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: .2em;
+}
+
+.dkx-vps__header h1 {
+	color: #fff;
+	font-size: clamp(26px, 3vw, 42px);
+	font-weight: 950;
+	letter-spacing: -.045em;
+	line-height: .95;
+	margin: 9px 0 8px;
+	text-transform: uppercase;
+}
+
+.dkx-vps__header p {
+	color: #9eb4c2;
+	font-size: 13px;
+	line-height: 1.55;
+	margin: 0;
+	max-width: 760px;
+}
+
+.dkx-vps__header-actions {
+	display: flex;
+	flex: 0 0 auto;
+	flex-wrap: wrap;
+	gap: 9px;
+	justify-content: flex-end;
+}
+
+.dkx-vps .button {
+	border-radius: 0;
+	font-weight: 800;
+}
+
+.dkx-vps .button-primary,
+.dkx-vps .button-primary:focus,
+.dkx-vps .button-primary:hover {
+	background: var(--dk-blue);
+	border-color: var(--dk-blue);
+	color: #00111c;
+}
+
+.dkx-vps .button-primary.is-dirty {
+	background: var(--dk-gold);
+	border-color: var(--dk-gold);
+}
+
+.dkx-vps__workspace {
+	background: var(--dk-ink);
+	border: 1px solid var(--dk-line);
+	border-top: 0;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 340px;
+	min-height: calc(100vh - 220px);
+}
+
+.dkx-vps__preview {
+	min-width: 0;
+	padding: 18px;
+}
+
+.dkx-vps__viewport {
+	align-items: center;
+	background: #091722;
+	border: 1px solid var(--dk-line);
+	display: flex;
+	gap: 2px;
+	margin-bottom: 12px;
+	padding: 7px;
+}
+
+.dkx-vps__viewport button {
+	background: transparent;
+	border: 0;
+	color: #91a8b8;
+	cursor: pointer;
+	font-size: 11px;
+	font-weight: 900;
+	letter-spacing: .08em;
+	padding: 10px 13px;
+	text-transform: uppercase;
+}
+
+.dkx-vps__viewport button.is-active {
+	background: var(--dk-blue);
+	color: #00111c;
+}
+
+.dkx-vps__viewport [data-dkx-refresh] {
+	margin-left: auto;
+}
+
+.dkx-vps__frame-shell {
+	background: #0b1116;
+	border: 1px solid #23516d;
+	height: calc(100vh - 300px);
+	margin: 0 auto;
+	min-height: 620px;
+	overflow: hidden;
+	transition: width .25s ease;
+	width: 100%;
+}
+
+.dkx-vps__frame-shell.is-tablet {
+	width: min(820px, 100%);
+}
+
+.dkx-vps__frame-shell.is-mobile {
+	width: min(430px, 100%);
+}
+
+.dkx-vps__frame-shell iframe {
+	background: #02080d;
+	border: 0;
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.dkx-vps__inspector {
+	background: #061019;
+	border-left: 1px solid var(--dk-line);
+	padding: 18px;
+}
+
+.dkx-vps__inspector section {
+	border: 1px solid var(--dk-line);
+	margin-bottom: 12px;
+	padding: 18px;
+}
+
+.dkx-vps__status {
+	background: #071a27;
+	border-left: 4px solid var(--dk-blue) !important;
+}
+
+.dkx-vps__status[data-state="dirty"] {
+	border-left-color: var(--dk-gold) !important;
+}
+
+.dkx-vps__status[data-state="saved"] {
+	border-left-color: var(--dk-aqua) !important;
+}
+
+.dkx-vps__status[data-state="error"] {
+	border-left-color: var(--dk-red) !important;
+}
+
+.dkx-vps__status strong,
+.dkx-vps__status span {
+	display: block;
+}
+
+.dkx-vps__status strong {
+	color: #fff;
+	font-size: 15px;
+}
+
+.dkx-vps__status span {
+	color: #9eb4c2;
+	font-size: 12px;
+	line-height: 1.5;
+	margin-top: 5px;
+}
+
+.dkx-vps__selection {
+	background: linear-gradient(145deg, #0a1721, #130d1f);
+}
+
+.dkx-vps__selection > span {
+	color: var(--dk-purple);
+	font-size: 10px;
+	font-weight: 900;
+	letter-spacing: .18em;
+}
+
+.dkx-vps__selection h2,
+.dkx-vps__instructions h2,
+.dkx-vps__sources h2 {
+	color: #fff;
+	font-size: 16px;
+	font-weight: 900;
+	letter-spacing: -.02em;
+	margin: 9px 0;
+}
+
+.dkx-vps__selection p,
+.dkx-vps__instructions p,
+.dkx-vps__sources p,
+.dkx-vps__instructions li {
+	color: #9eb4c2;
+	font-size: 12px;
+	line-height: 1.6;
+}
+
+.dkx-vps__selection-actions {
+	display: grid;
+	gap: 8px;
+	margin-top: 15px;
+}
+
+.dkx-vps__instructions ol {
+	margin: 12px 0 16px 20px;
+}
+
+.dkx-vps__sources div {
+	display: grid;
+	gap: 7px;
+	margin-top: 14px;
+}
+
+.dkx-vps__sources a {
+	background: #091722;
+	border: 1px solid #21465e;
+	color: #eaf5fc;
+	font-size: 12px;
+	font-weight: 800;
+	padding: 11px 12px;
+	text-decoration: none;
+}
+
+.dkx-vps__sources a span {
+	color: var(--dk-gold);
+	float: right;
+}
+
+@media (max-width: 1100px) {
+	.dkx-vps__header {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+
+	.dkx-vps__header-actions {
+		justify-content: flex-start;
+	}
+
+	.dkx-vps__workspace {
+		grid-template-columns: 1fr;
+	}
+
+	.dkx-vps__inspector {
+		border-left: 0;
+		border-top: 1px solid var(--dk-line);
+		display: grid;
+		gap: 12px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.dkx-vps__inspector section {
+		margin: 0;
+	}
+}
+
+@media (max-width: 782px) {
+	.dkx-vps {
+		margin: 10px 10px 0 0;
+	}
+
+	.dkx-vps__header,
+	.dkx-vps__preview,
+	.dkx-vps__inspector {
+		padding: 14px;
+	}
+
+	.dkx-vps__header-actions,
+	.dkx-vps__header-actions .button {
+		width: 100%;
+	}
+
+	.dkx-vps__header-actions .button {
+		justify-content: center;
+		text-align: center;
+	}
+
+	.dkx-vps__viewport {
+		flex-wrap: wrap;
+	}
+
+	.dkx-vps__viewport button {
+		flex: 1 1 40%;
+	}
+
+	.dkx-vps__viewport [data-dkx-refresh] {
+		margin-left: 0;
+	}
+
+	.dkx-vps__frame-shell {
+		height: 680px;
+		min-height: 680px;
+	}
+
+	.dkx-vps__inspector {
+		grid-template-columns: 1fr;
+	}
+}
+
