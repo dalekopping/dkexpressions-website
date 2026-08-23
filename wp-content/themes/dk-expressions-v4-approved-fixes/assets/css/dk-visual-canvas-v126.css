@@ -79,6 +79,30 @@ body.dkx-visual-editing main [contenteditable="true"] {
 	min-width: 20px;
 }
 
+body.dkx-visual-editing main h1,
+body.dkx-visual-editing main h2,
+body.dkx-visual-editing main h3,
+body.dkx-visual-editing main h4,
+body.dkx-visual-editing main h5,
+body.dkx-visual-editing main h6,
+body.dkx-visual-editing main p,
+body.dkx-visual-editing main li,
+body.dkx-visual-editing main blockquote,
+body.dkx-visual-editing main figcaption,
+body.dkx-visual-editing main a,
+body.dkx-visual-editing main button,
+body.dkx-visual-editing main label,
+body.dkx-visual-editing main img,
+body.dkx-visual-editing main video {
+	touch-action: manipulation;
+}
+
+@media (pointer: coarse) {
+	body.dkx-visual-editing::before {
+		content: "DK VISUAL EDITOR · TAP TEXT OR MEDIA";
+	}
+}
+
 body.dkx-visual-editing main a,
 body.dkx-visual-editing main button,
 body.dkx-visual-editing main input,
