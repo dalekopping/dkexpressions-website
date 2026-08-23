@@ -34,7 +34,7 @@ $menu_items = array(
 <a class="screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'dk-expressions-v4-fixes' ); ?></a>
 <header class="dk-header" id="top">
 	<a class="dk-brand" href="<?php echo esc_url( home_url( '/home/' ) ); ?>" aria-label="<?php esc_attr_e( 'DK Expressions home', 'dk-expressions-v4-fixes' ); ?>">
-		<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+		<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" data-dkx-global-media="logo">
 	</a>
 	<nav class="dk-nav" id="dk-nav" aria-label="<?php esc_attr_e( 'Main navigation', 'dk-expressions-v4-fixes' ); ?>">
 		<ul class="dk-nav-menu">
