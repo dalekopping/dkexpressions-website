@@ -217,11 +217,13 @@ function dkxv4_render_visual_editor_page() {
 					<p data-dkx-selection-help>Edit text directly on the canvas.</p>
 					<div class="dkx-vps__text-editor" data-dkx-text-editor hidden>
 						<label for="dkx-vps-text-value">Edit selected text</label>
-						<textarea id="dkx-vps-text-value" data-dkx-text-value rows="5" autocapitalize="sentences" enterkeyhint="done"></textarea>
+						<textarea id="dkx-vps-text-value" data-dkx-text-value rows="3" autocapitalize="sentences" enterkeyhint="done"></textarea>
 						<button type="button" class="button button-primary" data-dkx-apply-text>Apply text to canvas</button>
 					</div>
 					<div class="dkx-vps__selection-actions">
 						<button type="button" class="button button-primary" data-dkx-replace-media hidden>Choose replacement media</button>
+						<button type="button" class="button dkx-vps__add-media" data-dkx-add-media>Add image or video here</button>
+						<button type="button" class="button dkx-vps__remove-media" data-dkx-remove-insert hidden>Remove added media</button>
 						<button type="button" class="button" data-dkx-reset-selection>Restore this element</button>
 						<button type="button" class="button button-primary dkx-vps__mobile-save" data-dkx-save>Save page changes</button>
 					</div>
@@ -264,8 +266,8 @@ function dkxv4_visual_studio_admin_assets( $hook ) {
 		return;
 	}
 	wp_enqueue_media();
-	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.27.0' );
-	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.27.0', true );
+	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.28.0' );
+	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.28.0', true );
 	wp_localize_script(
 		'dkx-visual-page-studio',
 		'DKXVisualStudio',
@@ -298,7 +300,8 @@ function dkxv4_visual_canvas_assets() {
 	if ( ! $is_editor && ! $overrides ) {
 		return;
 	}
-	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.27.0', true );
+	wp_enqueue_style( 'dkx-visual-inserts', get_stylesheet_directory_uri() . '/assets/css/dk-visual-inserts-v128.css', array(), '1.28.0' );
+	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.28.0', true );
 	wp_add_inline_script(
 		'dkx-visual-canvas',
 		'window.DKXVisualCanvas=' . wp_json_encode(
@@ -311,7 +314,7 @@ function dkxv4_visual_canvas_assets() {
 		'before'
 	);
 	if ( $is_editor ) {
-		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.27.0' );
+		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.28.0' );
 		nocache_headers();
 	}
 }
@@ -378,12 +381,35 @@ function dkxv4_save_visual_editor() {
 	$overrides     = array();
 	if ( is_array( $raw_overrides ) ) {
 		foreach ( array_slice( $raw_overrides, 0, 500 ) as $override ) {
-			$type = sanitize_key( $override['type'] ?? '' );
-			$path = dkxv4_visual_sanitize_path( $override['path'] ?? '' );
-			if ( ! $path || ! in_array( $type, array( 'text', 'media' ), true ) ) {
+		$type = sanitize_key( $override['type'] ?? '' );
+		if ( ! in_array( $type, array( 'text', 'media', 'insert' ), true ) ) {
+			continue;
+		}
+		if ( 'insert' === $type ) {
+			$id          = sanitize_key( $override['id'] ?? '' );
+			$anchor_path = dkxv4_visual_sanitize_path( $override['anchorPath'] ?? '' );
+			$url         = esc_url_raw( (string) ( $override['url'] ?? '' ) );
+			$mime        = sanitize_mime_type( (string) ( $override['mime'] ?? '' ) );
+			if ( ! $id || ! $anchor_path || ! $url || ( 0 !== strpos( $mime, 'image/' ) && 0 !== strpos( $mime, 'video/' ) ) ) {
 				continue;
 			}
-			$clean = array( 'type' => $type, 'path' => $path );
+			$overrides[] = array(
+				'type'         => 'insert',
+				'id'           => substr( $id, 0, 80 ),
+				'anchorPath'   => $anchor_path,
+				'position'     => 'after',
+				'attachmentId' => absint( $override['attachmentId'] ?? 0 ),
+				'url'          => $url,
+				'mime'         => $mime,
+				'alt'          => sanitize_text_field( (string) ( $override['alt'] ?? '' ) ),
+			);
+			continue;
+		}
+		$path = dkxv4_visual_sanitize_path( $override['path'] ?? '' );
+		if ( ! $path ) {
+			continue;
+		}
+		$clean = array( 'type' => $type, 'path' => $path );
 			if ( 'text' === $type ) {
 				$clean['originalValue'] = sanitize_textarea_field( (string) ( $override['originalValue'] ?? '' ) );
 				$clean['value'] = wp_kses_post( (string) ( $override['value'] ?? '' ) );
