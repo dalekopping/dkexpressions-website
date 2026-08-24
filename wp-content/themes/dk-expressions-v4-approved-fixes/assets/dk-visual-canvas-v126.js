@@ -54,15 +54,22 @@
 		}
 		if (type === 'media') {
 			var source = element.tagName === 'VIDEO' ? element.querySelector('source') : null;
+			var background = element.tagName !== 'IMG' && element.tagName !== 'VIDEO' ? window.getComputedStyle(element).backgroundImage : '';
 			originals[path] = {
 				type: 'media',
-				url: source ? source.getAttribute('src') : element.getAttribute('src'),
+				url: source ? source.getAttribute('src') : (element.tagName === 'IMG' ? element.getAttribute('src') : backgroundUrl(background)),
 				alt: element.getAttribute('alt') || '',
-				mime: source ? source.getAttribute('type') || '' : ''
+				mime: source ? source.getAttribute('type') || '' : '',
+				background: background
 			};
 			return;
 		}
 		originals[path] = { type: 'text', value: element.innerHTML, plainValue: element.innerText };
+	}
+
+	function backgroundUrl(background) {
+		var match = String(background || '').match(/url\(["']?([^"')]+)["']?\)/i);
+		return match ? match[1] : '';
 	}
 
 	function applyMedia(element, item) {
@@ -94,7 +101,11 @@
 			} catch (error) {
 				// A visual refresh will load it if this browser blocks reload here.
 			}
+			return;
 		}
+		var background = window.getComputedStyle(element).backgroundImage || '';
+		var replacement = 'url("' + String(item.url).replace(/"/g, '%22') + '")';
+		element.style.backgroundImage = /url\([^)]+\)/i.test(background) ? background.replace(/url\([^)]+\)/i, replacement) : replacement;
 	}
 
 	function applyOverride(item) {
@@ -119,7 +130,7 @@
 		}
 		if (item.type === 'media' && item.originalUrl) {
 			var currentSource = element.tagName === 'VIDEO' ? element.querySelector('source') : null;
-			var currentUrl = currentSource ? currentSource.getAttribute('src') : element.getAttribute('src');
+			var currentUrl = currentSource ? currentSource.getAttribute('src') : (element.tagName === 'IMG' ? element.getAttribute('src') : backgroundUrl(window.getComputedStyle(element).backgroundImage));
 			if (currentUrl && currentUrl !== item.originalUrl) {
 				return;
 			}
@@ -130,6 +141,51 @@
 		} else if (item.type === 'media') {
 			applyMedia(element, item);
 		}
+	}
+
+	function createInsertedMedia(item) {
+		if (!item || !item.id || !item.anchorPath || !item.url) {
+			return null;
+		}
+		var existing = document.querySelector('[data-dkx-visual-insert-id="' + cssEscape(item.id) + '"]');
+		if (existing) {
+			return existing.querySelector('img,video');
+		}
+		var anchor;
+		try {
+			anchor = document.querySelector(item.anchorPath);
+		} catch (error) {
+			return null;
+		}
+		if (!anchor || !anchor.closest('main')) {
+			return null;
+		}
+		var figure = document.createElement('figure');
+		figure.className = 'dkx-visual-inserted-media';
+		figure.setAttribute('data-dkx-visual-insert-id', item.id);
+		var media;
+		if (String(item.mime || '').indexOf('video/') === 0) {
+			media = document.createElement('video');
+			media.controls = true;
+			media.playsInline = true;
+			media.preload = 'metadata';
+			var source = document.createElement('source');
+			source.src = item.url;
+			source.type = item.mime;
+			media.appendChild(source);
+		} else {
+			media = document.createElement('img');
+			media.src = item.url;
+			media.alt = item.alt || '';
+			media.loading = 'lazy';
+		}
+		figure.appendChild(media);
+		anchor.insertAdjacentElement('afterend', figure);
+		return media;
+	}
+
+	function applyInsert(item) {
+		createInsertedMedia(item);
 	}
 
 	function post(message) {
@@ -191,7 +247,41 @@
 			return null;
 		}
 		var media = start.closest('img,video');
+		if (!media) {
+			var visual = start.closest('figure,picture');
+			if (visual && !start.closest('figcaption')) {
+				media = visual.querySelector('img,video');
+			}
+		}
 		return media && (media.closest('main') || media.hasAttribute('data-dkx-global-media')) ? media : null;
+	}
+
+	function backgroundTarget(start) {
+		var current = start && start.nodeType === 1 ? start : null;
+		while (current && current !== document.body) {
+			if (current.closest('main') && backgroundUrl(window.getComputedStyle(current).backgroundImage)) {
+				return current;
+			}
+			if (current.tagName === 'MAIN') {
+				break;
+			}
+			current = current.parentElement;
+		}
+		return null;
+	}
+
+	function insertionTarget(element) {
+		if (!element || !element.closest('main')) {
+			return null;
+		}
+		var inserted = element.closest('[data-dkx-visual-insert-id]');
+		if (inserted) {
+			return inserted;
+		}
+		if (element.tagName === 'IMG' || element.tagName === 'VIDEO') {
+			return element.closest('figure') || element;
+		}
+		return element.closest('h1,h2,h3,h4,h5,h6,p,blockquote,li,figure,article,section') || element;
 	}
 
 	function clearSelection() {
@@ -211,6 +301,9 @@
 		selected.classList.add('dkx-visual-selected');
 		var path = elementPath(element);
 		captureOriginal(element, path, type);
+		var insertAnchor = insertionTarget(element);
+		var insertId = element.closest('[data-dkx-visual-insert-id]') ? element.closest('[data-dkx-visual-insert-id]').getAttribute('data-dkx-visual-insert-id') : '';
+		var backgroundMedia = type === 'media' && element.tagName !== 'IMG' && element.tagName !== 'VIDEO';
 		var editValue = '';
 		if (type === 'text') {
 			var nodes = textNodes(element);
@@ -228,14 +321,16 @@
 			elementType: type,
 			mediaKind: type === 'media' ? (element.tagName === 'VIDEO' ? 'video' : 'image') : '',
 			path: path,
-			label: type === 'media' ? (element.tagName === 'VIDEO' ? 'Video' : 'Image') : element.tagName.toLowerCase() + ' text',
+			label: type === 'media' ? (backgroundMedia ? 'Background image' : (element.tagName === 'VIDEO' ? 'Video' : 'Image')) : element.tagName.toLowerCase() + ' text',
 			fieldKey: element.getAttribute('data-dkx-field') || '',
 			fieldPostId: parseInt(element.getAttribute('data-dkx-field-post') || config.postId || 0, 10),
 			globalMedia: element.getAttribute('data-dkx-global-media') || '',
 			current: type === 'text' ? element.innerText : originals[path],
 			originalCurrent: type === 'text' && originals[path] ? originals[path].plainValue : '',
 			editValue: editValue,
-			textNodeIndex: selectedTextNodeIndex
+			textNodeIndex: selectedTextNodeIndex,
+			insertAnchorPath: insertAnchor ? elementPath(insertAnchor) : '',
+			insertId: insertId
 		});
 	}
 
@@ -246,7 +341,8 @@
 		document.addEventListener('click', function (event) {
 			var media = mediaTarget(event.target);
 			var text = media ? null : textTarget(event.target);
-			if (!media && !text) {
+			var background = !media && !text ? backgroundTarget(event.target) : null;
+			if (!media && !text && !background) {
 				if (event.target.closest('a,button,input,select,textarea,form')) {
 					event.preventDefault();
 				}
@@ -254,7 +350,7 @@
 			}
 			event.preventDefault();
 			event.stopPropagation();
-			selectElement(media || text, media ? 'media' : 'text', event);
+			selectElement(media || text || background, media || background ? 'media' : 'text', event);
 		}, true);
 
 		document.addEventListener('submit', function (event) {
@@ -293,7 +389,25 @@
 				}
 				applyMedia(target, event.data.media);
 				selectElement(target, 'media');
-				post({ type: 'dkx-change', elementType: 'media', path: event.data.path, media: event.data.media, globalMedia: target.getAttribute('data-dkx-global-media') || '' });
+				var inserted = target.closest('[data-dkx-visual-insert-id]');
+				post({ type: 'dkx-change', elementType: 'media', path: event.data.path, media: event.data.media, globalMedia: target.getAttribute('data-dkx-global-media') || '', insertId: inserted ? inserted.getAttribute('data-dkx-visual-insert-id') : '' });
+			}
+			if (event.data.type === 'dkx-insert-media') {
+				var insertedMedia = createInsertedMedia(event.data.insert);
+				if (!insertedMedia) {
+					return;
+				}
+				post({ type: 'dkx-change', elementType: 'insert', insert: event.data.insert });
+				selectElement(insertedMedia, 'media');
+			}
+			if (event.data.type === 'dkx-remove-insert') {
+				var insertedFigure = document.querySelector('[data-dkx-visual-insert-id="' + cssEscape(event.data.id || '') + '"]');
+				if (insertedFigure) {
+					if (insertedFigure.contains(selected)) {
+						clearSelection();
+					}
+					insertedFigure.remove();
+				}
 			}
 			if (event.data.type === 'dkx-set-text') {
 				var textElement;
@@ -349,7 +463,8 @@
 	}
 
 	function start() {
-		overrides.forEach(applyOverride);
+		overrides.filter(function (item) { return item && item.type === 'insert'; }).forEach(applyInsert);
+		overrides.filter(function (item) { return !item || item.type !== 'insert'; }).forEach(applyOverride);
 		if (config.editor) {
 			initialiseEditor();
 		}
