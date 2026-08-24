@@ -15,6 +15,8 @@
 	var selectionHelp = root.querySelector('[data-dkx-selection-help]');
 	var replaceMediaButton = root.querySelector('[data-dkx-replace-media]');
 	var addMediaButton = root.querySelector('[data-dkx-add-media]');
+	var uploadMediaButton = root.querySelector('[data-dkx-upload-media]');
+	var uploadInput = root.querySelector('[data-dkx-upload-input]');
 	var removeInsertButton = root.querySelector('[data-dkx-remove-insert]');
 	var resetButton = root.querySelector('[data-dkx-reset-selection]');
 	var textEditor = root.querySelector('[data-dkx-text-editor]');
@@ -59,11 +61,13 @@
 		root.classList.add('has-selection');
 		selectionLabel.textContent = data.label || 'Page element';
 		addMediaButton.hidden = data.elementType === 'media' || !data.insertAnchorPath;
+		uploadMediaButton.hidden = !data.insertAnchorPath;
 		removeInsertButton.hidden = !data.insertId;
 		resetButton.hidden = !!data.insertId;
 		if (data.elementType === 'media') {
 			selectionHelp.textContent = data.insertId ? 'Replace or remove this added media.' : (data.mediaSlot ? 'Choose an image or video. It will replace the numbered placeholder inside this exact frame.' : (data.globalMedia === 'logo' ? 'This is the global DK logo. Replacing it updates the header and footer everywhere.' : 'Upload or choose a replacement from the WordPress Media Library.'));
 			replaceMediaButton.textContent = data.mediaSlot ? 'Choose image or video for this frame' : 'Choose replacement media';
+			uploadMediaButton.textContent = data.mediaSlot ? 'Upload into this exact frame' : 'Upload replacement media';
 			replaceMediaButton.hidden = false;
 			textEditor.hidden = true;
 		} else {
@@ -71,6 +75,7 @@
 			replaceMediaButton.hidden = true;
 			textEditor.hidden = false;
 			textInput.value = typeof data.editValue === 'string' ? data.editValue : (data.current || '');
+			uploadMediaButton.textContent = 'Upload and add image or video here';
 		}
 	}
 
@@ -162,12 +167,41 @@
 		};
 	}
 
+	function placeMedia(media, selection) {
+		selection = selection || currentSelection;
+		if (!selection) {
+			return;
+		}
+		if (selection.elementType === 'media') {
+			sendToCanvas({ type: 'dkx-replace-media', path: selection.path, media: media });
+			return;
+		}
+		var insertId = 'media-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+		sendToCanvas({
+			type: 'dkx-insert-media',
+			insert: {
+				type: 'insert',
+				id: insertId,
+				anchorPath: selection.insertAnchorPath,
+				position: 'after',
+				attachmentId: media.attachmentId,
+				url: media.url,
+				mime: media.mime,
+				alt: media.alt
+			}
+		});
+	}
+
 	function openMediaLibrary(mode) {
 		if (!currentSelection || !window.wp || !wp.media) {
 			setStatus('error', 'Choose a position first', 'Tap text, an image, a video or an empty background area on the canvas.');
 			return;
 		}
 		var replace = mode === 'replace';
+		var selection = currentSelection;
+		if (wp.media.model && wp.media.model.settings && wp.media.model.settings.post) {
+			wp.media.model.settings.post.id = parseInt(config.postId || 0, 10);
+		}
 		var options = {
 			title: replace ? (currentSelection.globalMedia === 'logo' ? 'Choose the global DK logo' : 'Upload or choose replacement media') : 'Upload or choose an image or video',
 			button: { text: replace ? 'Use this replacement' : 'Add this media' },
@@ -184,26 +218,53 @@
 				setStatus('error', 'Unsupported file', 'Choose an image or video file from the Media Library.');
 				return;
 			}
-			if (replace) {
-				sendToCanvas({ type: 'dkx-replace-media', path: currentSelection.path, media: media });
-				return;
-			}
-			var insertId = 'media-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
-			sendToCanvas({
-				type: 'dkx-insert-media',
-				insert: {
-					type: 'insert',
-					id: insertId,
-					anchorPath: currentSelection.insertAnchorPath,
-					position: 'after',
-					attachmentId: media.attachmentId,
-					url: media.url,
-					mime: media.mime,
-					alt: media.alt
-				}
-			});
+			placeMedia(media, selection);
 		});
 		mediaFrame.open();
+	}
+
+	function uploadMediaFile(file) {
+		if (!file || !currentSelection) {
+			return;
+		}
+		var selection = currentSelection;
+		var maxBytes = parseInt(config.maxUploadBytes || 0, 10);
+		if (maxBytes && file.size > maxBytes) {
+			setStatus('error', 'File is too large', 'Choose a file smaller than ' + (config.maxUploadLabel || 'the WordPress upload limit') + '.');
+			return;
+		}
+		if (file.type && file.type.indexOf('image/') !== 0 && file.type.indexOf('video/') !== 0) {
+			setStatus('error', 'Unsupported file', 'Choose an image or video file.');
+			return;
+		}
+		var form = new FormData();
+		form.append('action', 'dkxv4_upload_visual_media');
+		form.append('nonce', config.nonce);
+		form.append('postId', config.postId);
+		form.append('mediaFile', file, file.name);
+		uploadMediaButton.disabled = true;
+		setStatus('saving', 'Uploading ' + file.name, 'Keep this screen open while WordPress attaches the file to this post or page.');
+		$.ajax({
+			url: config.ajaxUrl,
+			method: 'POST',
+			data: form,
+			processData: false,
+			contentType: false,
+			dataType: 'json'
+		}).done(function (response) {
+			if (!response || !response.success || !response.data || !response.data.media) {
+				setStatus('error', 'Upload failed', response && response.data && response.data.message ? response.data.message : 'WordPress could not upload this file.');
+				return;
+			}
+			placeMedia(response.data.media, selection);
+			setStatus('dirty', 'Upload placed', 'The file is attached to this post or page. Save the frontend changes to finish.');
+		}).fail(function (xhr) {
+			var message = xhr && xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message ? xhr.responseJSON.data.message : 'The server rejected this upload. Check the file size and type.';
+			setStatus('error', 'Upload failed', message);
+		}).always(function () {
+			uploadMediaButton.disabled = false;
+			uploadInput.value = '';
+		});
 	}
 
 	root.addEventListener('click', function (event) {
@@ -239,6 +300,22 @@
 
 		if (event.target.closest('[data-dkx-add-media]')) {
 			openMediaLibrary('insert');
+			return;
+		}
+
+		if (event.target.closest('[data-dkx-upload-media]')) {
+			if (!currentSelection) {
+				return;
+			}
+			if (currentSelection.globalMedia === 'logo' || currentSelection.mediaKind === 'image') {
+				uploadInput.accept = 'image/*';
+			} else if (currentSelection.mediaKind === 'video') {
+				uploadInput.accept = 'video/*';
+			} else {
+				uploadInput.accept = 'image/*,video/*';
+			}
+			uploadInput.value = '';
+			uploadInput.click();
 			return;
 		}
 
@@ -280,6 +357,10 @@
 			}
 			markDirty();
 		}
+	});
+
+	uploadInput.addEventListener('change', function () {
+		uploadMediaFile(uploadInput.files && uploadInput.files[0] ? uploadInput.files[0] : null);
 	});
 
 	function saveChanges() {
