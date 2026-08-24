@@ -58,11 +58,12 @@
 		selectionPanel.hidden = false;
 		root.classList.add('has-selection');
 		selectionLabel.textContent = data.label || 'Page element';
-		addMediaButton.hidden = !data.insertAnchorPath;
+		addMediaButton.hidden = data.elementType === 'media' || !data.insertAnchorPath;
 		removeInsertButton.hidden = !data.insertId;
 		resetButton.hidden = !!data.insertId;
 		if (data.elementType === 'media') {
-			selectionHelp.textContent = data.insertId ? 'Replace or remove this added media.' : (data.globalMedia === 'logo' ? 'This is the global DK logo. Replacing it updates the header and footer everywhere.' : 'Upload or choose a replacement from the WordPress Media Library.');
+			selectionHelp.textContent = data.insertId ? 'Replace or remove this added media.' : (data.mediaSlot ? 'Choose an image or video. It will replace the numbered placeholder inside this exact frame.' : (data.globalMedia === 'logo' ? 'This is the global DK logo. Replacing it updates the header and footer everywhere.' : 'Upload or choose a replacement from the WordPress Media Library.'));
+			replaceMediaButton.textContent = data.mediaSlot ? 'Choose image or video for this frame' : 'Choose replacement media';
 			replaceMediaButton.hidden = false;
 			textEditor.hidden = true;
 		} else {
@@ -172,7 +173,7 @@
 			button: { text: replace ? 'Use this replacement' : 'Add this media' },
 			multiple: false
 		};
-		if (replace) {
+		if (replace && currentSelection.mediaKind !== 'any') {
 			options.library = { type: currentSelection.globalMedia === 'logo' ? 'image' : (currentSelection.mediaKind || 'image') };
 		}
 		var mediaFrame = wp.media(options);
