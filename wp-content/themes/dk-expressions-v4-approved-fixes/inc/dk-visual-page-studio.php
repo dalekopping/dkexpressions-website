@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function dkxv4_visual_page_supported( $post_id ) {
 	$post_id = absint( $post_id );
-	return $post_id && 'page' === get_post_type( $post_id );
+	return $post_id && in_array( get_post_type( $post_id ), array( 'page', 'post' ), true );
 }
 
 /**
@@ -42,18 +42,19 @@ add_filter( 'use_block_editor_for_post', 'dkxv4_locked_page_block_editor', 20, 2
  * Put the visual editor beside the normal Edit link in the Pages list.
  */
 function dkxv4_visual_page_row_action( $actions, $post ) {
-	if ( $post instanceof WP_Post && 'page' === $post->post_type && current_user_can( 'edit_post', $post->ID ) ) {
+	if ( $post instanceof WP_Post && in_array( $post->post_type, array( 'page', 'post' ), true ) && current_user_can( 'edit_post', $post->ID ) ) {
 		$actions['dkx_visual_edit'] = '<a href="' . esc_url( dkxv4_visual_editor_url( $post->ID ) ) . '">DK Visual Editor</a>';
 	}
 	return $actions;
 }
 add_filter( 'page_row_actions', 'dkxv4_visual_page_row_action', 20, 2 );
+add_filter( 'post_row_actions', 'dkxv4_visual_page_row_action', 20, 2 );
 
 /**
  * Direct visual-edit shortcut while viewing a Page on the frontend.
  */
 function dkxv4_visual_admin_bar_link( $admin_bar ) {
-	if ( is_admin() || ! is_singular( 'page' ) ) {
+	if ( is_admin() || ! is_singular( array( 'page', 'post' ) ) ) {
 		return;
 	}
 	$post_id = get_queried_object_id();
@@ -173,14 +174,14 @@ function dkxv4_render_visual_editor_page() {
 	$post       = get_post( $post_id );
 	$page_key   = dkxv4_page_content_key( $post_id );
 	$manifest   = dkxv4_page_content_manifest();
-	$page_label = $manifest[ $page_key ]['label'] ?? get_the_title( $post_id );
+	$page_label = 'page' === $post->post_type && isset( $manifest[ $page_key ]['label'] ) ? $manifest[ $page_key ]['label'] : get_the_title( $post_id );
 	?>
 	<div class="wrap dkx-vps" data-dkx-visual-studio>
 		<header class="dkx-vps__header">
 			<div>
 				<span>DK / VISUAL PAGE STUDIO</span>
 				<h1><?php echo esc_html( $page_label ); ?></h1>
-				<p>The canvas is the real saved frontend. Click or tap visible text, images and videos to edit them on desktop, tablet or mobile.</p>
+				<p>The canvas is the real saved frontend. Click or tap visible text, images and videos to edit a post or page on desktop, tablet or mobile.</p>
 			</div>
 			<div class="dkx-vps__header-actions">
 				<a class="button" href="<?php echo esc_url( get_edit_post_link( $post_id, 'raw' ) ); ?>">Standard page settings</a>
@@ -221,6 +222,8 @@ function dkxv4_render_visual_editor_page() {
 						<button type="button" class="button button-primary" data-dkx-apply-text>Apply text to canvas</button>
 					</div>
 					<div class="dkx-vps__selection-actions">
+						<button type="button" class="button button-primary dkx-vps__upload-media" data-dkx-upload-media>Upload new image or video</button>
+						<input type="file" data-dkx-upload-input accept="image/*,video/*" hidden>
 						<button type="button" class="button button-primary" data-dkx-replace-media hidden>Choose replacement media</button>
 						<button type="button" class="button dkx-vps__add-media" data-dkx-add-media>Add image or video here</button>
 						<button type="button" class="button dkx-vps__remove-media" data-dkx-remove-insert hidden>Remove added media</button>
@@ -266,8 +269,8 @@ function dkxv4_visual_studio_admin_assets( $hook ) {
 		return;
 	}
 	wp_enqueue_media();
-	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.29.0' );
-	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.29.0', true );
+	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.30.0' );
+	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.30.0', true );
 	wp_localize_script(
 		'dkx-visual-page-studio',
 		'DKXVisualStudio',
@@ -278,6 +281,8 @@ function dkxv4_visual_studio_admin_assets( $hook ) {
 			'canvasUrl'    => dkxv4_visual_canvas_url( $post_id ),
 			'overrides'    => dkxv4_visual_overrides( $post_id ),
 			'globalLogoId' => absint( get_option( 'dkxv4_visual_logo_id', 0 ) ),
+			'maxUploadBytes' => wp_max_upload_size(),
+			'maxUploadLabel' => size_format( wp_max_upload_size() ),
 		)
 	);
 }
@@ -288,7 +293,7 @@ add_action( 'admin_enqueue_scripts', 'dkxv4_visual_studio_admin_assets', 20 );
  * a signed visual-canvas request.
  */
 function dkxv4_visual_canvas_assets() {
-	if ( ! is_singular( 'page' ) ) {
+	if ( ! is_singular( array( 'page', 'post' ) ) ) {
 		return;
 	}
 	$post_id = get_queried_object_id();
@@ -300,8 +305,8 @@ function dkxv4_visual_canvas_assets() {
 	if ( ! $is_editor && ! $overrides ) {
 		return;
 	}
-	wp_enqueue_style( 'dkx-visual-inserts', get_stylesheet_directory_uri() . '/assets/css/dk-visual-inserts-v128.css', array(), '1.29.0' );
-	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.29.0', true );
+	wp_enqueue_style( 'dkx-visual-inserts', get_stylesheet_directory_uri() . '/assets/css/dk-visual-inserts-v128.css', array(), '1.30.0' );
+	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.30.0', true );
 	wp_add_inline_script(
 		'dkx-visual-canvas',
 		'window.DKXVisualCanvas=' . wp_json_encode(
@@ -314,7 +319,7 @@ function dkxv4_visual_canvas_assets() {
 		'before'
 	);
 	if ( $is_editor ) {
-		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.29.0' );
+		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.30.0' );
 		nocache_headers();
 	}
 }
@@ -324,7 +329,7 @@ add_action( 'wp_enqueue_scripts', 'dkxv4_visual_canvas_assets', 1400 );
  * Editor-only body marker.
  */
 function dkxv4_visual_canvas_body_class( $classes ) {
-	if ( is_singular( 'page' ) && dkxv4_is_visual_canvas_request() ) {
+	if ( is_singular( array( 'page', 'post' ) ) && dkxv4_is_visual_canvas_request() ) {
 		$classes[] = 'dkx-visual-canvas-active';
 	}
 	return $classes;
@@ -341,6 +346,48 @@ function dkxv4_visual_logo_override( $url ) {
 	return $logo ?: $url;
 }
 add_filter( 'dkx_logo_url', 'dkxv4_visual_logo_override', 20 );
+
+/**
+ * Upload new visual media from the custom editor and attach it to the current
+ * post or Page. This avoids the unreliable detached-upload state produced by
+ * the standard media modal on some mobile browsers.
+ */
+function dkxv4_upload_visual_media() {
+	$post_id = isset( $_POST['postId'] ) ? absint( wp_unslash( $_POST['postId'] ) ) : 0;
+	check_ajax_referer( 'dkxv4_visual_editor_' . $post_id, 'nonce' );
+	if ( ! dkxv4_visual_page_supported( $post_id ) || ! current_user_can( 'edit_post', $post_id ) || ! current_user_can( 'upload_files' ) ) {
+		wp_send_json_error( array( 'message' => 'Your WordPress account cannot upload files to this post or page.' ), 403 );
+	}
+	if ( empty( $_FILES['mediaFile'] ) || ! is_array( $_FILES['mediaFile'] ) ) {
+		wp_send_json_error( array( 'message' => 'No file reached WordPress. The server limit is ' . size_format( wp_max_upload_size() ) . '.' ), 400 );
+	}
+
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+
+	$attachment_id = media_handle_upload( 'mediaFile', $post_id, array(), array( 'test_form' => false ) );
+	if ( is_wp_error( $attachment_id ) ) {
+		wp_send_json_error( array( 'message' => $attachment_id->get_error_message() ), 400 );
+	}
+	$mime = (string) get_post_mime_type( $attachment_id );
+	if ( 0 !== strpos( $mime, 'image/' ) && 0 !== strpos( $mime, 'video/' ) ) {
+		wp_delete_attachment( $attachment_id, true );
+		wp_send_json_error( array( 'message' => 'Please upload an image or video file.' ), 400 );
+	}
+
+	wp_send_json_success(
+		array(
+			'media' => array(
+				'attachmentId' => absint( $attachment_id ),
+				'url'          => wp_get_attachment_url( $attachment_id ),
+				'mime'         => $mime,
+				'alt'          => get_post_meta( $attachment_id, '_wp_attachment_image_alt', true ) ?: get_the_title( $attachment_id ),
+			),
+		)
+	);
+}
+add_action( 'wp_ajax_dkxv4_upload_visual_media', 'dkxv4_upload_visual_media' );
 
 /**
  * Validate the selector path stored by the visual canvas.

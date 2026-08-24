@@ -304,6 +304,14 @@
 	color: var(--dk-aqua) !important;
 }
 
+.dkx-vps__upload-media,
+.dkx-vps__upload-media:focus,
+.dkx-vps__upload-media:hover {
+	background: var(--dk-gold) !important;
+	border-color: var(--dk-gold) !important;
+	color: #171003 !important;
+}
+
 .dkx-vps__remove-media {
 	border-color: var(--dk-red) !important;
 	color: var(--dk-red) !important;
