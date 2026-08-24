@@ -19,6 +19,10 @@
 	box-sizing: border-box;
 }
 
+.dkx-vps [hidden] {
+	display: none !important;
+}
+
 .dkx-vps__header {
 	align-items: center;
 	background: linear-gradient(120deg, #071a29 0%, #040a10 58%, #170f24 100%);
@@ -279,7 +283,7 @@
 	box-shadow: none;
 	color: #fff;
 	font: 600 16px/1.55 Inter, Arial, sans-serif;
-	min-height: 126px;
+	min-height: 78px;
 	padding: 12px;
 	resize: vertical;
 	width: 100%;
@@ -293,6 +297,16 @@
 
 .dkx-vps__mobile-save {
 	display: none !important;
+}
+
+.dkx-vps__add-media {
+	border-color: var(--dk-aqua) !important;
+	color: var(--dk-aqua) !important;
+}
+
+.dkx-vps__remove-media {
+	border-color: var(--dk-red) !important;
+	color: var(--dk-red) !important;
 }
 
 .dkx-vps__instructions ol {
@@ -372,22 +386,47 @@
 	.dkx-vps__header,
 	.dkx-vps__preview,
 	.dkx-vps__inspector {
-		padding: 10px;
+		padding: 6px;
 	}
 
 	.dkx-vps__header {
-		gap: 16px;
+		gap: 10px;
 		min-height: 0;
+		padding: 14px 10px;
 	}
 
-	.dkx-vps__header-actions,
-	.dkx-vps__header-actions .button {
+	.dkx-vps__header h1 {
+		font-size: 25px;
+		margin-block: 6px;
+	}
+
+	.dkx-vps__header p {
+		font-size: 11px;
+		line-height: 1.4;
+	}
+
+	.dkx-vps__header-actions {
+		display: grid;
+		gap: 6px;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		width: 100%;
 	}
 
 	.dkx-vps__header-actions .button {
+		align-items: center;
+		display: flex;
+		font-size: 11px;
 		justify-content: center;
+		line-height: 1.25;
+		min-height: 42px;
+		padding: 7px;
 		text-align: center;
+		white-space: normal;
+		width: 100%;
+	}
+
+	.dkx-vps__header-actions [data-dkx-save] {
+		grid-column: 1 / -1;
 	}
 
 	.dkx-vps__viewport {
@@ -396,7 +435,9 @@
 
 	.dkx-vps__viewport button {
 		flex: 1 1 40%;
+		font-size: 9px;
 		min-height: 44px;
+		padding: 8px 5px;
 	}
 
 	.dkx-vps__viewport [data-dkx-refresh] {
@@ -405,7 +446,14 @@
 
 	.dkx-vps__frame-shell {
 		height: calc(100svh - 190px);
-		min-height: 500px;
+		min-height: 430px;
+		overflow: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.dkx-vps__frame-shell.is-mobile iframe {
+		max-width: none;
+		width: 360px;
 	}
 
 	.dkx-vps__inspector {
@@ -413,16 +461,50 @@
 	}
 
 	.dkx-vps__selection:not([hidden]) {
-		bottom: 8px;
-		left: 8px;
-		max-height: 72vh;
-		right: 8px;
+		bottom: 4px;
+		left: 4px;
+		max-height: 58vh;
+		padding: 12px;
+		right: 4px;
+	}
+
+	.dkx-vps__selection h2 {
+		font-size: 14px;
+		margin: 7px 0;
+	}
+
+	.dkx-vps__selection p {
+		line-height: 1.4;
+		margin: 7px 0;
+	}
+
+	.dkx-vps__text-editor {
+		gap: 7px;
+		margin-top: 9px;
+		padding-top: 9px;
+	}
+
+	.dkx-vps__text-editor textarea {
+		font-size: 15px;
+		min-height: 72px;
+		padding: 9px;
+	}
+
+	.dkx-vps__selection-actions {
+		gap: 6px;
+		margin-top: 9px;
 	}
 
 	.dkx-vps__selection-actions .button,
 	.dkx-vps__text-editor .button {
-		min-height: 46px;
-		padding: 9px 12px;
+		font-size: 12px;
+		line-height: 1.2;
+		min-height: 42px;
+		padding: 7px 10px;
 		width: 100%;
+	}
+
+	.dkx-vps__instructions {
+		display: none;
 	}
 }
