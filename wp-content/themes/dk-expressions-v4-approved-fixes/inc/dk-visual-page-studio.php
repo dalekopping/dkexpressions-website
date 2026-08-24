@@ -266,8 +266,8 @@ function dkxv4_visual_studio_admin_assets( $hook ) {
 		return;
 	}
 	wp_enqueue_media();
-	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.28.0' );
-	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.28.0', true );
+	wp_enqueue_style( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/css/dk-visual-page-studio-v126.css', array(), '1.29.0' );
+	wp_enqueue_script( 'dkx-visual-page-studio', get_stylesheet_directory_uri() . '/assets/dk-visual-page-studio-v126.js', array( 'jquery' ), '1.29.0', true );
 	wp_localize_script(
 		'dkx-visual-page-studio',
 		'DKXVisualStudio',
@@ -300,8 +300,8 @@ function dkxv4_visual_canvas_assets() {
 	if ( ! $is_editor && ! $overrides ) {
 		return;
 	}
-	wp_enqueue_style( 'dkx-visual-inserts', get_stylesheet_directory_uri() . '/assets/css/dk-visual-inserts-v128.css', array(), '1.28.0' );
-	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.28.0', true );
+	wp_enqueue_style( 'dkx-visual-inserts', get_stylesheet_directory_uri() . '/assets/css/dk-visual-inserts-v128.css', array(), '1.29.0' );
+	wp_enqueue_script( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/dk-visual-canvas-v126.js', array(), '1.29.0', true );
 	wp_add_inline_script(
 		'dkx-visual-canvas',
 		'window.DKXVisualCanvas=' . wp_json_encode(
@@ -314,7 +314,7 @@ function dkxv4_visual_canvas_assets() {
 		'before'
 	);
 	if ( $is_editor ) {
-		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.28.0' );
+		wp_enqueue_style( 'dkx-visual-canvas', get_stylesheet_directory_uri() . '/assets/css/dk-visual-canvas-v126.css', array(), '1.29.0' );
 		nocache_headers();
 	}
 }
@@ -393,11 +393,15 @@ function dkxv4_save_visual_editor() {
 			if ( ! $id || ! $anchor_path || ! $url || ( 0 !== strpos( $mime, 'image/' ) && 0 !== strpos( $mime, 'video/' ) ) ) {
 				continue;
 			}
+			$position = sanitize_key( $override['position'] ?? 'after' );
+			if ( ! in_array( $position, array( 'after', 'before', 'inside', 'slot' ), true ) ) {
+				$position = 'after';
+			}
 			$overrides[] = array(
 				'type'         => 'insert',
 				'id'           => substr( $id, 0, 80 ),
 				'anchorPath'   => $anchor_path,
-				'position'     => 'after',
+				'position'     => $position,
 				'attachmentId' => absint( $override['attachmentId'] ?? 0 ),
 				'url'          => $url,
 				'mime'         => $mime,

@@ -214,7 +214,7 @@ foreach ( $variant_names as $key => $name ) {
 					$work_title = $caption ?: ( $work_title ?: $fallback[1] );
 				?>
 				<article class="dkxhp-work-card">
-					<div class="dkxhp-work-media"><?php $render_work_media( $media, $i, 'dkxhp-work-asset' ); ?></div>
+					<div class="dkxhp-work-media" data-dkx-media-slot="replace" data-dkx-media-class="dkxhp-work-asset" data-dkx-media-label="<?php echo esc_attr( sprintf( 'Selected work frame %02d', $i + 1 ) ); ?>"><?php $render_work_media( $media, $i, 'dkxhp-work-asset' ); ?></div>
 					<div class="dkxhp-work-caption"><span><?php echo esc_html( $fallback[0] ); ?></span><p><?php echo esc_html( $work_title ); ?></p></div>
 				</article>
 				<?php endfor; ?>

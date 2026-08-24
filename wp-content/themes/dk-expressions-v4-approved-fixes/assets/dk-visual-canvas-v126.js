@@ -53,6 +53,7 @@
 			return;
 		}
 		if (type === 'media') {
+			var mediaSlot = element.hasAttribute('data-dkx-media-slot');
 			var source = element.tagName === 'VIDEO' ? element.querySelector('source') : null;
 			var background = element.tagName !== 'IMG' && element.tagName !== 'VIDEO' ? window.getComputedStyle(element).backgroundImage : '';
 			originals[path] = {
@@ -60,7 +61,8 @@
 				url: source ? source.getAttribute('src') : (element.tagName === 'IMG' ? element.getAttribute('src') : backgroundUrl(background)),
 				alt: element.getAttribute('alt') || '',
 				mime: source ? source.getAttribute('type') || '' : '',
-				background: background
+				background: background,
+				slotHtml: mediaSlot ? element.innerHTML : null
 			};
 			return;
 		}
@@ -74,6 +76,15 @@
 
 	function applyMedia(element, item) {
 		if (!element || !item || !item.url) {
+			return;
+		}
+		if (element.hasAttribute('data-dkx-media-slot')) {
+			var slotMedia = createMediaElement(item, element.getAttribute('data-dkx-media-class') || '');
+			if (!slotMedia) {
+				return;
+			}
+			element.innerHTML = '';
+			element.appendChild(slotMedia);
 			return;
 		}
 		if (element.tagName === 'IMG') {
@@ -106,6 +117,32 @@
 		var background = window.getComputedStyle(element).backgroundImage || '';
 		var replacement = 'url("' + String(item.url).replace(/"/g, '%22') + '")';
 		element.style.backgroundImage = /url\([^)]+\)/i.test(background) ? background.replace(/url\([^)]+\)/i, replacement) : replacement;
+	}
+
+	function createMediaElement(item, className) {
+		if (!item || !item.url) {
+			return null;
+		}
+		var media;
+		if (String(item.mime || '').indexOf('video/') === 0) {
+			media = document.createElement('video');
+			media.controls = true;
+			media.playsInline = true;
+			media.preload = 'metadata';
+			var source = document.createElement('source');
+			source.src = item.url;
+			source.type = item.mime;
+			media.appendChild(source);
+		} else {
+			media = document.createElement('img');
+			media.src = item.url;
+			media.alt = item.alt || '';
+			media.loading = 'lazy';
+		}
+		if (className) {
+			media.className = className;
+		}
+		return media;
 	}
 
 	function applyOverride(item) {
@@ -160,27 +197,27 @@
 		if (!anchor || !anchor.closest('main')) {
 			return null;
 		}
+		var slot = anchor.matches('[data-dkx-media-slot]') ? anchor : anchor.querySelector('[data-dkx-media-slot]');
+		var useSlot = !!slot && (item.position === 'slot' || !!slot.querySelector('.dkxhp-work-placeholder'));
 		var figure = document.createElement('figure');
 		figure.className = 'dkx-visual-inserted-media';
 		figure.setAttribute('data-dkx-visual-insert-id', item.id);
-		var media;
-		if (String(item.mime || '').indexOf('video/') === 0) {
-			media = document.createElement('video');
-			media.controls = true;
-			media.playsInline = true;
-			media.preload = 'metadata';
-			var source = document.createElement('source');
-			source.src = item.url;
-			source.type = item.mime;
-			media.appendChild(source);
-		} else {
-			media = document.createElement('img');
-			media.src = item.url;
-			media.alt = item.alt || '';
-			media.loading = 'lazy';
+		var media = createMediaElement(item, useSlot ? (slot.getAttribute('data-dkx-media-class') || '') : '');
+		if (!media) {
+			return null;
 		}
 		figure.appendChild(media);
-		anchor.insertAdjacentElement('afterend', figure);
+		if (useSlot) {
+			figure.classList.add('is-media-slot');
+			slot.innerHTML = '';
+			slot.appendChild(figure);
+		} else if (item.position === 'before') {
+			anchor.insertAdjacentElement('beforebegin', figure);
+		} else if (item.position === 'inside') {
+			anchor.appendChild(figure);
+		} else {
+			anchor.insertAdjacentElement('afterend', figure);
+		}
 		return media;
 	}
 
@@ -253,7 +290,14 @@
 				media = visual.querySelector('img,video');
 			}
 		}
-		return media && (media.closest('main') || media.hasAttribute('data-dkx-global-media')) ? media : null;
+		if (media && (media.closest('main') || media.hasAttribute('data-dkx-global-media'))) {
+			return media;
+		}
+		var slot = start.closest('[data-dkx-media-slot]');
+		if (slot && slot.closest('main') && slot.querySelector('.dkxhp-work-placeholder')) {
+			return slot;
+		}
+		return null;
 	}
 
 	function backgroundTarget(start) {
@@ -281,6 +325,10 @@
 		if (element.tagName === 'IMG' || element.tagName === 'VIDEO') {
 			return element.closest('figure') || element;
 		}
+		var mediaSlot = element.closest('[data-dkx-media-slot]');
+		if (mediaSlot) {
+			return mediaSlot;
+		}
 		return element.closest('h1,h2,h3,h4,h5,h6,p,blockquote,li,figure,article,section') || element;
 	}
 
@@ -303,6 +351,7 @@
 		captureOriginal(element, path, type);
 		var insertAnchor = insertionTarget(element);
 		var insertId = element.closest('[data-dkx-visual-insert-id]') ? element.closest('[data-dkx-visual-insert-id]').getAttribute('data-dkx-visual-insert-id') : '';
+		var mediaSlot = type === 'media' && element.hasAttribute('data-dkx-media-slot');
 		var backgroundMedia = type === 'media' && element.tagName !== 'IMG' && element.tagName !== 'VIDEO';
 		var editValue = '';
 		if (type === 'text') {
@@ -319,9 +368,10 @@
 		post({
 			type: 'dkx-selection',
 			elementType: type,
-			mediaKind: type === 'media' ? (element.tagName === 'VIDEO' ? 'video' : 'image') : '',
+			mediaKind: type === 'media' ? (mediaSlot ? 'any' : (element.tagName === 'VIDEO' ? 'video' : 'image')) : '',
 			path: path,
-			label: type === 'media' ? (backgroundMedia ? 'Background image' : (element.tagName === 'VIDEO' ? 'Video' : 'Image')) : element.tagName.toLowerCase() + ' text',
+			label: type === 'media' ? (mediaSlot ? (element.getAttribute('data-dkx-media-label') || 'Empty media frame') : (backgroundMedia ? 'Background image' : (element.tagName === 'VIDEO' ? 'Video' : 'Image'))) : element.tagName.toLowerCase() + ' text',
+			mediaSlot: mediaSlot,
 			fieldKey: element.getAttribute('data-dkx-field') || '',
 			fieldPostId: parseInt(element.getAttribute('data-dkx-field-post') || config.postId || 0, 10),
 			globalMedia: element.getAttribute('data-dkx-global-media') || '',
@@ -452,6 +502,8 @@
 				}
 				if (original.type === 'text') {
 					element.innerHTML = original.value;
+				} else if (typeof original.slotHtml === 'string') {
+					element.innerHTML = original.slotHtml;
 				} else {
 					applyMedia(element, original);
 				}
