@@ -103,6 +103,17 @@ body.dkx-visual-editing main video {
 	}
 }
 
+@media (max-width: 480px) {
+	body.dkx-visual-editing::before {
+		font-size: 8px;
+		left: 6px;
+		letter-spacing: .09em;
+		max-width: calc(100vw - 12px);
+		padding: 7px 8px;
+		top: 6px;
+	}
+}
+
 body.dkx-visual-editing main a,
 body.dkx-visual-editing main button,
 body.dkx-visual-editing main input,
