@@ -14,6 +14,9 @@
 	var selectionLabel = root.querySelector('[data-dkx-selection-label]');
 	var selectionHelp = root.querySelector('[data-dkx-selection-help]');
 	var replaceMediaButton = root.querySelector('[data-dkx-replace-media]');
+	var addMediaButton = root.querySelector('[data-dkx-add-media]');
+	var removeInsertButton = root.querySelector('[data-dkx-remove-insert]');
+	var resetButton = root.querySelector('[data-dkx-reset-selection]');
 	var textEditor = root.querySelector('[data-dkx-text-editor]');
 	var textInput = root.querySelector('[data-dkx-text-value]');
 	var saveButtons = Array.prototype.slice.call(root.querySelectorAll('[data-dkx-save]'));
@@ -25,7 +28,9 @@
 	var dirty = false;
 
 	(Array.isArray(config.overrides) ? config.overrides : []).forEach(function (item) {
-		if (item && item.path) {
+		if (item && item.type === 'insert' && item.id) {
+			overrideMap['insert:' + item.id] = item;
+		} else if (item && item.path) {
 			overrideMap[item.path] = item;
 		}
 	});
@@ -53,8 +58,11 @@
 		selectionPanel.hidden = false;
 		root.classList.add('has-selection');
 		selectionLabel.textContent = data.label || 'Page element';
+		addMediaButton.hidden = !data.insertAnchorPath;
+		removeInsertButton.hidden = !data.insertId;
+		resetButton.hidden = !!data.insertId;
 		if (data.elementType === 'media') {
-			selectionHelp.textContent = data.globalMedia === 'logo' ? 'This is the global DK logo. Replacing it updates the header and footer everywhere.' : 'Choose another image or video from the WordPress Media Library.';
+			selectionHelp.textContent = data.insertId ? 'Replace or remove this added media.' : (data.globalMedia === 'logo' ? 'This is the global DK logo. Replacing it updates the header and footer everywhere.' : 'Upload or choose a replacement from the WordPress Media Library.');
 			replaceMediaButton.hidden = false;
 			textEditor.hidden = true;
 		} else {
@@ -118,6 +126,11 @@
 		} else if (data.elementType === 'media' && data.media) {
 			if (data.globalMedia === 'logo') {
 				globalLogoId = parseInt(data.media.attachmentId || 0, 10);
+			} else if (data.insertId && overrideMap['insert:' + data.insertId]) {
+				overrideMap['insert:' + data.insertId].attachmentId = parseInt(data.media.attachmentId || 0, 10);
+				overrideMap['insert:' + data.insertId].url = data.media.url || '';
+				overrideMap['insert:' + data.insertId].mime = data.media.mime || '';
+				overrideMap['insert:' + data.insertId].alt = data.media.alt || '';
 			} else {
 				overrideMap[data.path] = {
 					type: 'media',
@@ -129,9 +142,68 @@
 					alt: data.media.alt || ''
 				};
 			}
+		} else if (data.elementType === 'insert' && data.insert && data.insert.id) {
+			overrideMap['insert:' + data.insert.id] = data.insert;
 		}
 		markDirty();
 	});
+
+	function attachmentMedia(attachment) {
+		var mime = attachment.mime || '';
+		if (!mime && attachment.type) {
+			mime = attachment.type + '/' + (attachment.subtype || '');
+		}
+		return {
+			attachmentId: attachment.id,
+			url: attachment.url,
+			mime: mime,
+			alt: attachment.alt || attachment.title || ''
+		};
+	}
+
+	function openMediaLibrary(mode) {
+		if (!currentSelection || !window.wp || !wp.media) {
+			setStatus('error', 'Choose a position first', 'Tap text, an image, a video or an empty background area on the canvas.');
+			return;
+		}
+		var replace = mode === 'replace';
+		var options = {
+			title: replace ? (currentSelection.globalMedia === 'logo' ? 'Choose the global DK logo' : 'Upload or choose replacement media') : 'Upload or choose an image or video',
+			button: { text: replace ? 'Use this replacement' : 'Add this media' },
+			multiple: false
+		};
+		if (replace) {
+			options.library = { type: currentSelection.globalMedia === 'logo' ? 'image' : (currentSelection.mediaKind || 'image') };
+		}
+		var mediaFrame = wp.media(options);
+		mediaFrame.on('select', function () {
+			var attachment = mediaFrame.state().get('selection').first().toJSON();
+			var media = attachmentMedia(attachment);
+			if (media.mime.indexOf('image/') !== 0 && media.mime.indexOf('video/') !== 0) {
+				setStatus('error', 'Unsupported file', 'Choose an image or video file from the Media Library.');
+				return;
+			}
+			if (replace) {
+				sendToCanvas({ type: 'dkx-replace-media', path: currentSelection.path, media: media });
+				return;
+			}
+			var insertId = 'media-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8);
+			sendToCanvas({
+				type: 'dkx-insert-media',
+				insert: {
+					type: 'insert',
+					id: insertId,
+					anchorPath: currentSelection.insertAnchorPath,
+					position: 'after',
+					attachmentId: media.attachmentId,
+					url: media.url,
+					mime: media.mime,
+					alt: media.alt
+				}
+			});
+		});
+		mediaFrame.open();
+	}
 
 	root.addEventListener('click', function (event) {
 		var viewportButton = event.target.closest('[data-dkx-viewport]');
@@ -164,27 +236,27 @@
 			return;
 		}
 
+		if (event.target.closest('[data-dkx-add-media]')) {
+			openMediaLibrary('insert');
+			return;
+		}
+
 		if (event.target.closest('[data-dkx-replace-media]')) {
-			if (!currentSelection || currentSelection.elementType !== 'media' || !window.wp || !wp.media) {
+			if (!currentSelection || currentSelection.elementType !== 'media') {
 				return;
 			}
-			var mediaFrame = wp.media({
-				title: currentSelection.globalMedia === 'logo' ? 'Choose the global DK logo' : 'Choose replacement media',
-				button: { text: 'Use this media' },
-				multiple: false,
-				library: { type: currentSelection.globalMedia === 'logo' ? 'image' : (currentSelection.mediaKind || 'image') }
-			});
-			mediaFrame.on('select', function () {
-				var attachment = mediaFrame.state().get('selection').first().toJSON();
-				var media = {
-					attachmentId: attachment.id,
-					url: attachment.url,
-					mime: attachment.mime || attachment.type || '',
-					alt: attachment.alt || attachment.title || ''
-				};
-				sendToCanvas({ type: 'dkx-replace-media', path: currentSelection.path, media: media });
-			});
-			mediaFrame.open();
+			openMediaLibrary('replace');
+			return;
+		}
+
+		if (event.target.closest('[data-dkx-remove-insert]')) {
+			if (!currentSelection || !currentSelection.insertId) {
+				return;
+			}
+			delete overrideMap['insert:' + currentSelection.insertId];
+			sendToCanvas({ type: 'dkx-remove-insert', id: currentSelection.insertId });
+			markDirty();
+			closeSelection();
 			return;
 		}
 
@@ -195,12 +267,16 @@
 			if (currentSelection.fieldKey) {
 				delete fieldMap[(currentSelection.fieldPostId || config.postId) + ':' + currentSelection.fieldKey];
 			}
-			if (currentSelection.globalMedia === 'logo') {
+			if (currentSelection.insertId) {
+				delete overrideMap['insert:' + currentSelection.insertId];
+				sendToCanvas({ type: 'dkx-remove-insert', id: currentSelection.insertId });
+				closeSelection();
+			} else if (currentSelection.globalMedia === 'logo') {
 				globalLogoId = parseInt(config.globalLogoId || 0, 10);
 			} else {
 				delete overrideMap[currentSelection.path];
+				sendToCanvas({ type: 'dkx-reset-element', path: currentSelection.path });
 			}
-			sendToCanvas({ type: 'dkx-reset-element', path: currentSelection.path });
 			markDirty();
 		}
 	});
