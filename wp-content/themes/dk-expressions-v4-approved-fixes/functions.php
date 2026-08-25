@@ -151,8 +151,52 @@ function dkxv4_is_conversion_landing_preview() {
 	return 'conversion' === dkxv4_landing_preview_key();
 }
 
+/**
+ * Packages that may be carried from a commercial CTA into the project brief.
+ *
+ * Keeping this list in one place prevents a visitor-supplied query string from
+ * becoming trusted enquiry data and keeps the service/budget preselection
+ * consistent across Landing, Solutions, Industries and Rates.
+ */
+function dkxv4_package_catalog() {
+	return array(
+		'event-entry'       => array( 'label' => 'Event Domination — Entry', 'price' => 'R6,500 / event', 'service' => 'Event Coverage', 'budget' => 'Under R15k' ),
+		'event-spark'       => array( 'label' => 'Event Domination — Spark', 'price' => 'R6,500 / event', 'service' => 'Event Coverage', 'budget' => 'Under R15k' ),
+		'event-signature'   => array( 'label' => 'Event Domination — Signature', 'price' => 'R32,000 / event', 'service' => 'Event Coverage', 'budget' => 'R15k–R35k' ),
+		'event-premium'     => array( 'label' => 'Event Domination — Premium', 'price' => 'From R95,000', 'service' => 'Event Coverage', 'budget' => 'R75k+' ),
+		'event-takeover'    => array( 'label' => 'Event Domination — Takeover', 'price' => 'From R95,000', 'service' => 'Event Coverage', 'budget' => 'R75k+' ),
+		'retainer-entry'    => array( 'label' => 'Brand Retainer — Entry', 'price' => 'R15,000 / month', 'service' => 'Brand Retainer', 'budget' => 'R15k–R35k' ),
+		'always-essential'  => array( 'label' => 'Always On — Essential', 'price' => 'R15,000 / month', 'service' => 'Brand Retainer', 'budget' => 'R15k–R35k' ),
+		'retainer-core'     => array( 'label' => 'Brand Retainer — Core', 'price' => 'R35,000 / month', 'service' => 'Brand Retainer', 'budget' => 'R35k–R75k' ),
+		'always-premium'    => array( 'label' => 'Always On — Premium', 'price' => 'R35,000 / month', 'service' => 'Brand Retainer', 'budget' => 'R35k–R75k' ),
+		'retainer-premium'  => array( 'label' => 'Brand Retainer — Premium', 'price' => 'From R60,000 / month', 'service' => 'Brand Retainer', 'budget' => 'R35k–R75k' ),
+		'always-elite'      => array( 'label' => 'Always On — Elite', 'price' => 'From R60,000 / month', 'service' => 'Brand Retainer', 'budget' => 'R35k–R75k' ),
+		'name-starter'      => array( 'label' => 'Become the Name — Starter', 'price' => 'R18,000 / month', 'service' => 'Executive Branding', 'budget' => 'R15k–R35k' ),
+		'name-growth'       => array( 'label' => 'Become the Name — Growth', 'price' => 'R40,000 / month', 'service' => 'Executive Branding', 'budget' => 'R35k–R75k' ),
+		'name-authority'    => array( 'label' => 'Become the Name — Authority', 'price' => 'From R75,000 / month', 'service' => 'Executive Branding', 'budget' => 'R75k+' ),
+		'attention-feature' => array( 'label' => 'Own the Attention — Feature', 'price' => 'R1,500 / placement', 'service' => 'Campaign / Launch', 'budget' => 'Under R15k' ),
+		'attention-spotlight' => array( 'label' => 'Own the Attention — Spotlight', 'price' => 'R6,000 / campaign', 'service' => 'Campaign / Launch', 'budget' => 'Under R15k' ),
+		'attention-headline' => array( 'label' => 'Own the Attention — Headline', 'price' => 'R12,500 / campaign', 'service' => 'Campaign / Launch', 'budget' => 'Under R15k' ),
+	);
+}
+
+/**
+ * Build a package-aware Start a Project URL.
+ */
+function dkxv4_package_contact_url( $package_slug = '' ) {
+	$package_slug = sanitize_key( $package_slug );
+	$catalog      = dkxv4_package_catalog();
+	$url          = home_url( '/contact/' );
+
+	if ( $package_slug && isset( $catalog[ $package_slug ] ) ) {
+		$url = add_query_arg( 'package', $package_slug, $url );
+	}
+
+	return $url . '#project-brief';
+}
+
 function dkx_fixes_assets() {
-	$release = '1.31.0';
+	$release = '1.32.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -407,7 +451,7 @@ function dkxv4_industries_preview_assets_v1229() {
 		'dkx-industries-options-v1229',
 		get_stylesheet_directory_uri() . '/assets/css/industries-options-v1229.css',
 		array( 'dkxv4-commercial-v1173' ),
-		'1.23.2'
+		'1.32.0'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'dkxv4_industries_preview_assets_v1229', 1001 );
@@ -461,13 +505,13 @@ function dkxv4_contact_rate_assets_v1227() {
 		'dkx-contact-rates-v1227',
 		get_stylesheet_directory_uri() . '/assets/css/contact-rates-v1227.css',
 		array( 'dkx-recovery-v1204' ),
-		'1.22.8'
+		'1.32.0'
 	);
 	wp_enqueue_script(
 		'dkx-contact-rates-v1227',
 		get_stylesheet_directory_uri() . '/assets/contact-rates-v1227.js',
 		array(),
-		'1.22.8',
+		'1.32.0',
 		true
 	);
 }
@@ -592,6 +636,12 @@ add_filter( 'attachment_fields_to_save', 'dkxv4_save_attachment_work_field', 10,
 
 function dkxv4_project_enquiry_handler() {
 	$redirect_url = home_url( '/contact/' );
+	$package_slug = sanitize_key( wp_unslash( $_POST['project_package'] ?? '' ) );
+	$catalog      = dkxv4_package_catalog();
+	$package      = isset( $catalog[ $package_slug ] ) ? $catalog[ $package_slug ] : null;
+	if ( $package ) {
+		$redirect_url = add_query_arg( 'package', $package_slug, $redirect_url );
+	}
 	if ( ! empty( $_POST['website'] ) ) {
 		wp_safe_redirect( add_query_arg( 'project', 'sent', $redirect_url ) );
 		exit;
@@ -613,6 +663,7 @@ function dkxv4_project_enquiry_handler() {
 		'Email: ' . $email,
 		'Phone: ' . sanitize_text_field( wp_unslash( $_POST['project_phone'] ?? '' ) ),
 		'Company / Brand: ' . sanitize_text_field( wp_unslash( $_POST['project_company'] ?? '' ) ),
+		'Selected Package: ' . ( $package ? $package['label'] . ' — ' . $package['price'] : 'Not pre-selected' ),
 		'Project Type: ' . $service,
 		'Budget: ' . sanitize_text_field( wp_unslash( $_POST['project_budget'] ?? '' ) ),
 		'Timeline: ' . sanitize_text_field( wp_unslash( $_POST['project_timeline'] ?? '' ) ),
