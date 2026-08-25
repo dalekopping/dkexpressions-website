@@ -210,26 +210,21 @@ function dkxv4_page_content_manifest() {
 				'Published stories' => 'Posts — edit the story itself under Posts.',
 			),
 			'sections' => array(
-				'field-notes' => array( 'label' => '01 / Field Notes', 'fields' => array(
-					'work_field_kicker' => dkxv4_pce_field( 'Kicker', 'Field Notes / South Africa & beyond' ),
-					'work_field_heading' => dkxv4_pce_field( 'Hero heading', 'We went where the story lived.' ),
-					'work_field_copy' => dkxv4_pce_field( 'Hero copy', 'A documentary trail through culture, music, performance and the human moments outside the official programme.' ),
-					'work_wall_heading' => dkxv4_pce_field( 'Recovered prints heading', 'A wall of places we stood.' ),
+				'field-notes' => array( 'label' => '01 / Hero + Proof', 'fields' => array(
+					'work_day1_heading' => dkxv4_pce_field( 'Hero heading', 'WE WERE THERE.' ),
+					'work_day1_intro' => dkxv4_pce_field( 'Proof statement', 'Not stock. Not mock-ups. Not promises.' ),
+					'work_day1_support' => dkxv4_pce_field( 'Hero supporting copy', 'This is work captured, filmed and produced by DK Expressions.' ),
 				) ),
-				'archive' => array( 'label' => '02 / Living Archive', 'fields' => array(
-					'work_archive_kicker' => dkxv4_pce_field( 'Kicker', 'Living Archive / Time engine online' ),
-					'work_archive_heading' => dkxv4_pce_field( 'Hero heading', 'Every frame is a portal.' ),
-					'work_archive_copy' => dkxv4_pce_field( 'Hero copy', 'Thirteen years of culture, performance and motion—stored as living proof that we were there.' ),
-					'work_memory_heading' => dkxv4_pce_field( 'Memory stream heading', 'Drag through documented time.' ),
-					'work_motion_heading' => dkxv4_pce_field( 'Projection chamber heading', 'Memory in motion.' ),
+				'archive' => array( 'label' => '02 / Selected Work', 'fields' => array(
+					'work_selected_heading' => dkxv4_pce_field( 'Section heading', 'Proof lives in the frame.' ),
+					'work_selected_copy' => dkxv4_pce_field( 'Section copy', 'Eight recovered records from more than a decade in the room. Every card is work made by DK Expressions.' ),
 				) ),
 				'proof' => array( 'label' => '03 / Recommendations + Closing', 'fields' => array(
-					'work_margin_heading' => dkxv4_pce_field( 'Recommendations heading', 'The names in the margins.' ),
+					'work_margin_heading' => dkxv4_pce_field( 'Recommendations heading', 'Reputation, documented.' ),
 					'work_quote_one' => dkxv4_pce_field( 'Big Concerts recommendation', '“Committed, passionate and dedicated to his craft.”' ),
 					'work_quote_two' => dkxv4_pce_field( 'One-Eyed Jack recommendation', '“I highly recommend associating any brand with DK Expressions.”' ),
 					'work_quote_three' => dkxv4_pce_field( 'VWV Massive recommendation', '“The photography and social media services had been outstanding.”' ),
-					'work_final_heading' => dkxv4_pce_field( 'Final heading', 'Keep moving. Keep looking.' ),
-					'work_final_copy' => dkxv4_pce_field( 'Final copy', 'New stories, recovered frames and work from the field.' ),
+					'work_day1_final' => dkxv4_pce_field( 'Final heading', 'Seen enough? Let’s make the next chapter.' ),
 				) ),
 			),
 		),

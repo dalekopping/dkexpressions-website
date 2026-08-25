@@ -267,7 +267,7 @@ $render_solution_vault = static function ( $families, $whatsapp_url, $rate_url, 
 	<main class="dkxip dkxip--switchboard dk-no-semantic-highlight" id="top">
 		<section class="dkxip-switch-hero">
 			<div class="dkxip-switch-topline"><span>DK / SIGNAL MAP 2013 — ∞</span><b>08 CHANNELS ONLINE</b></div>
-			<div class="dkxip-switch-copy"><p class="dkxip-kicker"><span>Option 03</span> / Infinity Switchboard</p><small>Where we work</small><h1>Different<br>industries.<br><em>One signal.</em></h1><p>One obsession: attention. We start with the audience and the objective — not a generic marketing template.</p></div>
+			<div class="dkxip-switch-copy"><p class="dkxip-kicker"><span>Option 03</span> / Infinity Switchboard</p><small>Where we work</small><h1>Different<br>industries.<br><em>One obsession:<br>attention.</em></h1><p>We start with the audience and the objective — not a generic marketing template.</p></div>
 			<div class="dkxip-switch-core" aria-hidden="true"><i></i><i></i><span><img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt=""></span><b>∞</b><small>SIGNAL<br>ACTIVE</small></div>
 			<div class="dkxip-switch-readout"><span>INPUT</span><b>AUDIENCE</b><span>OBJECTIVE</span><b>ATTENTION</b></div>
 		</section>
@@ -291,7 +291,7 @@ $render_solution_vault = static function ( $families, $whatsapp_url, $rate_url, 
 				<article class="is-publishing"><span>02 / OWN THE DISTRIBUTION</span><h3>Online<br>Publishing</h3><p>Editorial features, announcements, interviews, reviews and SEO-led stories published through the DK Expressions platform and built to remain discoverable beyond launch day.</p><ul><li>Editorial production</li><li>SEO publishing</li><li>Features &amp; interviews</li><li>Campaign distribution</li><li>Archive visibility</li></ul></article>
 			</div>
 		</section>
-		<?php $render_solution_vault( $solution_families, $whatsapp_package_url, $rate_card_url, $contact_url ); ?>
+		<?php $render_rates( $rate_card_url, $contact_url, array( '10', '11' ) ); ?>
 		<section class="dkxip-final"><span>ROUTE / 11</span><h2>Connect more<br>than <em>one signal.</em></h2><p>Not sure which signal or package fits? Most strong projects sit across more than one industry and more than one solution.</p><a href="<?php echo esc_url( $contact_url ); ?>">Start a Project <b>↗</b></a></section>
 	</main>
 <?php endif; ?>

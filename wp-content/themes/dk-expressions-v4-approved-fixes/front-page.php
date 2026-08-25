@@ -25,6 +25,8 @@ get_header();
 		<div class="dkx1211-proof-audience">
 			<span class="is-visits"><strong>1.10M+</strong> visits</span><i aria-hidden="true">·</i>
 			<span class="is-pages"><strong>2.47M+</strong> pages viewed</span><i aria-hidden="true">·</i>
+			<span class="is-hits"><strong>6.13M+</strong> hits</span><i aria-hidden="true">·</i>
+			<span class="is-years"><strong>13+</strong> years</span><i aria-hidden="true">·</i>
 			<span class="is-trusted">Trusted by <strong>Big Concerts, Comic Con Africa, Showtime Management, TPW</strong></span>
 		</div>
 	</section>

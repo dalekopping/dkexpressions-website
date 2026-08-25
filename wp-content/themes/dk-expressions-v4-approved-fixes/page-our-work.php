@@ -1,13 +1,10 @@
 <?php
 /**
  * Template Name: DK Expressions Our Work — Time Vault
- * v1.18.7 cinematic media-first portfolio.
+ * v1.31.0 proof-led Time Vault.
  */
 get_header();
-$dkxv4_work_preview = function_exists( 'dkxv4_work_preview_key' ) ? dkxv4_work_preview_key() : '';
-$dkxv4_show_work_switcher = '' !== $dkxv4_work_preview;
-$dkxv4_work_preview = $dkxv4_show_work_switcher ? $dkxv4_work_preview : 'archive';
-require get_stylesheet_directory() . '/template-parts/our-work-options-preview.php';
+require get_stylesheet_directory() . '/template-parts/our-work-day1.php';
 get_footer();
 return;
 
