@@ -159,12 +159,12 @@ $render_rates = static function ( $rate_url, $start_url, $sequence = array( '09'
 		<div class="dkxip-rate-deck">
 			<article class="dkxip-rate-card is-event">
 				<header><span>LIVE / EXPERIENCE</span><h3>Event<br>Domination</h3><p>Ideal for Entertainment, Music, Theatre, Festivals and live experiences.</p></header>
-				<div class="dkxip-rate-lines"><div><span>Entry</span><strong>R6,500</strong></div><div class="is-chosen"><b>Most Chosen</b><span>Signature</span><strong>R32,000</strong></div><div><span>Premium</span><strong>From R95,000</strong></div></div>
+				<div class="dkxip-rate-lines"><div><span>Entry</span><strong>R6,500</strong><a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-entry' ) ); ?>" aria-label="Choose Event Domination Entry">↗</a></div><div class="is-chosen"><b>Most Chosen</b><span>Signature</span><strong>R32,000</strong><a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-signature' ) ); ?>" aria-label="Choose Event Domination Signature">↗</a></div><div><span>Premium</span><strong>From R95,000</strong><a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-premium' ) ); ?>" aria-label="Choose Event Domination Premium">↗</a></div></div>
 				<p class="dkxip-deliverables">Up to <b>8</b> hours coverage · Photography + video · Live posting · Next-day gallery</p>
 			</article>
 			<article class="dkxip-rate-card is-brand">
 				<header><span>ALWAYS / VISIBLE</span><h3>Brand<br>Retainer</h3><p>Ideal for Hospitality, Property, Corporate, Lifestyle and ongoing brand needs.</p></header>
-				<div class="dkxip-rate-lines"><div><span>Entry</span><strong>R15,000 <i>/ month</i></strong></div><div class="is-chosen"><b>Most Chosen</b><span>Core</span><strong>R35,000 <i>/ month</i></strong></div><div><span>Premium</span><strong>From R60,000 <i>/ month</i></strong></div></div>
+				<div class="dkxip-rate-lines"><div><span>Entry</span><strong>R15,000 <i>/ month</i></strong><a href="<?php echo esc_url( dkxv4_package_contact_url( 'retainer-entry' ) ); ?>" aria-label="Choose Brand Retainer Entry">↗</a></div><div class="is-chosen"><b>Most Chosen</b><span>Core</span><strong>R35,000 <i>/ month</i></strong><a href="<?php echo esc_url( dkxv4_package_contact_url( 'retainer-core' ) ); ?>" aria-label="Choose Brand Retainer Core">↗</a></div><div><span>Premium</span><strong>From R60,000 <i>/ month</i></strong><a href="<?php echo esc_url( dkxv4_package_contact_url( 'retainer-premium' ) ); ?>" aria-label="Choose Brand Retainer Premium">↗</a></div></div>
 				<p class="dkxip-deliverables"><b>3</b>-month minimum · Ongoing content · Social Media Management · Strategy · Priority scheduling · Monthly reporting</p>
 			</article>
 		</div>
