@@ -195,8 +195,8 @@ function dkxv4_page_content_manifest() {
 			'label' => 'Solutions / Package Vault',
 			'sections' => array(
 				'hero' => array( 'label' => '01 / Hero + Analytics', 'fields' => array(
-					'solutions_hero_heading' => dkxv4_pce_field( 'Hero heading', 'Choose the level of attention.' ),
-					'solutions_hero_copy' => dkxv4_pce_field( 'Hero copy', 'Four focused solution systems. Twelve clear starting points. Built to make the moment, the brand and the name impossible to ignore.' ),
+					'solutions_hero_heading' => dkxv4_pce_field( 'Hero heading', 'Brand content. Event coverage. Retainers built for impact.' ),
+					'solutions_hero_copy' => dkxv4_pce_field( 'Hero copy', 'Photography, motion, strategy, social media management and online publishing across four focused systems. Clear scopes, locked starting rates and a direct path from package to project brief.' ),
 					'solutions_analytics_heading' => dkxv4_pce_field( 'Analytics heading', 'Independent Server Analytics.' ),
 					'solutions_analytics_period' => dkxv4_pce_field( 'Analytics period', 'September 2025–August 2026', array( 'type' => 'text' ) ),
 					'solutions_live_visits' => dkxv4_pce_field( 'August visits', '97,603', array( 'type' => 'text' ) ),
@@ -357,7 +357,7 @@ function dkxv4_page_content_manifest() {
 				) ),
 				'success' => array( 'label' => '04 / Success State', 'fields' => array(
 					'contact_success_heading' => dkxv4_pce_field( 'Success heading', 'Brief received.' ),
-					'contact_success_copy' => dkxv4_pce_field( 'Success copy', 'Thank you. We’ve got it and will come back to you within one business day.' ),
+					'contact_success_copy' => dkxv4_pce_field( 'Success copy', 'We’ve got it and will come back to you within one business day.' ),
 				) ),
 			),
 		),

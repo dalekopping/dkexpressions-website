@@ -63,17 +63,17 @@ get_header();
 			<article class="is-media">
 				<p class="dkx1203-pricing-label">Media / Campaign</p><h3>Spotlight</h3><p class="dkx1203-pricing-price">R6,000 <span>/ campaign</span></p>
 				<ul><li>8 editorial listings</li><li>Social amplification on each</li><li>Instagram, Facebook and X coverage</li><li>Campaign-window placement</li></ul>
-				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Choose Spotlight →</a>
+				<a href="<?php echo esc_url( dkxv4_package_contact_url( 'attention-spotlight' ) ); ?>">Choose Spotlight →</a>
 			</article>
 			<article class="is-events is-featured">
 				<b class="dkx1203-pricing-badge">Most Chosen</b><p class="dkx1203-pricing-label">Event Domination</p><h3>Signature</h3><p class="dkx1203-pricing-price">R32,000 <span>/ event</span></p>
 				<ul><li>Up to 8 hours coverage</li><li>Photography and video</li><li>Live event posting</li><li>Same-day teaser and recap</li></ul>
-				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Choose Signature →</a>
+				<a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-signature' ) ); ?>">Choose Signature →</a>
 			</article>
 			<article class="is-brands">
 				<p class="dkx1203-pricing-label">Always On</p><h3>Premium</h3><p class="dkx1203-pricing-price">R35,000 <span>/ month</span></p>
 				<ul><li>Two shoots per month</li><li>20 posts and 8 reels</li><li>Full social management</li><li>Strategy, creative and reporting</li></ul>
-				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Choose Premium →</a>
+				<a href="<?php echo esc_url( dkxv4_package_contact_url( 'always-premium' ) ); ?>">Choose Premium →</a>
 			</article>
 		</div>
 		<p class="dkx1203-pricing-note">Need a different scale? <a href="<?php echo esc_url( home_url( '/rates/' ) ); ?>">View the complete 2026 rate card →</a></p>

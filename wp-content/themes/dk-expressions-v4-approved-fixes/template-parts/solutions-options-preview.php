@@ -26,7 +26,6 @@ foreach ( $solution_variants as $variant_key => $variant_label ) {
 	);
 }
 
-$whatsapp_package_url = 'https://wa.me/27722460451?text=Hi%20Dale%2C%20I%20would%20like%20to%20discuss%20a%20DK%20Expressions%20package.';
 $solution_families = array(
 	array(
 		'number'   => '01',
@@ -77,15 +76,21 @@ $solution_families = array(
 		),
 	),
 );
+$solution_package_slugs = array(
+	'event-domination'  => array( 'event-spark', 'event-signature', 'event-takeover' ),
+	'always-on'         => array( 'always-essential', 'always-premium', 'always-elite' ),
+	'become-the-name'   => array( 'name-starter', 'name-growth', 'name-authority' ),
+	'own-the-attention' => array( 'attention-feature', 'attention-spotlight', 'attention-headline' ),
+);
 ?>
 
 <main class="dkxsr dkxsr--<?php echo esc_attr( $dkxv4_solutions_preview ); ?> dk-no-semantic-highlight" id="top">
 	<div class="dkxsr-grid" aria-hidden="true"></div>
 	<section class="dkxsr-hero">
 		<div class="dkxsr-shell">
-			<p class="dkxsr-eyebrow">DK Expressions · Solutions</p>
-			<h1>Choose the level<br>of <em>attention.</em></h1>
-			<p class="dkxsr-hero-copy">Four focused solution systems. Twelve clear starting points. Built to make the moment, the brand and the name impossible to ignore.</p>
+			<p class="dkxsr-eyebrow">Agency / Solutions</p>
+			<h1>Brand content.<br>Event coverage.<br><em>Retainers built for impact.</em></h1>
+			<p class="dkxsr-hero-copy">Photography, motion, strategy, social media management and online publishing across four focused systems. Clear scopes, locked starting rates and a direct path from package to project brief.</p>
 			<nav class="dkxsr-family-nav" aria-label="Solution families">
 				<?php foreach ( $solution_families as $family ) : ?><a class="<?php echo esc_attr( $family['class'] ); ?>" href="#<?php echo esc_attr( $family['slug'] ); ?>"><span><?php echo esc_html( $family['number'] ); ?></span><?php echo esc_html( $family['title'] ); ?></a><?php endforeach; ?>
 			</nav>
@@ -120,13 +125,14 @@ $solution_families = array(
 				</header>
 				<div class="dkxsr-package-grid">
 					<?php foreach ( $family['packages'] as $package_index => $package ) : ?>
+					<?php $package_slug = $solution_package_slugs[ $family['slug'] ][ $package_index ] ?? ''; ?>
 					<article class="dkxsr-package <?php echo $package['badge'] ? 'is-featured' : ''; ?>">
 						<?php if ( $package['badge'] ) : ?><b class="dkxsr-badge"><?php echo esc_html( $package['badge'] ); ?></b><?php endif; ?>
 						<header><span><?php echo esc_html( str_pad( (string) ( $package_index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><h3><?php echo esc_html( $package['name'] ); ?></h3></header>
 						<p class="dkxsr-price"><?php if ( ! empty( $package['prefix'] ) ) : ?><small><?php echo esc_html( $package['prefix'] ); ?></small><?php endif; ?><strong><?php echo esc_html( $package['price'] ); ?></strong><?php if ( $package['suffix'] ) : ?><span><?php echo esc_html( $package['suffix'] ); ?></span><?php endif; ?></p>
 						<p class="dkxsr-description"><?php echo esc_html( $package['description'] ); ?></p>
 						<ul><?php foreach ( $package['features'] as $feature ) : ?><li><?php echo wp_kses_post( $feature ); ?></li><?php endforeach; ?></ul>
-						<a href="<?php echo esc_url( $whatsapp_package_url ); ?>" target="_blank" rel="noopener">Discuss this package <span>↗</span></a>
+						<a href="<?php echo esc_url( dkxv4_package_contact_url( $package_slug ) ); ?>">Start with <?php echo esc_html( $package['name'] ); ?> <span>↗</span></a>
 					</article>
 					<?php endforeach; ?>
 				</div>
@@ -138,7 +144,7 @@ $solution_families = array(
 	<section class="dkxsr-custom">
 		<div class="dkxsr-shell dkxsr-custom-grid">
 			<div><p class="dkxsr-eyebrow">Need something that does not fit in a box?</p><h2>Build a custom<br><em>campaign.</em></h2></div>
-			<div><p class="dkxsr-custom-copy">Starting rates exclude VAT where applicable. Final quotations depend on scope, crew, production requirements, travel and deliverables. Project bookings require a <strong>50</strong>% deposit. Retainers carry a three-month minimum.</p><div class="dkxsr-actions"><a class="is-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a project <span>↗</span></a><a href="<?php echo esc_url( $whatsapp_package_url ); ?>" target="_blank" rel="noopener">WhatsApp us <span>→</span></a></div></div>
+			<div><p class="dkxsr-custom-copy">Starting rates exclude VAT where applicable. Final quotations depend on scope, crew, production requirements, travel and deliverables. Project bookings require a <strong>50</strong>% deposit. Retainers carry a three-month minimum.</p><div class="dkxsr-actions"><a class="is-primary" href="<?php echo esc_url( dkxv4_package_contact_url() ); ?>">Start a project <span>↗</span></a><a href="<?php echo esc_url( home_url( '/rates/' ) ); ?>">View Full 2026 Rate Card <span>→</span></a></div></div>
 		</div>
 	</section>
 
