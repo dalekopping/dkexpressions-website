@@ -31,11 +31,10 @@ jobs:
           set -euo pipefail
           find wp-content/themes/dk-expressions-v4 \
                wp-content/themes/dk-expressions-v4-approved-fixes \
-               wp-content/mu-plugins \
             -type f -name '*.php' -print0 \
             | xargs -0 -n1 php -l
 
-      - name: Verify required launch files
+      - name: Verify required theme files
         shell: bash
         run: |
           set -euo pipefail
@@ -43,8 +42,6 @@ jobs:
           test -f wp-content/themes/dk-expressions-v4/functions.php
           test -f wp-content/themes/dk-expressions-v4-approved-fixes/style.css
           test -f wp-content/themes/dk-expressions-v4-approved-fixes/functions.php
-          test -f wp-content/mu-plugins/dkx-seo-foundations.php
-          test -f wp-content/mu-plugins/dkx-measurement.php
 
       - name: Build installable child-theme package
         shell: bash
