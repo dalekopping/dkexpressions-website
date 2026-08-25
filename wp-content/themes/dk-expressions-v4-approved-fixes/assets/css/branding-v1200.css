@@ -252,3 +252,49 @@ body .dk-footer-whatsapp strong {
 @media (prefers-reduced-motion:reduce) {
   .dk-landing-cta { transition:none; }
 }
+
+/*
+ * DK EXPRESSIONS BRAND GUARDRAILS — 2026-08-26
+ * 1. DK Colouring System only: no neon/glow typography.
+ * 2. Main header lives at the top of the document and never follows scroll.
+ * 3. Official DK Expressions logo replaces any plain DK hero monogram.
+ */
+body .dk-site-content strong,
+body .dk-site-content b,
+body main strong,
+body main b,
+body .dk-auto-red {
+  text-shadow:none!important;
+  animation:none!important;
+  filter:none!important;
+}
+
+body .dk-header,
+body .dk-header.is-stuck {
+  position:absolute!important;
+  top:0!important;
+  left:0!important;
+  right:0!important;
+  height:86px!important;
+  backdrop-filter:none!important;
+}
+body.admin-bar .dk-header,
+body.admin-bar .dk-header.is-stuck {
+  top:32px!important;
+}
+body .dk-header.is-stuck .dk-brand img {
+  height:72px!important;
+}
+
+/* Time Vault: never display a generic DK text mark where the brand logo belongs. */
+body .dkxday1-hero-mark span {
+  display:block!important;
+  width:104px!important;
+  height:72px!important;
+  overflow:hidden!important;
+  background:url('../../../dk-expressions-v4/assets/images/dk-expressions-logo-white-tight.png') center/contain no-repeat!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  text-indent:-9999px!important;
+}
