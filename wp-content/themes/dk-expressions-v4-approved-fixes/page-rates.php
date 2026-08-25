@@ -29,18 +29,18 @@ $rate_card_url = get_stylesheet_directory_uri() . '/assets/downloads/DK-Expressi
 			<article class="dkxcr-rate-world is-event">
 				<header><span>01 / EVENT DOMINATION</span><h3>One event.<br>Maximum <em>impact.</em></h3></header>
 				<div class="dkxcr-tier-list">
-					<div><span>ENTRY</span><strong>R6,500</strong><small>Focused entry coverage</small></div>
-					<div class="is-chosen"><b>Most Chosen</b><span>SIGNATURE</span><strong>R32,000</strong><small>Full event coverage and amplification</small></div>
-					<div><span>PREMIUM</span><strong>From R95,000</strong><small>Flagship and multi-day production</small></div>
+					<div><span>ENTRY</span><strong>R6,500</strong><small>Focused entry coverage</small><a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-entry' ) ); ?>">Choose Entry <b>↗</b></a></div>
+					<div class="is-chosen"><b>Most Chosen</b><span>SIGNATURE</span><strong>R32,000</strong><small>Full event coverage and amplification</small><a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-signature' ) ); ?>">Choose Signature <b>↗</b></a></div>
+					<div><span>PREMIUM</span><strong>From R95,000</strong><small>Flagship and multi-day production</small><a href="<?php echo esc_url( dkxv4_package_contact_url( 'event-premium' ) ); ?>">Choose Premium <b>↗</b></a></div>
 				</div>
 			</article>
 
 			<article class="dkxcr-rate-world is-retainer">
 				<header><span>02 / BRAND RETAINER</span><h3>Always visible.<br>Always <em>moving.</em></h3><p>Three-month minimum</p></header>
 				<div class="dkxcr-tier-list">
-					<div><span>ENTRY</span><strong>R15,000 <i>/ month</i></strong><small>Consistent monthly presence</small></div>
-					<div class="is-chosen"><b>Most Chosen</b><span>CORE</span><strong>R35,000 <i>/ month</i></strong><small>Content, strategy and ongoing partnership</small></div>
-					<div><span>PREMIUM</span><strong>From R60,000 <i>/ month</i></strong><small>Category-level content leadership</small></div>
+					<div><span>ENTRY</span><strong>R15,000 <i>/ month</i></strong><small>Consistent monthly presence</small><a href="<?php echo esc_url( dkxv4_package_contact_url( 'retainer-entry' ) ); ?>">Choose Entry <b>↗</b></a></div>
+					<div class="is-chosen"><b>Most Chosen</b><span>CORE</span><strong>R35,000 <i>/ month</i></strong><small>Content, strategy and ongoing partnership</small><a href="<?php echo esc_url( dkxv4_package_contact_url( 'retainer-core' ) ); ?>">Choose Core <b>↗</b></a></div>
+					<div><span>PREMIUM</span><strong>From R60,000 <i>/ month</i></strong><small>Category-level content leadership</small><a href="<?php echo esc_url( dkxv4_package_contact_url( 'retainer-premium' ) ); ?>">Choose Premium <b>↗</b></a></div>
 				</div>
 			</article>
 		</div>
