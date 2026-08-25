@@ -152,7 +152,7 @@ function dkxv4_is_conversion_landing_preview() {
 }
 
 function dkx_fixes_assets() {
-	$release = '1.30.0';
+	$release = '1.31.0';
 
 	wp_enqueue_style( 'dkx-parent-style', get_template_directory_uri() . '/style.css', array(), '1.0.0' );
 	wp_enqueue_style( 'dkx-approved-fixes', get_stylesheet_uri(), array( 'dkx-parent-style' ), $release );
@@ -377,6 +377,19 @@ function dkxv4_work_preview_assets_v1223() {
 			get_stylesheet_directory_uri() . '/assets/css/our-work-options-v1223.css',
 			array( 'dkxv4-commercial-v1173' ),
 			'1.22.6'
+		);
+		wp_enqueue_style(
+			'dkx-our-work-day1-v131',
+			get_stylesheet_directory_uri() . '/assets/css/our-work-day1-v131.css',
+			array( 'dkx-our-work-options-v1223' ),
+			'1.31.0'
+		);
+		wp_enqueue_script(
+			'dkx-our-work-day1-v131',
+			get_stylesheet_directory_uri() . '/assets/our-work-day1-v131.js',
+			array(),
+			'1.31.0',
+			true
 		);
 	}
 }
