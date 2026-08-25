@@ -45,6 +45,7 @@ jobs:
           test -f wp-content/themes/dk-expressions-v4-approved-fixes/functions.php
           test -f wp-content/mu-plugins/dkx-seo-foundations.php
           test -f wp-content/mu-plugins/dkx-measurement.php
+          test -f wp-content/mu-plugins/dkx-brand-guardrails.php
 
       - name: Build installable child-theme package
         shell: bash
