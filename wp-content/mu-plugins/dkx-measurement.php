@@ -2,7 +2,7 @@
 /**
  * Plugin Name: DK Expressions Measurement
  * Description: GTM loader, GA4 data layer, launch conversion events and basic Consent Mode v2.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: DK Expressions
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
@@ -36,6 +36,15 @@ add_action('wp_body_open',function(){
 	$gtm=dkx_measurement_gtm_id();if(!$gtm)return;
 	echo '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id='.esc_attr($gtm).'" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>';
 },1);
+
+add_filter('the_content',function($content){
+	if(is_admin()||!is_main_query()||!in_the_loop())return $content;
+	$is_policy=function_exists('is_privacy_policy')&&is_privacy_policy();
+	if(!$is_policy&&!is_page('privacy-policy'))return $content;
+	if(stripos($content,'Analytics preferences and consent')!==false)return $content;
+	$notice='<section class="dkx-privacy-analytics"><h2>Analytics preferences and consent</h2><p>DK Expressions uses essential storage required for the website to function and optional analytics to understand how visitors use the site. Analytics storage is denied by default until you choose to accept analytics. You can choose “Essential only” and continue using the website without optional analytics storage.</p><p>When analytics is enabled, Google Tag Manager and Google Analytics 4 may process usage information such as page views, interactions and conversion events. Advertising storage, ad personalisation and ad user-data storage remain denied by default in our Consent Mode configuration.</p><p>Your analytics preference is stored in your browser so the site can remember your choice. Clearing your browser storage may cause the consent choice to be shown again.</p></section>';
+	return $content.$notice;
+},30);
 
 add_action('wp_footer',function(){if(is_admin())return;?>
 <style id="dkx-consent-style">#dkx-consent{position:fixed;z-index:9998;left:18px;right:18px;bottom:18px;display:none;align-items:center;justify-content:space-between;gap:20px;max-width:900px;margin:auto;padding:16px 18px;border:1px solid rgba(64,184,255,.42);background:#06111d;color:#fff;font:13px/1.55 Arial,sans-serif}#dkx-consent p{margin:0;max-width:620px}#dkx-consent div{display:flex;gap:8px;flex-wrap:wrap}#dkx-consent button{min-height:40px;padding:0 14px;border:1px solid #40b8ff;background:#40b8ff;color:#02070c;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}#dkx-consent button[data-choice="denied"]{background:transparent;color:#fff}@media(max-width:650px){#dkx-consent{align-items:flex-start;flex-direction:column}#dkx-consent div,#dkx-consent button{width:100%}}</style>
