@@ -28,6 +28,23 @@ $menu_items = array(
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php wp_head(); ?>
+	<style id="dkx-global-fixed-header">
+		/* Global navigation lock: the DK navigation remains at the top on every page. */
+		.dk-header{
+			position:fixed!important;
+			top:0!important;
+			left:0!important;
+			right:0!important;
+			z-index:10000!important;
+			background:rgba(2,5,10,.97)!important;
+			border-bottom:1px solid rgba(67,174,255,.22)!important;
+			backdrop-filter:blur(16px);
+			-webkit-backdrop-filter:blur(16px);
+		}
+		body.admin-bar .dk-header{top:32px!important;}
+		@media(max-width:782px){body.admin-bar .dk-header{top:46px!important;}}
+		.dk-header.is-stuck{position:fixed!important;}
+	</style>
 </head>
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
