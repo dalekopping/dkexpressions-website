@@ -32,7 +32,8 @@ $menu_items = array(
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="screen-reader-text" href="#primary"><?php esc_html_e( 'Skip to content', 'dk-expressions-v4-fixes' ); ?></a>
-<header class="dk-header" id="top">
+<span id="top" class="screen-reader-text" aria-hidden="true"></span>
+<header class="dk-header" id="dk-header">
 	<a class="dk-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'DK Expressions landing page', 'dk-expressions-v4-fixes' ); ?>">
 		<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" data-dkx-global-media="logo">
 	</a>
