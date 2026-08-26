@@ -2,7 +2,7 @@
 /**
  * Plugin Name: DK Expressions Rate Card Link Lock
  * Description: Forces every legacy DK Expressions rate-card link to the final 2026 downloadable PDF endpoint.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: DK Expressions
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -17,7 +17,7 @@ add_filter( 'the_content', function( $content ) {
 	if ( ! is_string( $content ) || '' === $content ) return $content;
 	$final = esc_url( dkx_final_rate_card_locked_url() );
 	$content = preg_replace(
-		'#https?://[^\"\']+/DK-Expressions-2026-Rate-Card\.pdf#i',
+		"#https?://[^\"']+/DK-Expressions-2026-Rate-Card\\.pdf#i",
 		$final,
 		$content
 	);
