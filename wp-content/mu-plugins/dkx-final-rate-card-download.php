@@ -2,7 +2,7 @@
 /**
  * Plugin Name: DK Expressions Final Rate Card Download
  * Description: Serves the final 2026 seven-page DK Expressions commercial rate card as a downloadable PDF using the DK Colour System.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: DK Expressions
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -13,8 +13,7 @@ final class DKX_Final_Rate_Card_PDF {
     private $h = 841.890;
 
     private function esc( $s ) {
-        $s = str_replace( array('–','—','’','“','”','•'), array('-','-','\'','"','"','-'), (string) $s );
-        $s = preg_replace('/[^\x20-\x7E]/', '', $s);
+        $s = preg_replace('/[^\x20-\x7E]/', ' ', (string) $s);
         return str_replace(array('\\','(',')'), array('\\\\','\\(','\\)'), $s);
     }
     private function rgb( $hex ) {
@@ -65,7 +64,6 @@ final class DKX_Final_Rate_Card_PDF {
     public function render() {
         $INK='#02070C'; $BLUE='#40B8FF'; $AQUA='#20D7C8'; $GOLD='#FFC34F'; $PURPLE='#976DFF'; $RED='#FF5364'; $ORANGE='#FF8A4C'; $MUTED='#9DB2C2';
 
-        // Page 1 - Cover.
         $s=''; $this->rect($s,0,0,$this->w,$this->h,$INK);
         foreach(array($BLUE,$AQUA,$GOLD,$PURPLE,$RED,$ORANGE) as $i=>$c) $this->rect($s,$i*($this->w/6),824.9,$this->w/6,17,$c);
         $this->text($s,51,686,'DK',52,true,$BLUE); $this->text($s,51,638,'EXPRESSIONS',31,true,'#FFFFFF');
@@ -74,7 +72,6 @@ final class DKX_Final_Rate_Card_PDF {
         $this->text($s,51,363,'Johannesburg + Cape Town, South Africa',9,false,$MUTED); $this->text($s,51,340,'South African Rand  |  Rates exclude VAT',9,false,$MUTED);
         $this->text($s,51,77,'PREMIUM CULTURE  /  CONTENT  /  BRAND STORYTELLING',9,true,'#FFFFFF'); $this->footer($s,1); $this->add_page($s);
 
-        // Page 2 - Pricing at a glance.
         $s=''; $this->topbar($s,'COMMERCIAL SYSTEM / PRICING AT A GLANCE',$BLUE);
         $this->text($s,45,740,'SELL THE OUTCOME,',25,true,$INK); $this->text($s,45,706,'NOT THE HOUR.',25,true,$BLUE);
         $this->para($s,45,669,'Each core service has an entry tier, a deliberately anchored middle tier and a premium tier. Quote the middle tier first. Entry is the fallback, not the opener.',9,$MUTED,false,108,12);
@@ -109,12 +106,11 @@ final class DKX_Final_Rate_Card_PDF {
         );
         foreach($services as $svc){
             list($page,$label,$accent,$title,$desc,$best,$pkgs)=$svc; $s=''; $this->topbar($s,$label,$accent); $this->text($s,45,737,$title,24,true,$INK); $this->para($s,45,700,$desc,8.7,$INK,false,112,11); $this->para($s,45,671,$best,7.8,$MUTED,true,116,10);
-            $x=45; foreach($pkgs as $i=>$p){ $this->card($s,$x,610,161,354,$p[0],$p[1],$p[2],$p[3],$p[4],$accent,$p[5]); $x+=172; }
+            $x=45; foreach($pkgs as $p){ $this->card($s,$x,610,161,354,$p[0],$p[1],$p[2],$p[3],$p[4],$accent,$p[5]); $x+=172; }
             if($page===3){ $this->rect($s,45,62,505,60,$INK); $this->text($s,60,105,'ADD-ONS',7,true,$BLUE); $this->text($s,60,82,'Extra shooter R2,500/day  /  Drone R3,500  /  Rush same-hour edits R1,800  /  Branded frame or AR filter: quoted',7.2,true,'#FFFFFF'); }
             $this->footer($s,$page); $this->add_page($s);
         }
 
-        // Page 6 - Media placements and social amplification.
         $s=''; $this->topbar($s,'04 / OWN THE ATTENTION / BLOG & MEDIA PLACEMENTS',$RED); $this->text($s,45,737,'OWN THE ATTENTION',24,true,$INK);
         $this->para($s,45,700,'Paid editorial placements on DK Expressions and amplification across social channels, monetising the publishing authority and audience built since 2013.',8.7,$INK,false,112,11);
         $this->para($s,45,671,'Best for brands, venues, events and products that want credible exposure without committing to a full retainer.',7.8,$MUTED,true,116,10);
@@ -130,7 +126,6 @@ final class DKX_Final_Rate_Card_PDF {
         $yy=108; foreach($social as $row){ $this->rect($s,45,$yy,505,25,'#F4F7F9'); foreach($row as $i=>$v) $this->text($s,51+$i*126,$yy+9,$v,7.5,$i>0,$INK); $yy-=25; }
         $this->footer($s,6); $this->add_page($s);
 
-        // Page 7 - Bundles and rules.
         $s=''; $this->topbar($s,'FAST-START BUNDLES / COMMERCIAL RULES',$AQUA); $this->text($s,45,737,'FAST-START BUNDLES',24,true,$INK);
         $bundles=array(array('LAUNCH SPARK','R7,500','Compact launch / announcement package and minimum new-client entry point.'),array('EVENT STORY','R15,000','Stronger event storytelling entry point for clients not ready for Signature.'),array('BRAND MOMENTUM','R14,500','Focused content / campaign bundle for brands testing an ongoing relationship.'));
         $x=45; foreach($bundles as $b){ $this->rect($s,$x,541,161,156,'#07131C'); $this->rect($s,$x,691,161,6,$AQUA); $this->text($s,$x+14,663,$b[0],8,true,$AQUA); $this->text($s,$x+14,629,$b[1],20,true,'#FFFFFF'); $this->para($s,$x+14,601,$b[2],7.2,$MUTED,false,31,10); $x+=172; }
