@@ -26,7 +26,7 @@
 		<section class="dk-footer-column">
 			<h4>Explore</h4>
 			<nav aria-label="<?php esc_attr_e( 'Explore navigation', 'dk-expressions-v4-fixes' ); ?>">
-				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
+				<a href="<?php echo esc_url( home_url( '/home/' ) ); ?>">Home</a>
 				<a href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>">Solutions</a>
 				<a href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">Our Work</a>
 				<a href="<?php echo esc_url( home_url( '/industries/' ) ); ?>">Industries</a>
