@@ -5,7 +5,7 @@ body.dkx-visual-editing {
 
 body.dkx-visual-editing::before {
 	background: #35b8ff;
-	box-shadow: 0 0 18px rgba(53, 184, 255, .7);
+	box-shadow: none;
 	color: #00111c;
 	content: "DK VISUAL EDITOR · CLICK TEXT OR MEDIA";
 	font: 900 10px/1 Inter, Arial, sans-serif;
@@ -26,15 +26,18 @@ body.dkx-visual-editing main h5,
 body.dkx-visual-editing main h6,
 body.dkx-visual-editing main p,
 body.dkx-visual-editing main li,
+body.dkx-visual-editing main dt,
+body.dkx-visual-editing main dd,
 body.dkx-visual-editing main blockquote,
 body.dkx-visual-editing main figcaption,
 body.dkx-visual-editing main a,
 body.dkx-visual-editing main button,
 body.dkx-visual-editing main label,
 body.dkx-visual-editing main img,
-body.dkx-visual-editing main video {
+body.dkx-visual-editing main video,
+body.dkx-visual-editing main .dkx-vps-inline-edit-target {
 	cursor: pointer !important;
-	transition: outline-color .15s ease, box-shadow .15s ease;
+	transition: outline-color .15s ease;
 }
 
 body.dkx-visual-editing [data-dkx-global-media] {
@@ -51,25 +54,28 @@ body.dkx-visual-editing main h5:hover,
 body.dkx-visual-editing main h6:hover,
 body.dkx-visual-editing main p:hover,
 body.dkx-visual-editing main li:hover,
+body.dkx-visual-editing main dt:hover,
+body.dkx-visual-editing main dd:hover,
 body.dkx-visual-editing main blockquote:hover,
 body.dkx-visual-editing main figcaption:hover,
 body.dkx-visual-editing main a:hover,
 body.dkx-visual-editing main button:hover,
 body.dkx-visual-editing main label:hover,
 body.dkx-visual-editing main img:hover,
-body.dkx-visual-editing main video:hover {
+body.dkx-visual-editing main video:hover,
+body.dkx-visual-editing main .dkx-vps-inline-edit-target:hover {
 	outline: 2px dashed #35b8ff !important;
 	outline-offset: 4px;
 }
 
 body.dkx-visual-editing main .dkx-visual-selected {
-	box-shadow: 0 0 0 4px rgba(255, 194, 71, .2), 0 0 25px rgba(255, 194, 71, .28) !important;
+	box-shadow: none !important;
 	outline: 3px solid #ffc247 !important;
 	outline-offset: 4px;
 }
 
 body.dkx-visual-editing [data-dkx-global-media].dkx-visual-selected {
-	box-shadow: 0 0 0 4px rgba(255, 194, 71, .2), 0 0 25px rgba(255, 194, 71, .28) !important;
+	box-shadow: none !important;
 	outline: 3px solid #ffc247 !important;
 	outline-offset: 4px;
 }
@@ -87,13 +93,16 @@ body.dkx-visual-editing main h5,
 body.dkx-visual-editing main h6,
 body.dkx-visual-editing main p,
 body.dkx-visual-editing main li,
+body.dkx-visual-editing main dt,
+body.dkx-visual-editing main dd,
 body.dkx-visual-editing main blockquote,
 body.dkx-visual-editing main figcaption,
 body.dkx-visual-editing main a,
 body.dkx-visual-editing main button,
 body.dkx-visual-editing main label,
 body.dkx-visual-editing main img,
-body.dkx-visual-editing main video {
+body.dkx-visual-editing main video,
+body.dkx-visual-editing main .dkx-vps-inline-edit-target {
 	touch-action: manipulation;
 }
 
