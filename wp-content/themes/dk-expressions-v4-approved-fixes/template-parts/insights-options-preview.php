@@ -1,6 +1,6 @@
 <?php
 /**
- * Locked DK Expressions Insights archive — v1.23.5.
+ * Locked DK Expressions Insights archive — v1.23.6.
  *
  * Editorial Spectrum hero + Timecode category stream.
  *
@@ -82,7 +82,7 @@ $primary_category_for = static function ( $post_id ) use ( $yoast_primary_catego
 $configured_sticky_ids = array_filter( array_map( 'absint', (array) get_option( 'sticky_posts', array() ) ) );
 $sticky_story_ids       = array();
 if ( $configured_sticky_ids ) {
-$candidate_sticky_ids = get_posts(
+	$candidate_sticky_ids = get_posts(
 		array(
 			'post_type'           => 'post',
 			'post_status'         => 'publish',
@@ -168,13 +168,6 @@ foreach ( $regular_story_ids as $story_id ) {
 		}
 	}
 }
-
-$server_stats = array(
-	array( '01', '1.10M+', 'Visits', '#43baff' ),
-	array( '02', '2.47M+', 'Pages Viewed', '#ffc857' ),
-	array( '03', '6.13M+', 'Hits', '#9b7cff' ),
-	array( 'Live', '97,603', 'August Visits', '#2ad6c9' ),
-);
 ?>
 <main class="dkxoi dkxoi--locked dk-no-semantic-highlight">
 	<section class="dkxoi-hero dkxoi-spectrum-hero">
@@ -196,23 +189,6 @@ $server_stats = array(
 			<p class="dkxoi-eyebrow">The DK Expressions editorial universe</p>
 			<h2>All Insights</h2>
 		</header>
-
-		<section class="dkxoi-server" aria-label="DK Expressions verified server analytics">
-			<header>
-				<p class="dkxoi-eyebrow">Proof, Not Promises</p>
-				<h3>Independent Server Analytics.</h3>
-				<span>September 2025–August 2026 · Verified by Webalizer</span>
-			</header>
-			<div class="dkxoi-server-grid">
-				<?php foreach ( $server_stats as $server_stat ) : ?>
-					<article data-stat="<?php echo esc_attr( $server_stat[0] ); ?>" style="--stat-accent:<?php echo esc_attr( $server_stat[3] ); ?>">
-						<span><?php echo esc_html( $server_stat[0] ); ?></span>
-						<strong><?php echo esc_html( $server_stat[1] ); ?></strong>
-						<b><?php echo esc_html( $server_stat[2] ); ?></b>
-					</article>
-				<?php endforeach; ?>
-			</div>
-		</section>
 
 		<nav class="dkxoi-categories" aria-label="<?php esc_attr_e( 'Browse insight categories', 'dk-expressions-v4-fixes' ); ?>">
 			<a class="is-active" href="#category-streams" style="--cat-accent:#ffffff">All stories</a>
@@ -308,17 +284,17 @@ $server_stats = array(
 											<h3><?php echo esc_html( get_the_title( $story_id ) ); ?></h3>
 											<p><?php echo esc_html( wp_trim_words( get_the_excerpt( $story_id ), 18, '…' ) ); ?></p>
 											<span>Read the story ↗</span>
-										</div>
-									</a>
-								</article>
-							<?php endforeach; ?>
-						</div>
+									</div>
+								</a>
+							</article>
+						<?php endforeach; ?>
+					</div>
 
-						<a class="dkxoi-see-more" href="<?php echo esc_url( get_category_link( $category_id ) ); ?>">See more <?php echo esc_html( $category->name ); ?> stories <span>→</span></a>
-					</section>
-				<?php endforeach; ?>
-			</div>
-		</section>
+					<a class="dkxoi-see-more" href="<?php echo esc_url( get_category_link( $category_id ) ); ?>">See more <?php echo esc_html( $category->name ); ?> stories <span>→</span></a>
+				</section>
+			<?php endforeach; ?>
+		</div>
+	</section>
 	</section>
 </main>
 <?php wp_reset_postdata(); ?>
