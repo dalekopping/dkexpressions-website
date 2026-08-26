@@ -2,7 +2,7 @@
 /**
  * Plugin Name: DK Expressions Page Routing Lock
  * Description: Keeps the Landing page and Home page permanently separate.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: DK Expressions
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -11,9 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Ensure WordPress uses a dedicated Landing page as the static front page,
  * while /home/ remains a completely separate page.
  */
-add_action( 'admin_init', function() {
-	if ( get_option( 'dkx_landing_home_split_2026' ) ) return;
-
+add_action( 'init', function() {
 	$landing = get_page_by_path( 'landing' );
 	if ( ! $landing ) {
 		$landing_id = wp_insert_post( array(
@@ -29,12 +27,14 @@ add_action( 'admin_init', function() {
 	}
 
 	if ( $landing ) {
-		update_option( 'show_on_front', 'page' );
-		update_option( 'page_on_front', (int) $landing->ID );
+		if ( 'page' !== get_option( 'show_on_front' ) ) {
+			update_option( 'show_on_front', 'page' );
+		}
+		if ( (int) get_option( 'page_on_front' ) !== (int) $landing->ID ) {
+			update_option( 'page_on_front', (int) $landing->ID );
+		}
 	}
-
-	update_option( 'dkx_landing_home_split_2026', '1', false );
-} );
+}, 1 );
 
 /**
  * Explicitly bind the two routes to their own templates.
