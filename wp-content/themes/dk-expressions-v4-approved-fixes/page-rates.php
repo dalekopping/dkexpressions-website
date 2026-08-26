@@ -1,7 +1,7 @@
 <?php
 /**
  * Template Name: DK Expressions 2026 Rate Card
- * Full and one-page commercial rate card downloads — v1.22.9.
+ * Full and one-page PDF commercial rate card downloads — v1.23.0.
  */
 get_header();
 
@@ -11,9 +11,6 @@ $rate_card_url = function_exists( 'dkx_final_rate_card_download_url' )
 $one_page_pdf_url = function_exists( 'dkx_one_page_rate_card_pdf_url' )
 	? dkx_one_page_rate_card_pdf_url()
 	: add_query_arg( 'dkx_rate_card', 'one-page-pdf-2026', home_url( '/' ) );
-$one_page_docx_url = function_exists( 'dkx_one_page_rate_card_docx_url' )
-	? dkx_one_page_rate_card_docx_url()
-	: add_query_arg( 'dkx_rate_card', 'one-page-docx-2026', home_url( '/' ) );
 ?>
 <main class="dkxcr dkxcr--rates dk-no-semantic-highlight" id="top">
 	<div class="dkxcr-grid" aria-hidden="true"></div>
@@ -27,10 +24,9 @@ $one_page_docx_url = function_exists( 'dkx_one_page_rate_card_docx_url' )
 			<div class="dkxcr-actions">
 				<a class="is-primary" href="<?php echo esc_url( $rate_card_url ); ?>" download="DK-Expressions-2026-Rate-Card.pdf" data-dkx-rate-download>Download Full Rate Card <span>↓</span></a>
 				<a href="<?php echo esc_url( $one_page_pdf_url ); ?>" download="DK-Expressions-2026-One-Page-Rate-Card.pdf" data-dkx-rate-download>One-Page PDF <span>↓</span></a>
-				<a href="<?php echo esc_url( $one_page_docx_url ); ?>" download="DK-Expressions-2026-One-Page-Rate-Card.docx">One-Page Word <span>↓</span></a>
 				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project <span>↗</span></a>
 			</div>
-			<div class="dkxcr-download-meta"><span>7-page full edition</span><span>1-page quick reference</span><span>PDF + editable Word</span><span>Excludes VAT</span></div>
+			<div class="dkxcr-download-meta"><span>7-page full edition</span><span>1-page quick reference</span><span>PDF downloads</span><span>Excludes VAT</span></div>
 			<p class="dkxcr-download-status" role="status" aria-live="polite" data-dkx-download-status>Rate card downloaded. Ready when you are. <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project →</a></p>
 		</div>
 	</section>
@@ -77,11 +73,11 @@ $one_page_docx_url = function_exists( 'dkx_one_page_rate_card_docx_url' )
 	</section>
 
 	<section class="dkxcr-rate-final">
-		<div><p class="dkxcr-kicker"><span>05</span> / Keep the card</p><h2>Your next project<br>starts with <em>clarity.</em></h2><p>Keep the full commercial edition for detailed scopes, or download the single-page version for a fast internal reference.</p></div>
+		<div><p class="dkxcr-kicker"><span>05</span> / Keep the card</p><h2>Your next project<br>starts with <em>clarity.</em></h2><p>Keep the full commercial edition for detailed scopes, or download the single-page PDF for a fast internal reference.</p></div>
 		<div>
 			<a class="dkxcr-final-download" href="<?php echo esc_url( $rate_card_url ); ?>" download="DK-Expressions-2026-Rate-Card.pdf" data-dkx-rate-download><span>FULL PDF / 2026</span><strong>Download Complete<br>7-Page Rate Card</strong><b>↓</b></a>
 			<a class="dkxcr-final-download" href="<?php echo esc_url( $one_page_pdf_url ); ?>" download="DK-Expressions-2026-One-Page-Rate-Card.pdf" data-dkx-rate-download><span>QUICK PDF / 2026</span><strong>Download One-Page<br>Rate Card</strong><b>↓</b></a>
-			<p><a href="<?php echo esc_url( $one_page_docx_url ); ?>" download="DK-Expressions-2026-One-Page-Rate-Card.docx">Editable Word version ↓</a> &nbsp; | &nbsp; <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project →</a></p>
+			<p><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">Start a Project →</a></p>
 		</div>
 	</section>
 </main>
