@@ -15,7 +15,7 @@
 	<div class="dk-footer-shell">
 
 		<section class="dk-footer-brand-block">
-			<a class="dk-footer-logo" href="<?php echo esc_url( home_url( '/home/' ) ); ?>">
+			<a class="dk-footer-logo" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<img src="<?php echo esc_url( dkx_logo_url() ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" data-dkx-global-media="logo">
 			</a>
 			<p><?php echo esc_html( dkxv4_registered_slogan( dkxv4_content( 'footer_tagline' ) ) ); ?></p>
@@ -26,7 +26,7 @@
 		<section class="dk-footer-column">
 			<h4>Explore</h4>
 			<nav aria-label="<?php esc_attr_e( 'Explore navigation', 'dk-expressions-v4-fixes' ); ?>">
-				<a href="<?php echo esc_url( home_url( '/home/' ) ); ?>">Home</a>
+				<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
 				<a href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>">Solutions</a>
 				<a href="<?php echo esc_url( home_url( '/our-work/' ) ); ?>">Our Work</a>
 				<a href="<?php echo esc_url( home_url( '/industries/' ) ); ?>">Industries</a>
@@ -63,6 +63,7 @@
 			<nav aria-label="<?php esc_attr_e( 'DK Expressions navigation', 'dk-expressions-v4-fixes' ); ?>">
 				<a href="<?php echo esc_url( dkxv4_content_url( 'footer_contact_url' ) ); ?>"><?php echo esc_html( dkxv4_content( 'footer_contact_label' ) ); ?></a>
 				<a href="<?php echo esc_url( dkxv4_content_url( 'footer_privacy_url' ) ); ?>"><?php echo esc_html( dkxv4_content( 'footer_privacy_label' ) ); ?></a>
+				<a href="<?php echo esc_url( home_url( '/terms-of-use/' ) ); ?>">Terms of Use</a>
 				<a class="back-footer" href="#top"><?php echo esc_html( dkxv4_content( 'footer_back_label' ) ); ?> ↑</a>
 			</nav>
 		</section>
