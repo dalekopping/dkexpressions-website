@@ -6,6 +6,17 @@
  */
 get_header();
 ?>
+<style id="dkx-landing-four-package-grid">
+.dkx1211-pricing-grid-four{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.dkx1211-pricing-grid-four .is-events{--tier:#40b8ff}
+.dkx1211-pricing-grid-four .is-brands{--tier:#ffc34f}
+.dkx1211-pricing-grid-four .is-name{--tier:#976dff}
+.dkx1211-pricing-grid-four .is-media{--tier:#ff5364}
+.dkx1211-pricing-grid-four article{border-top:4px solid var(--tier)!important}
+.dkx1211-pricing-grid-four article .dkx1203-pricing-label,.dkx1211-pricing-grid-four article>a{color:var(--tier)!important}
+@media(max-width:1100px){.dkx1211-pricing-grid-four{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:700px){.dkx1211-pricing-grid-four{grid-template-columns:1fr!important}}
+</style>
 
 <section class="dk-home-hero dk-landing dkx1211-hero dk-no-semantic-highlight" id="top" data-dkx-section-key="landing-hero">
 	<div class="dk-stars" aria-hidden="true"></div>
