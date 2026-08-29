@@ -1,20 +1,20 @@
 <?php
 /**
  * Plugin Name: DK Expressions Master FAQ
- * Description: Visible FAQ content supplied by the 2026 Developer Handover Master Copy, matching FAQ schema.
- * Version: 1.0.0
+ * Description: Visible FAQ content supplied by the 2026 Developer Handover Master Copy, matching production FAQ schema.
+ * Version: 1.1.0
  * Author: DK Expressions
  */
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 function dkx_master_faq_rows() {
 	return array(
-		array( 'What is included in the Event Domination Signature package?', 'Up to 8 hours of photography and video coverage, live event posting, 5 reels + 80 edited photos, same-day teaser and a post-event recap. Price: R32,000 (excl. VAT).' ),
-		array( 'How does a Brand Content Retainer work?', 'Retainers provide ongoing photography, content creation, social management and strategy on a monthly basis. The Core package (Most Chosen) is R35,000 per month with a 3-month minimum and includes two shoots, 20 posts + 8 reels, full social management and monthly reporting.' ),
-		array( 'Do you travel outside Johannesburg?', 'Yes. Travel outside Johannesburg, accommodation and related costs are quoted separately unless specifically included in the package.' ),
-		array( 'What is the minimum booking or deposit required?', 'A 50% deposit is required to confirm any project. Retainers require a written three-month minimum commitment.' ),
-		array( 'Can I buy individual photographs or a single social post?', 'Yes. We offer supporting à-la-carte rates, but we recommend fixed packages for better value and clearer outcomes. Photography starts from R4,500 per session; single sponsored posts from R950.' ),
-		array( 'How quickly do you deliver images after an event?', 'Standard turnaround is 5–7 working days after receipt of final materials. Signature Event Domination includes next-day gallery delivery and same-day teasers. Rush work may carry a 20% fee.' ),
+		array( 'What is included in the Event Domination Signature package?', 'The Signature package is priced at R32,000 excluding VAT and provides expanded event photography, video and content coverage. Final scope is confirmed in the written project quotation.' ),
+		array( 'How do the Always On retainers work?', 'Always On retainers start at R15,000 per month, with Premium at R35,000 per month and Elite from R60,000 per month. Retainers require a minimum three-month commitment.' ),
+		array( 'Do you travel outside Johannesburg?', 'Yes. DK Expressions works across South Africa. Travel, accommodation and related costs outside Johannesburg are quoted separately unless specifically included in the package.' ),
+		array( 'What deposit is required?', 'A 50% deposit is required to confirm a project.' ),
+		array( 'What are the minimum booking levels?', 'New-client projects have a R7,500 excluding VAT commercial floor. Photography is not quoted below R5,000 and event coverage is not quoted below R6,500.' ),
+		array( 'Can I book an individual sponsored placement?', 'Yes. Own the Attention includes Feature at R1,500 per placement, Spotlight at R6,000 per campaign and Headline at R12,500 per campaign, excluding VAT.' ),
 	);
 }
 
