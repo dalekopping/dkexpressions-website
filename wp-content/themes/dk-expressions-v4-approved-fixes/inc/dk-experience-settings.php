@@ -15,7 +15,7 @@ function dkxv4_content_defaults() {
 		'founder_name'      => 'Dale Kopping',
 		'founding_year'     => '2013',
 		'tagline'           => 'Freezing Time and Space with the Time Travellers®',
-		'contact_email'     => 'dale@dkexpressions.co.za',
+		'contact_email'     => 'advertise@dkexpressions.co.za',
 		'contact_phone'     => '+27 72 246 0451',
 		'contact_location'  => 'Johannesburg · South Africa · Worldwide',
 		'address_locality'  => 'Johannesburg',
@@ -213,7 +213,18 @@ function dkxv4_content_defaults() {
 function dkxv4_content( $key ) {
 	$saved    = get_option( 'dkxv4_content', array() );
 	$defaults = dkxv4_content_defaults();
-	return array_key_exists( $key, $saved ) ? $saved[ $key ] : ( $defaults[ $key ] ?? '' );
+	$value    = array_key_exists( $key, $saved ) ? $saved[ $key ] : ( $defaults[ $key ] ?? '' );
+
+	// Use one public enquiry address across every commercial template and form.
+	// Existing installs may still carry the retired address in the saved option.
+	if ( 'contact_email' === $key ) {
+		$normalised = strtolower( trim( (string) $value ) );
+		if ( '' === $normalised || 'dale@dkexpressions.co.za' === $normalised ) {
+			return 'advertise@dkexpressions.co.za';
+		}
+	}
+
+	return $value;
 }
 
 function dkxv4_content_url( $key ) {
