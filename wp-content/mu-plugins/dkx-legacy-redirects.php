@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: DK Expressions Legacy Redirects
- * Description: Preserves historical /dkexp/%postname%/ post URLs after the production permalink cutover.
- * Version: 1.0.0
+ * Description: Preserves historical DK Expressions post URLs after the production permalink cutover.
+ * Version: 1.1.0
  * Author: DK Expressions
  */
 
@@ -11,11 +11,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Redirect legacy DK Expressions post URLs only after WordPress is no longer
- * configured to use the historical /dkexp/%postname%/ permalink structure.
- *
- * The guard makes this file safe to deploy before the production permalink
- * change: while /dkexp/ remains the configured structure, this plugin is inert.
+ * Extract a likely post slug from supported historical DKEXP URL shapes.
+ * Supported examples:
+ *   /dkexp/post-slug/
+ *   /dkexp/2024/08/post-slug/
+ *   /dkexp/2024/08/15/post-slug/
+ *   /dkexp/post-slug.html
+ */
+function dkx_legacy_extract_post_slug( $request_path ) {
+    $path = trim( rawurldecode( (string) $request_path ), '/' );
+
+    $patterns = array(
+        '#^dkexp/([^/]+?)(?:\.html?)?$#i',
+        '#^dkexp/\d{4}/\d{1,2}/([^/]+?)(?:\.html?)?$#i',
+        '#^dkexp/\d{4}/\d{1,2}/\d{1,2}/([^/]+?)(?:\.html?)?$#i',
+    );
+
+    foreach ( $patterns as $pattern ) {
+        if ( preg_match( $pattern, $path, $matches ) ) {
+            $slug = sanitize_title( $matches[1] );
+            return $slug ?: '';
+        }
+    }
+
+    return '';
+}
+
+/**
+ * Preserve benign tracking parameters while dropping parameters that can
+ * change WordPress routing or create redirect ambiguity.
+ */
+function dkx_legacy_safe_query_args() {
+    if ( empty( $_GET ) || ! is_array( $_GET ) ) {
+        return array();
+    }
+
+    $blocked = array( 'p', 'page_id', 'name', 'post_type', 'preview', 'feed', 'paged', 'attachment_id' );
+    $args    = array();
+
+    foreach ( wp_unslash( $_GET ) as $key => $value ) {
+        $clean_key = sanitize_key( $key );
+        if ( ! $clean_key || in_array( $clean_key, $blocked, true ) || ! is_scalar( $value ) ) {
+            continue;
+        }
+        $args[ $clean_key ] = sanitize_text_field( (string) $value );
+    }
+
+    return $args;
+}
+
+/**
+ * Redirect historical post URLs only after WordPress is no longer configured
+ * to use the historical /dkexp/ permalink structure. This guard keeps the
+ * plugin inert before the production permalink cutover.
  */
 add_action( 'template_redirect', function() {
     if ( is_admin() ) {
@@ -27,8 +75,6 @@ add_action( 'template_redirect', function() {
     }
 
     $permalink_structure = (string) get_option( 'permalink_structure' );
-
-    // Production safety guard: do nothing while /dkexp/ is still the live structure.
     if ( false !== strpos( $permalink_structure, '/dkexp/' ) ) {
         return;
     }
@@ -37,18 +83,7 @@ add_action( 'template_redirect', function() {
         ? (string) wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH )
         : '';
 
-    if ( ! $request_path ) {
-        return;
-    }
-
-    $request_path = trim( rawurldecode( $request_path ), '/' );
-
-    // Match historical single-post URLs only: /dkexp/{post-slug}/
-    if ( ! preg_match( '#^dkexp/([^/]+)$#i', $request_path, $matches ) ) {
-        return;
-    }
-
-    $slug = sanitize_title( $matches[1] );
+    $slug = dkx_legacy_extract_post_slug( $request_path );
     if ( '' === $slug ) {
         return;
     }
@@ -63,17 +98,14 @@ add_action( 'template_redirect', function() {
         return;
     }
 
-    // Preserve harmless query parameters such as campaign tracking values.
-    if ( ! empty( $_GET ) && is_array( $_GET ) ) {
-        $query_args = array();
-        foreach ( wp_unslash( $_GET ) as $key => $value ) {
-            if ( is_scalar( $value ) ) {
-                $query_args[ sanitize_key( $key ) ] = sanitize_text_field( (string) $value );
-            }
-        }
-        if ( $query_args ) {
-            $target = add_query_arg( $query_args, $target );
-        }
+    $query_args = dkx_legacy_safe_query_args();
+    if ( $query_args ) {
+        $target = add_query_arg( $query_args, $target );
+    }
+
+    $current = home_url( '/' . trim( (string) $request_path, '/' ) . '/' );
+    if ( untrailingslashit( $current ) === untrailingslashit( $target ) ) {
+        return;
     }
 
     wp_safe_redirect( $target, 301, 'DK Expressions Legacy Redirects' );
