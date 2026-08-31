@@ -168,6 +168,20 @@ add_filter( 'wpseo_twitter_image', function($v){$m=dkx_seom_current();$u=!empty(
 add_filter( 'wp_robots', function( $robots ) {
     $m = dkx_seom_current();
     if ( !$m ) return $robots;
+
+    // Production commercial pages must remain indexable even if an older
+    // page-level SEO record still contains a staging noindex directive.
+    $commercial_page = is_front_page() || is_page( array(
+        'home', 'solutions', 'industries', 'our-work', 'time-vault',
+        'rates', 'about', 'contact'
+    ) );
+    if ( 1 === (int) get_option( 'blog_public' ) && $commercial_page ) {
+        $robots['index'] = true;
+        $robots['follow'] = true;
+        unset( $robots['noindex'], $robots['nofollow'] );
+        return $robots;
+    }
+
     if ( 'noindex' === $m['index'] ) { $robots['noindex']=true; unset($robots['index']); } else { $robots['index']=true; unset($robots['noindex']); }
     if ( 'nofollow' === $m['follow'] ) { $robots['nofollow']=true; unset($robots['follow']); } else { $robots['follow']=true; unset($robots['nofollow']); }
     return $robots;
